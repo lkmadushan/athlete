@@ -16,7 +16,7 @@ class AuthController extends ApiController {
 	 */
 	public function __construct(UserTransformer $userTransformer)
 	{
-		$this->beforeFilter('auth.once');
+		parent::__construct();
 
 		$this->userTransformer = $userTransformer;
 	}
@@ -28,11 +28,8 @@ class AuthController extends ApiController {
 	 */
 	public function store()
 	{
-		return Response::json([
-			'success' => true,
-			'data' => [
-				'user' => $this->userTransformer->transform(Auth::user()),
-			],
-		], 200);
+		return $this->respondWithSuccess([
+			'user' => $this->userTransformer->transform(Auth::user()),
+		]);
 	}
 }

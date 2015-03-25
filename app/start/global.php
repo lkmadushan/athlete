@@ -61,7 +61,7 @@ App::error(function(Exception $exception, $code)
 
 App::error(function(\Athlete\Filters\ApiKeyMismatchException $exception)
 {
-	return Response::json(buildErrorResponse($exception->getMessage(), 403), 403);
+	return Response::json(buildErrorResponse($exception->getMessage(), 400), 400);
 });
 
 App::error(function(\Athlete\Filters\UnauthorizedUserException $exception)
