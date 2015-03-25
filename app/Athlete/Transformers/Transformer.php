@@ -1,4 +1,4 @@
-<?php namespace Athletes\Transformers;
+<?php namespace Athlete\Transformers;
 
 abstract class Transformer {
 

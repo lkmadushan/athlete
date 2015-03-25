@@ -11,7 +11,7 @@
 |
 */
 
-App::before('Athletes\Filters\VerifyApiKey');
+App::before('Athlete\Filters\VerifyApiKey');
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +23,5 @@ App::before('Athletes\Filters\VerifyApiKey');
 | integrates HTTP Basic authentication for quick, simple checking.
 |
 */
+
+Route::filter('auth.once', 'Athlete\Filters\VerifyAuthentication');

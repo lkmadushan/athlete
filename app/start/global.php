@@ -49,18 +49,24 @@ Log::useFiles(storage_path().'/logs/laravel.log');
 App::error(function(Exception $exception, $code)
 {
 	Log::error($exception);
+
+	/*switch($code) {
+		case 500:
+			return Response::json(buildErrorResponse('Internel server!', $code), 500);
+
+		case 404:
+			return Response::json(buildErrorResponse('Not found!', $code), 404);
+	}*/
 });
 
-App::error(function(\Athletes\Filters\ApiKeyMismatchException $exception)
+App::error(function(\Athlete\Filters\ApiKeyMismatchException $exception)
 {
-	$response = [
-		'success' => false,
-		'error' => [
-			'message' => $exception->getMessage(),
-		],
-	];
+	return Response::json(buildErrorResponse($exception->getMessage(), 403), 403);
+});
 
-	return Response::json($response, 403);
+App::error(function(\Athlete\Filters\UnauthorizedUserException $exception)
+{
+	return Response::json(buildErrorResponse($exception->getMessage(), 401), 401);
 });
 
 /*
@@ -91,3 +97,12 @@ App::down(function()
 */
 
 require app_path().'/filters.php';
+
+/*
+|--------------------------------------------------------------------------
+| Require The Helpers File
+|--------------------------------------------------------------------------
+|
+*/
+
+require app_path().'/helpers.php';

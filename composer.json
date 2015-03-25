@@ -21,7 +21,7 @@
 			"app/tests/TestCase.php"
 		],
         "psr-4": {
-            "Athlete\\": "app/Athletes"
+            "Athlete\\": "app/Athlete"
         }
 	},
 	"scripts": {
