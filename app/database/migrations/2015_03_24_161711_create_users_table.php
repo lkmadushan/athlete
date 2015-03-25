@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration {
 			$table->increments('id')->unsigned();
 			$table->string('email')->unique();
 			$table->string('password');
+			$table->boolean('is_purchased')->unsigned()->default(0);
 			$table->timestamps();
 		});
 	}

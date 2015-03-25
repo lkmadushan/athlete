@@ -13,7 +13,8 @@ class UserTransformer extends Transformer {
 	{
 		return [
 			'user_id' => $user['id'],
-			'email' => $user['email']
+			'email' => $user['email'],
+			'is_purchased' => (boolean)$user['is_purchased']
 		];
 	}
 }
