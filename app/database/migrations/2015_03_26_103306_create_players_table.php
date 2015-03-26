@@ -17,10 +17,10 @@ class CreatePlayersTable extends Migration {
 			$table->increments('id')->unsigned();
 			$table->string('first_name');
 			$table->string('last_name');
-			$table->text('notes');
-			$table->enum('unit', ['metrix', 'imperial']);
-			$table->string('value');
+			$table->text('notes')->nullable();
 			$table->timestamp('born_on');
+			$table->integer('team_id')->unsigned();
+			$table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
 			$table->timestamps();
 		});
 	}

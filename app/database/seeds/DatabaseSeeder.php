@@ -2,7 +2,9 @@
 
 class DatabaseSeeder extends Seeder {
 
-	protected $tables = ['users'];
+	protected $tables = [
+		'users', 'devices', 'sports', 'teams', 'players', 'skills', 'videos'
+	];
 
 	/**
 	 * Run the database seeds.
@@ -15,8 +17,7 @@ class DatabaseSeeder extends Seeder {
 
 		$this->cleanDatabase();
 
-		$this->call('UsersTableSeeder');
-		$this->call('DevicesTableSeeder');
+		$this->seed();
 	}
 
 	/**
@@ -29,5 +30,20 @@ class DatabaseSeeder extends Seeder {
 		foreach($this->tables as $table) {
 			DB::table($table)->truncate();
 		}
+	}
+
+	protected function seed()
+	{
+		foreach($this->tables as $table) {
+
+			$seeder = $this->tableToSeeder($table);
+
+			$this->call($seeder);
+		}
+	}
+
+	protected function tableToSeeder($table)
+	{
+		return ucfirst($table) . 'TableSeeder';
 	}
 }

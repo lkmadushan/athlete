@@ -39,3 +39,15 @@ Route::group(['prefix' => 'api/v1'], function()
 		Route::resource('sports.teams.players.videos', '', ['except' => ['create', 'edit']]);
 	});
 });
+
+Route::get('sandbox', function()
+{
+	return Height::find(4)->player->team;
+
+	/*return User::with('sports.teams.players')
+		->with('sports.teams.players.skills')
+		->with('sports.teams.players.videos')
+		->with('sports.teams.players.weights')
+		->with('sports.teams.players.heights')
+		->find(20)->toArray();*/
+});
