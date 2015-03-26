@@ -4,11 +4,6 @@ class ApiController extends Controller {
 
 	protected $statusCode = 200;
 
-	public function __construct()
-	{
-		$this->beforeFilter('auth.once', ['on' => ['post', 'put', 'patch', 'delete']]);
-	}
-
 	/**
 	 * Get status code
 	 *

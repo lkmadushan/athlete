@@ -2,7 +2,7 @@
 
 use Athlete\Transformers\UserTransformer;
 
-class AuthController extends ApiController {
+class AccountsController extends ApiController {
 
 	/**
 	 * @var Athlete\Transformers\UserTransformer
@@ -16,20 +16,16 @@ class AuthController extends ApiController {
 	 */
 	public function __construct(UserTransformer $userTransformer)
 	{
-		parent::__construct();
-
 		$this->userTransformer = $userTransformer;
 	}
 
 	/**
-	 * Authenticate user response
+	 * Get authenticate user response
 	 *
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function store()
+	public function user()
 	{
-		return $this->respondWithSuccess([
-			'user' => $this->userTransformer->transform(Auth::user()),
-		]);
+		return $this->respondWithSuccess($this->userTransformer->transform(Auth::user()));
 	}
 }
