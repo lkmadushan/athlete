@@ -18,8 +18,8 @@ class AccountsController extends ApiController {
 	private $includes = [
 		'sports.teams.players.skills',
 		'sports.teams.players.videos',
-		'sports.teams.players.heights',
-		'sports.teams.players.weights'
+		'sports.teams.players.height',
+		'sports.teams.players.weight'
 	];
 
 	/**

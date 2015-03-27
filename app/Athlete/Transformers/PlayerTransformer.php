@@ -11,7 +11,7 @@ class PlayerTransformer extends  TransformerAbstract {
 	 * @var array
 	 */
 	protected $availableIncludes = [
-		'skills', 'videos', 'weights', 'heights'
+		'skills', 'videos', 'weight', 'height'
 	];
 
 	/**
@@ -63,11 +63,11 @@ class PlayerTransformer extends  TransformerAbstract {
 	 * @param \Player $player
 	 * @return \League\Fractal\Resource\Item
 	 */
-	public function includeWeights(Player $player)
+	public function includeWeight(Player $player)
 	{
-		$weights = $player->weights;
+		$weight = $player->weight;
 
-		return $this->collection($weights, new WeightTransformer);
+		if($weight) return $this->item($weight, new WeightTransformer);
 	}
 
 	/**
@@ -76,10 +76,10 @@ class PlayerTransformer extends  TransformerAbstract {
 	 * @param \Player $player
 	 * @return \League\Fractal\Resource\Item
 	 */
-	public function includeHeights(Player $player)
+	public function includeHeight(Player $player)
 	{
-		$heights = $player->heights;
+		$height = $player->height;
 
-		return $this->collection($heights, new HeightTransformer);
+		if($height) return $this->item($height, new HeightTransformer);
 	}
 }

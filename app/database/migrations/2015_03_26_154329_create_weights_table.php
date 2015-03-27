@@ -18,7 +18,7 @@ class CreateWeightsTable extends Migration {
 			$table->enum('unit', ['kg', 'lb']);
 			$table->decimal('value', 6, 3)->unsigned();
 			$table->foreign('id')->references('id')->on('players')->onDelete('cascade');
-			$table->primary(['id', 'unit']);
+			$table->primary('id');
 			$table->timestamps();
 		});
 	}

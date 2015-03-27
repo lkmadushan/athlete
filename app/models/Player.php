@@ -19,13 +19,13 @@ class Player extends \Eloquent {
 		return $this->hasMany('Video');
 	}
 
-	public function weights()
+	public function weight()
 	{
-		return $this->hasMany('Weight', 'id', 'id');
+		return $this->hasOne('Weight', 'id', 'id');
 	}
 
-	public function heights()
+	public function height()
 	{
-		return $this->hasMany('Height', 'id', 'id');
+		return $this->hasOne('Height', 'id', 'id');
 	}
 }

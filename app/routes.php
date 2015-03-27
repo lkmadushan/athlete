@@ -47,8 +47,8 @@ Route::get('sandbox', function()
 	return User::with('sports.teams.players')
 		->with('sports.teams.players.skills')
 		->with('sports.teams.players.videos')
-		->with('sports.teams.players.weights')
-		->with('sports.teams.players.heights')
+		->with('sports.teams.players.weight')
+		->with('sports.teams.players.height')
 		->get()->toArray();
 });
 
