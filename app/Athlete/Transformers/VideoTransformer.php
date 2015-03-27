@@ -14,7 +14,7 @@ class VideoTransformer extends TransformerAbstract {
 	public function transform(Video $video)
 	{
 		return [
-			'video_id' => $video->id,
+			'video_id' => (int)$video->id,
 			'title' => $video->title,
 			'thumbnail' => $video->thumb
 		];

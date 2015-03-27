@@ -62,6 +62,16 @@ class ApiController extends Controller {
 	}
 
 	/**
+	 * Parse with including relations
+	 *
+	 * @return array
+	 */
+	public function getIncludes()
+	{
+		return Request::get('includes') ?: [];
+	}
+
+	/**
 	 * Create error response
 	 *
 	 * @param $message
@@ -78,6 +88,12 @@ class ApiController extends Controller {
 		]);
 	}
 
+	/**
+	 * Create success response
+	 *
+	 * @param $data
+	 * @return \Illuminate\Http\JsonResponse
+	 */
 	public function respondWithSuccess($data)
 	{
 		return $this->respond([

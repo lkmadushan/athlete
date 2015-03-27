@@ -5,7 +5,12 @@ use League\Fractal\TransformerAbstract;
 
 class SportTransformer extends TransformerAbstract {
 
-	protected $defaultIncludes = [
+	/**
+	 * Avaliable includes to parse
+	 *
+	 * @var array
+	 */
+	protected $availableIncludes = [
 		'teams'
 	];
 
@@ -18,7 +23,7 @@ class SportTransformer extends TransformerAbstract {
 	public function transform(Sport $sport)
 	{
 		return [
-			'sport_id' => $sport->id,
+			'sport_id' => (int)$sport->id,
 			'name' => $sport->name,
 			'image' => $sport->image
 		];

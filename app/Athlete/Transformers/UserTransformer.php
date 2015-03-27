@@ -5,7 +5,12 @@ use League\Fractal\TransformerAbstract;
 
 class UserTransformer extends TransformerAbstract {
 
-	protected $defaultIncludes = [
+	/**
+	 * Avaliable includes to parse
+	 *
+	 * @var array
+	 */
+	protected $availableIncludes = [
 		'sports'
 	];
 
@@ -18,7 +23,7 @@ class UserTransformer extends TransformerAbstract {
 	public function transform(User $user)
 	{
 		return [
-			'user_id' => $user->id,
+			'user_id' => (int)$user->id,
 			'email' => $user->email,
 			'is_purchased' => (boolean)$user->is_purchased
 		];

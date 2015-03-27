@@ -7,7 +7,7 @@ Route::group(['prefix' => 'api/v1'], function()
 	 */
 	Route::post('accounts/register', 'AccountsController@register');
 
-	Route::get('accounts/reset-password', 'AccountsController@resetPassword');
+	Route::post('accounts/reset-password', 'AccountsController@resetPassword');
 
 	/**
 	 * Check authentication before routing

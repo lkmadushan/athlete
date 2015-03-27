@@ -56,6 +56,9 @@ App::error(function(Exception $exception, $code)
 
 		case 404:
 			return Response::json(buildErrorResponse('Not found!', $code), 404);
+
+		case 405:
+			return Response::json(buildErrorResponse('Method not allowed!', $code), 404);
 	}*/
 });
 

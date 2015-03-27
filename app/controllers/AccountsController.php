@@ -11,6 +11,18 @@ class AccountsController extends ApiController {
 	private $fractal;
 
 	/**
+	 * Includes relations
+	 *
+	 * @var array
+	 */
+	private $includes = [
+		'sports.teams.players.skills',
+		'sports.teams.players.videos',
+		'sports.teams.players.heights',
+		'sports.teams.players.weights'
+	];
+
+	/**
 	 * Inject the UserTransformer
 	 *
 	 * @param \Sorskod\Larasponse\Larasponse $fractal
@@ -18,6 +30,8 @@ class AccountsController extends ApiController {
 	public function __construct(Larasponse $fractal)
 	{
 		$this->fractal = $fractal;
+
+		$this->fractal->parseIncludes($this->getIncludes());
 	}
 
 	/**
@@ -30,5 +44,15 @@ class AccountsController extends ApiController {
 		$data = $this->fractal->item(Auth::user(), new UserTransformer);
 
 		return $this->respondWithSuccess($data);
+	}
+
+	/**
+	 * Parse includes to comma seperated values
+	 *
+	 * @return string
+	 */
+	public function getIncludes()
+	{
+		return implode(',', $this->includes);
 	}
 }

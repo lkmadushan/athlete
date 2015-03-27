@@ -5,7 +5,12 @@ use League\Fractal\TransformerAbstract;
 
 class TeamTransformer extends TransformerAbstract {
 
-	protected $defaultIncludes = [
+	/**
+	 * Avaliable includes to parse
+	 *
+	 * @var array
+	 */
+	protected $availableIncludes = [
 		'players'
 	];
 
@@ -18,7 +23,7 @@ class TeamTransformer extends TransformerAbstract {
 	public function transform(Team $team)
 	{
 		return [
-			'team_id' => $team->id,
+			'team_id' => (int)$team->id,
 			'name' => $team->name
 		];
 	}

@@ -14,7 +14,7 @@ class SkillTransformer extends  TransformerAbstract {
 	public function transform(Skill $skill)
 	{
 		return [
-			'skill_id' => $skill->id,
+			'skill_id' => (int)$skill->id,
 			'name' => $skill->name,
 			'notes' => $skill->notes,
 			'level' => $skill->level,
