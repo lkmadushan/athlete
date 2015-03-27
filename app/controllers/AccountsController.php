@@ -1,22 +1,23 @@
 <?php
 
+use Sorskod\Larasponse\Larasponse;
 use Athlete\Transformers\UserTransformer;
 
 class AccountsController extends ApiController {
 
 	/**
-	 * @var Athlete\Transformers\UserTransformer
+	 * @var \Sorskod\Larasponse\Larasponse $fractal
 	 */
-	protected $userTransformer;
+	private $fractal;
 
 	/**
 	 * Inject the UserTransformer
 	 *
-	 * @param Athlete\Transformers\UserTransformer $userTransformer
+	 * @param \Sorskod\Larasponse\Larasponse $fractal
 	 */
-	public function __construct(UserTransformer $userTransformer)
+	public function __construct(Larasponse $fractal)
 	{
-		$this->userTransformer = $userTransformer;
+		$this->fractal = $fractal;
 	}
 
 	/**
@@ -26,6 +27,8 @@ class AccountsController extends ApiController {
 	 */
 	public function user()
 	{
-		return $this->respondWithSuccess($this->userTransformer->transform(Auth::user()));
+		$data = $this->fractal->item(Auth::user(), new UserTransformer);
+
+		return $this->respondWithSuccess($data);
 	}
 }

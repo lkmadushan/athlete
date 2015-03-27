@@ -124,6 +124,7 @@ return array(
 
 		'Laracasts\Validation\ValidationServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
+		'Sorskod\Larasponse\LarasponseServiceProvider',
 
 	),
 
