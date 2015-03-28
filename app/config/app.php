@@ -126,6 +126,8 @@ return array(
 		'Way\Generators\GeneratorsServiceProvider',
 		'Sorskod\Larasponse\LarasponseServiceProvider',
 
+		'Athlete\Providers\BackendServiceProvider',
+
 	),
 
 	/*

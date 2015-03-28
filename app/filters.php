@@ -2,19 +2,6 @@
 
 /*
 |--------------------------------------------------------------------------
-| Application & Route Filters
-|--------------------------------------------------------------------------
-|
-| Below you will find the "before" and "after" events for the application
-| which may be used to do any work before or after a request into your
-| application. Here you may also register your custom route filters.
-|
-*/
-
-App::before('Athlete\Filters\VerifyApiKey');
-
-/*
-|--------------------------------------------------------------------------
 | Authentication Filters
 |--------------------------------------------------------------------------
 |
@@ -25,3 +12,4 @@ App::before('Athlete\Filters\VerifyApiKey');
 */
 
 Route::filter('auth.once', 'Athlete\Filters\VerifyAuthentication');
+Route::filter('api.key', 'Athlete\Filters\VerifyApiKey');

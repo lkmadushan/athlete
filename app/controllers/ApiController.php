@@ -50,6 +50,17 @@ class ApiController extends Controller {
 	}
 
 	/**
+	 * Unprocessable entity response
+	 *
+	 * @param string $message
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function respondUnprocess($message = 'Unprocessable entity!')
+	{
+		return $this->setStatusCode(422)->respondWithError($message);
+	}
+
+	/**
 	 * Create json response
 	 *
 	 * @param $data
@@ -66,7 +77,7 @@ class ApiController extends Controller {
 	 *
 	 * @return array
 	 */
-	public function getIncludes()
+	protected function getIncludes()
 	{
 		return Request::get('includes') ?: [];
 	}
@@ -99,6 +110,7 @@ class ApiController extends Controller {
 		return $this->respond([
 			'success' => true,
 			'data' => $data,
+			'status_code' => $this->getStatusCode()
 		]);
 	}
 }

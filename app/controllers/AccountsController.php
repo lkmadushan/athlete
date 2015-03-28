@@ -2,6 +2,8 @@
 
 use Sorskod\Larasponse\Larasponse;
 use Athlete\Transformers\UserTransformer;
+use Athlete\Requests\RegisterUserRequest;
+use Athlete\Repositories\User\UserRepository;
 
 class AccountsController extends ApiController {
 
@@ -23,15 +25,31 @@ class AccountsController extends ApiController {
 	];
 
 	/**
+	 * @var RegisterUserRequest $registerUserRequest
+	 */
+	private $registerUserRequest;
+	/**
+	 * @var \Athlete\Repositories\User\UserRepository
+	 */
+	private $repository;
+
+	/**
 	 * Inject the UserTransformer
 	 *
 	 * @param \Sorskod\Larasponse\Larasponse $fractal
+	 * @param RegisterUserRequest $registerUserRequest
+	 * @param \Athlete\Repositories\User\UserRepository $repository
 	 */
-	public function __construct(Larasponse $fractal)
+	public function __construct(Larasponse $fractal,
+	                            RegisterUserRequest $registerUserRequest,
+	                            UserRepository $repository
+	)
 	{
 		$this->fractal = $fractal;
 
 		$this->fractal->parseIncludes($this->getIncludes());
+		$this->registerUserRequest = $registerUserRequest;
+		$this->repository = $repository;
 	}
 
 	/**
@@ -46,12 +64,23 @@ class AccountsController extends ApiController {
 		return $this->respondWithSuccess($data);
 	}
 
+	public function register()
+	{
+		$formData = Input::all();
+
+		$this->registerUserRequest->validate($formData);
+
+		$this->repository->save($formData);
+
+		return $this->respondWithSuccess('User has been successfully registered.');
+	}
+
 	/**
 	 * Parse includes to comma seperated values
 	 *
 	 * @return string
 	 */
-	public function getIncludes()
+	protected function getIncludes()
 	{
 		return implode(',', $this->includes);
 	}

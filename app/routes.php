@@ -1,13 +1,19 @@
 <?php
 
-Route::group(['prefix' => 'api/v1'], function()
+/**
+ * Password Reset Controllers
+ */
+Route::get('password/reset', 'RemindersController@getReset');
+Route::get('password/reset', 'RemindersController@postReset');
+
+Route::group(['prefix' => 'api/v1', 'before' => 'api.key'], function()
 {
 	/**
 	 * Account Controllers
 	 */
 	Route::post('accounts/register', 'AccountsController@register');
 
-	Route::post('accounts/reset-password', 'AccountsController@resetPassword');
+	Route::post('accounts/reset-password', 'RemindersController@postRemind');
 
 	/**
 	 * Check authentication before routing
@@ -38,18 +44,6 @@ Route::group(['prefix' => 'api/v1'], function()
 
 		Route::resource('sports.teams.players.videos', '', ['except' => ['create', 'edit']]);
 	});
-});
-
-Route::get('sandbox', function()
-{
-	//return Height::find(4)->player->team;
-
-	return User::with('sports.teams.players')
-		->with('sports.teams.players.skills')
-		->with('sports.teams.players.videos')
-		->with('sports.teams.players.weight')
-		->with('sports.teams.players.height')
-		->get()->toArray();
 });
 
 App::bind('League\Fractal\Serializer\SerializerAbstract', 'Athlete\Transformers\Serializers\CustomSerializer');

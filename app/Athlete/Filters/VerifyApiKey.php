@@ -25,10 +25,11 @@ class VerifyApiKey {
 	/**
 	 * API key filter
 	 *
+	 * @param $route
 	 * @param $request
 	 * @throws \Athlete\Filters\ApiKeyMismatchException
 	 */
-	public function filter($request)
+	public function filter($route, $request)
 	{
 		if( ! $this->apiKeysMatch($request))
 		{
