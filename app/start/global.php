@@ -74,7 +74,11 @@ App::error(function(\Athlete\Filters\UnauthorizedUserException $exception)
 
 App::error(function(\Laracasts\Validation\FormValidationException $exception)
 {
-	return Response::json(buildErrorResponse($exception->getErrors(), 422), 422);
+	return Response::json([
+		'success' => false,
+		'error' => $exception->getErrors(),
+		'status_code' => 422
+	], 422);
 });
 
 /*

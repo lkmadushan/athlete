@@ -9,8 +9,13 @@ class Device extends \Eloquent {
 		$this->attributes['type'] = strtolower($value);
 	}
 
-	public function getTypeAttribute()
+	public function getTypeAttribute($value)
 	{
-		return strtoupper($this->type);
+		return strtoupper($value);
+	}
+
+	public function user()
+	{
+		return $this->belongsTo('User');
 	}
 }

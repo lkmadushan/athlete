@@ -70,7 +70,7 @@ class AccountsController extends ApiController {
 
 		$this->registerUserRequest->validate($formData);
 
-		$this->repository->save($formData);
+		$this->repository->saveWithDevice($formData);
 
 		return $this->respondWithSuccess('User has been successfully registered.');
 	}

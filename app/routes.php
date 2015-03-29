@@ -45,5 +45,3 @@ Route::group(['prefix' => 'api/v1', 'before' => 'api.key'], function()
 		Route::resource('sports.teams.players.videos', '', ['except' => ['create', 'edit']]);
 	});
 });
-
-App::bind('League\Fractal\Serializer\SerializerAbstract', 'Athlete\Transformers\Serializers\CustomSerializer');
