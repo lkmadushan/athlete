@@ -74,7 +74,7 @@ App::error(function(\Athlete\Filters\UnauthorizedUserException $exception)
 
 App::error(function(Illuminate\Database\Eloquent\ModelNotFoundException $exception)
 {
-	return Response::json(buildErrorResponse($exception->getMessage(), 404), 404);
+	return Response::json(buildErrorResponse($exception->getModel(). " not found!", 404), 404);
 });
 
 App::error(function(\Laracasts\Validation\FormValidationException $exception)

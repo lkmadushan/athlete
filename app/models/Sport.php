@@ -13,4 +13,18 @@ class Sport extends \Eloquent {
 	{
 		return $this->hasMany('Team');
 	}
+
+	/**
+	 * Set image name when creating a sport
+	 *
+	 */
+	public static function boot()
+	{
+		parent::boot();
+
+		static::creating(function($model)
+		{
+			$model->image = Str::random() . '.png';
+		});
+	}
 }
