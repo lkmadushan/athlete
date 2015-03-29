@@ -16,11 +16,28 @@ class VerifyAuthentication {
 
 	/**
 	 * Authenticate the user
+	 *
+	 * @param $route
+	 * @param $request
+	 * @throws \Athlete\Filters\UnauthorizedUserException
 	 */
-	public function filter()
+	public function filter($route, $request)
 	{
 		$this->auth->onceBasic();
 
-		if($this->auth->guest()) throw new UnauthorizedUserException;
+		if($this->auth->guest() || ! $this->authDeviceMatch($request)) throw new UnauthorizedUserException;
+	}
+
+	/**
+	 * Check user has the authenticated device
+	 *
+	 * @param $request
+	 * @return mixed
+	 */
+	public function authDeviceMatch($request)
+	{
+		$deviceId = $request->header('X-Auth-Device');
+
+		return $this->auth->user()->hasDevice($deviceId);
 	}
 }

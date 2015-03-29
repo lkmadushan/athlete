@@ -35,13 +35,34 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		$this->attributes['password'] = Hash::make($value);
 	}
 
+	/**
+	 * User has many sports
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
 	public function sports()
 	{
 		return $this->hasMany('Sport');
 	}
 
+	/**
+	 * User has many devices
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
 	public function devices()
 	{
 		return $this->hasMany('Device');
+	}
+
+	/**
+	 * Check user has device
+	 *
+	 * @param $deviceId
+	 * @return bool
+	 */
+	public function hasDevice($deviceId)
+	{
+		return in_array($deviceId, $this->devices->lists('id'));
 	}
 }
