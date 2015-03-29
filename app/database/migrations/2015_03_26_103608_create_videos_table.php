@@ -16,7 +16,8 @@ class CreateVideosTable extends Migration {
 		{
 			$table->increments('id')->unsigned();
 			$table->string('title');
-			$table->string('thumb');
+			$table->string('thumbnail');
+			$table->string('mime')->default('video/mp4');
 			$table->integer('player_id')->unsigned();
 			$table->foreign('player_id')->references('id')->on('players')->onDelete('cascade');
 			$table->timestamps();

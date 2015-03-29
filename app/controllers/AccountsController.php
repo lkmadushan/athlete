@@ -34,7 +34,7 @@ class AccountsController extends ApiController {
 	private $repository;
 
 	/**
-	 * Inject the UserTransformer
+	 * Inject the dependancies
 	 *
 	 * @param \Sorskod\Larasponse\Larasponse $fractal
 	 * @param RegisterUserRequest $registerUserRequest
@@ -46,8 +46,8 @@ class AccountsController extends ApiController {
 	)
 	{
 		$this->fractal = $fractal;
-
 		$this->fractal->parseIncludes($this->getIncludes());
+
 		$this->registerUserRequest = $registerUserRequest;
 		$this->repository = $repository;
 	}

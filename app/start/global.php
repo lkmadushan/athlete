@@ -50,7 +50,7 @@ App::error(function(Exception $exception, $code)
 {
 	Log::error($exception);
 
-	switch($code) {
+	/*switch($code) {
 		case 500:
 			return Response::json(buildErrorResponse('Internel server!', $code), 500);
 
@@ -59,7 +59,7 @@ App::error(function(Exception $exception, $code)
 
 		case 405:
 			return Response::json(buildErrorResponse('Method not allowed!', $code), 404);
-	}
+	}*/
 });
 
 App::error(function(\Athlete\Filters\ApiKeyMismatchException $exception)
@@ -70,6 +70,11 @@ App::error(function(\Athlete\Filters\ApiKeyMismatchException $exception)
 App::error(function(\Athlete\Filters\UnauthorizedUserException $exception)
 {
 	return Response::json(buildErrorResponse($exception->getMessage(), 401), 401);
+});
+
+App::error(function(Illuminate\Database\Eloquent\ModelNotFoundException $exception)
+{
+	return Response::json(buildErrorResponse($exception->getMessage(), 404), 404);
 });
 
 App::error(function(\Laracasts\Validation\FormValidationException $exception)

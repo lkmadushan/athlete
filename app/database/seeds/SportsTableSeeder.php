@@ -10,7 +10,7 @@ class SportsTableSeeder extends Seeder {
 
 		$users = User::lists('id');
 
-		foreach(range(1, 10) as $index)
+		foreach(range(1, 100) as $index)
 		{
 			Sport::create([
 				'name' => $faker->word,

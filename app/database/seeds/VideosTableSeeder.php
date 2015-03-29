@@ -14,7 +14,7 @@ class VideosTableSeeder extends Seeder {
 		{
 			Video::create([
 				'title' => $faker->word,
-				'thumb' => $faker->word,
+				'thumbnail' => $faker->word,
 				'player_id' => $faker->randomElement($players)
 			]);
 		}

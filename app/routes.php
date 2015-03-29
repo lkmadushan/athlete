@@ -34,9 +34,9 @@ Route::group(['prefix' => 'api/v1', 'before' => 'api.key'], function()
 		/**
 		 * Resources
 		 */
-		Route::resource('sports', '', ['except' => ['create', 'edit']]);
+		Route::resource('sports', 'SportsController', ['except' => ['create', 'edit']]);
 
-		Route::resource('sports.teams', '', ['except' => ['create', 'edit']]);
+		Route::resource('sports.teams', 'TeamsController', ['except' => ['create', 'edit']]);
 
 		Route::resource('sports.teams.players', '', ['except' => ['create', 'edit']]);
 
@@ -45,3 +45,21 @@ Route::group(['prefix' => 'api/v1', 'before' => 'api.key'], function()
 		Route::resource('sports.teams.players.videos', '', ['except' => ['create', 'edit']]);
 	});
 });
+
+/**
+ * Image response
+ */
+Route::get('images/{sportId}/{imageName}', [
+	'as' => 'image_path',
+	'uses' => function($sportId, $imageName)
+{
+	$mime = Sport::find($sportId)->mime;
+
+	$path = storage_path("images/{$sportId}/$imageName");
+
+	$response = Response::make(file_get_contents($path), '200');
+
+	$response->header('Content-Type', $mime);
+
+	return $response;
+}]);

@@ -8,6 +8,11 @@ abstract class EloquentRepository {
 	protected $model;
 
 	/**
+	 * @var $builder
+	 */
+	protected $builder;
+
+	/**
 	 * @param User $model
 	 */
 	public function __construct($model)
@@ -24,5 +29,15 @@ abstract class EloquentRepository {
 	public function save(array $data)
 	{
 		return $this->model->create($data);
+	}
+
+	public function findById($id)
+	{
+		return $this->builder->findOrFail($id);
+	}
+
+	public function paginate($limit)
+	{
+		return $this->builder->paginate($limit);
 	}
 }
