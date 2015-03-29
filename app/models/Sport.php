@@ -2,7 +2,7 @@
 
 class Sport extends \Eloquent {
 
-	protected $fillable = [];
+	protected $fillable = ['name'];
 
 	public function user()
 	{

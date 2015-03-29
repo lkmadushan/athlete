@@ -1,7 +1,7 @@
 <?php
 
-use Athlete\Repositories\Sport\SportRepository;
 use Sorskod\Larasponse\Larasponse;
+use Athlete\Repositories\Sport\SportRepository;
 use Athlete\Transformers\SportTransformer;
 
 class SportsController extends ApiController {
@@ -53,7 +53,7 @@ class SportsController extends ApiController {
 	 */
 	public function store()
 	{
-		//
+		dd('hi');
 	}
 
 	/**
@@ -81,7 +81,22 @@ class SportsController extends ApiController {
 	 */
 	public function update($id)
 	{
-		//
+		$sport = $this->repository->filterByUser(Auth::user()->id)->findById($id);
+
+		try {
+			DB::beginTransaction();
+
+			$sport->update(Input::all());
+
+			if(Input::hasFile('image') && Input::file('image')->isValid()) {
+
+				Input::file('image')->move(storage_path("images/{$sport->id}"), $sport->image);
+			}
+
+			DB::commit();
+		} catch(Exception $e) {
+			DB::rollBack();
+		}
 	}
 
 	/**
