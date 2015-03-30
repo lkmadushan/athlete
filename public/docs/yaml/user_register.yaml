@@ -57,7 +57,7 @@ parameters:
     - name: push_token
         description: Push token of the device
         type: binary data
-        optional: No
+        optional: Yes
         default:
         values: 02307032-d6a5-11e4-b9d6-1681e6b88ec1
 
