@@ -23,7 +23,7 @@ access_token: not_required
 
 device_id: required
 
-device_type: not_required
+device_type: required
 
 parameters:
 

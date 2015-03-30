@@ -25,6 +25,8 @@ class VerifyAuthentication {
 	{
 		$this->auth->onceBasic();
 
+		if(! $this->authDeviceMatch($request)) $this->resetDevice($request);
+
 		if($this->auth->guest() || ! $this->authDeviceMatch($request)) throw new UnauthorizedUserException;
 	}
 
@@ -39,5 +41,19 @@ class VerifyAuthentication {
 		$deviceId = $request->header('X-Auth-Device');
 
 		return $this->auth->user()->hasDevice($deviceId);
+	}
+
+	/**
+	 * Reset login device
+	 *
+	 * @param $request
+	 */
+	public function resetDevice($request)
+	{
+		return $this->auth->user()->devices()->update([
+			'id' => $request->header('X-Auth-Device'),
+			'type' => $request->header('X-Auth-Device-Type'),
+			'push_token' => $request->header('X-Auth-Device-Push'),
+		]);
 	}
 }
