@@ -299,6 +299,11 @@ json_generator: |
       "status_code": 200
     }
     
-errors: 
-
-sandbox_errors:
+errors: |
+    {
+      "success": false,
+      "error": {
+        "message": "Invalid credentials!",
+        "status_code": 401
+      }
+    }
