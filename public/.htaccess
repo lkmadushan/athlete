@@ -217,6 +217,10 @@ AddDefaultCharset utf-8
     RewriteEngine On
     # RewriteBase /
 
+    # Perform redirect if docs
+    RewriteCond %{REQUEST_URI} (.*)/docs$ [NC]
+    RewriteRule ^(.*)$ /$1/index.php [R=301,L]
+
     # Redirect Trailing Slashes...
     RewriteRule ^(.*)/$ /$1 [L,R=301]
 
