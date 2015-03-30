@@ -23,7 +23,7 @@ class EloquentUserRepository extends EloquentRepository implements UserRepositor
 	public function saveWithDevice(array $data)
 	{
 		return $this->model->create($data)
-			->devices()
+			->device()
 			->save(new Device($this->parseDeviceInformation($data)));
 	}
 

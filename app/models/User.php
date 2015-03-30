@@ -46,23 +46,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	}
 
 	/**
-	 * User has many devices
+	 * User has one device
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
 	 */
-	public function devices()
+	public function device()
 	{
-		return $this->hasMany('Device');
-	}
-
-	/**
-	 * Check user has device
-	 *
-	 * @param $deviceId
-	 * @return bool
-	 */
-	public function hasDevice($deviceId)
-	{
-		return in_array($deviceId, $this->devices->lists('id'));
+		return $this->hasOne('Device');
 	}
 }

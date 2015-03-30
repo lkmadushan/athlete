@@ -1,6 +1,7 @@
 <?php namespace Athlete\Filters;
 
 use Illuminate\Auth\AuthManager;
+use Symfony\Component\Security\Core\Util\StringUtils;
 
 class VerifyAuthentication {
 
@@ -25,47 +26,38 @@ class VerifyAuthentication {
 	{
 		$this->auth->onceBasic();
 
-		if(! $this->authDeviceMatch($request)) $this->resetDevice($request);
+		if($this->auth->check() && ! $this->authDeviceMatch($request)) $this->resetDevice($request);
 
 		if($this->auth->guest() || ! $this->authDeviceMatch($request)) throw new UnauthorizedUserException;
 	}
 
 	/**
-	 * Check user has the authenticated device
+	 * Match the authenticated device
 	 *
 	 * @param $request
-	 * @return mixed
+	 * @return bool
 	 */
 	public function authDeviceMatch($request)
 	{
 		$deviceId = $request->header('X-Auth-Device');
 
-		if($this->auth->check()) return $this->auth->user()->hasDevice($deviceId);
+		if($this->auth->check())
+			return StringUtils::equals($this->auth->user()->device->id, $deviceId);
+
+		return false;
 	}
 
 	/**
-	 * Reset login device
+	 * Reset the device
 	 *
 	 * @param $request
-	 * @return bool
-	 * @throws \Athlete\Filters\UnauthorizedUserException
 	 */
 	public function resetDevice($request)
 	{
-		if($this->auth->check()) {
-
-			try {
-				return $this->auth->user()->devices()->update([
-					'id' => $request->header('X-Auth-Device'),
-					'type' => $request->header('X-Auth-Device-Type'),
-					'push_token' => $request->header('X-Auth-Device-Push'),
-				]);
-			} catch(\Exception $e) {
-
-				throw new UnauthorizedUserException;
-			}
-		}
-
-		return false;
+		return $this->auth->user()->device()->update([
+			'id' => $request->header('X-Auth-Device'),
+			'type' => strtolower($request->header('X-Auth-Device-Type')),
+			'push_token' => $request->header('X-Auth-Device-Push'),
+		]);
 	}
 }
