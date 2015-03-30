@@ -1,0 +1,124 @@
+
+---
+version: v1.0
+
+rate_limited: Yes
+
+action: GLOBEL CONFIGURATION
+
+description: Globel configuration for API
+    
+parameters:
+   
+   - name: **Note**
+        description: Every call to the web service must be made with an ‘action’ parameter. 
+        type: String
+        optional: No
+        default: 
+        values: 
+    
+   - name: API URL
+        description: API Url for access API
+        type: String
+        optional: No
+        default: 
+        values: http://loveapp.elegantsandbox.com/index.php/api
+   
+   - name: BASE URL
+        description: Base Url for  API
+        type: String
+        optional: No
+        default: 
+        values: http://loveapp.elegantsandbox.com (sandbox)
+   
+   - name: FILE URL
+        description: access to upload files
+        type: String
+        optional: No
+        default: 
+        values: http://loveapp.elegantsandbox.com/uploads/[file_name] (sandbox)
+        
+   - name: key
+        type: String
+        description: The key for access API
+        optional: No
+        default: 
+        values: 4rfv5tgb6ydchn71qwsx3eujmaz28ik
+   
+   - name: time zone
+        type: String
+        description: 
+        optional: No
+        default: 
+        values: GMT 0
+        
+   - name: timestamp format
+        type: String
+        description: 
+        optional: No
+        default: 
+        values: 1383718280 ( In Seconds )
+                  
+   - name: system status
+        type: String
+        description: Before call to web services must check system status
+        optional: No
+        default: 
+        values: system status  = 0  // Terminate the process   and display maintenance alert  / system status  = 1  //  Proceed with request    
+   
+json_generator: |
+
+ COMMON ERROR RESPONSE- IF METHOED NOT "POST"
+ {
+    "result": "",
+    "status": "UNSUCCESSFUL",
+    "error": "POST_REQUIRE"
+ }
+ 
+ COMMON ERROR RESPONSE-INVALID API KEY
+ 
+ {
+    "result": "",
+    "status": "UNSUCCESSFUL",
+    "error": "UNAUTHORIZED_REQUEST"
+ }
+ 
+ COMMON ERROR RESPONSE-SYSTEM OFFLINE
+ 
+ {
+    "result": "",
+    "status": "UNSUCCESSFUL",
+    "error": "SYSTEM_OFFLINE"
+ }
+ 
+ COMMON ERROR RESPONSE-INVALID_ACCESS_TOKEN
+ 
+ {
+    "result": "",
+    "status": "UNSUCCESSFUL",
+    "error": "INVALID_ACCESS_TOKEN"
+ }
+ 
+ COMMON ERROR RESPONSE-TOKEN_EXPIRED
+ 
+ {
+    "result": {
+        "access_token": "012e71796fb5aad0d31f0a3114d11e6a7786321c"
+    },
+    "status": "UNSUCCESSFUL",
+    "error": "TOKEN_EXPIRED"
+ }
+ 
+ COMMON ERROR RESPONSE-INVALID_ACTION
+ 
+ {
+    "result": "",
+    "status": "UNSUCCESSFUL",
+    "error": "INVALID_ACTION"
+ }
+   
+   
+   
+errors: POST_REQUIRE,UNAUTHORIZED_REQUEST,SYSTEM_OFFLINE,INVALID_ACCESS_TOKEN,TOKEN_EXPIRED,INVALID_ACTION
+    
+        

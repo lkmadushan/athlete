@@ -1,0 +1,73 @@
+---
+version: v1.0
+
+rate_limited: Yes
+
+response_format: JSON
+
+authentication: not_required
+
+auth_type: not_required
+
+method: POST
+
+resource: json/user_register.json
+
+description: Register a new user
+
+endpoint: accounts/register
+
+api_key: required
+
+access_token: not_required
+
+device_id: not_required
+
+device_type: not_required
+
+parameters:
+    - name: email
+        description: User's email
+        type: String
+        optional: No
+        default: 
+        values: example@company.com
+
+    - name: password
+        description: User's password
+        type: String
+        optional: No
+        default: 
+        values: ***********
+
+    - name: device_id
+        type: String
+        description: User's device id
+        optional: No
+        default:
+        values: 02307032-d6a5-11e4-b9d6-1681e6b88ec1
+
+    - name: device_type
+        type: String
+        description: User's device type
+        optional: No
+        default:
+        values: APPLE
+
+    - name: push_token
+        description: Push token of the device
+        type: binary data
+        optional: No
+        default:
+        values: 02307032-d6a5-11e4-b9d6-1681e6b88ec1
+
+json_generator: |
+    {
+        "success": true,
+        "data": "User has been successfully registered.",
+        "status_code": 200
+    }
+    
+errors: 
+
+sandbox_errors:

@@ -16,7 +16,8 @@ class VideoTransformer extends TransformerAbstract {
 		return [
 			'video_id' => (int)$video->id,
 			'title' => $video->title,
-			'thumbnail' => $video->thumb
+			'url' => route('video_path', [$video->id, $video->title]),
+			'thumbnail' => route('video_thumb_path', [$video->id, $video->thumbnail]),
 		];
 	}
 }

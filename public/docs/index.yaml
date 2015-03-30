@@ -1,0 +1,202 @@
+# file_name: relative path is w.r.t. pub directory
+# absolute file path: make sure web server can read the file
+#
+---
+
+# user account
+
+user_register:
+    method: POST
+    endpoint: accounts/register
+    description: Register a new user
+    file_name: yaml/user_register.yaml
+
+reset_password:
+    method: POST
+    endpoint: accounts/reset-password
+    description: Reset user's password
+    file_name: yaml/reset_password.yaml
+
+user_account:
+    method: POST
+    endpoint: accounts/user
+    description: Authenticated user information
+    file_name: yaml/user_account.yaml
+
+change_password:
+    method: PATCH
+    endpoint: accounts/change-passsword
+    description: Change user's passsword
+    file_name: yaml/change_password.yaml
+
+change_email:
+    method: PATCH
+    endpoint: accounts/change-email
+    description: Change user's email
+    file_name: yaml/change_email.yaml
+
+purchase_account:
+    method: PATCH
+    endpoint: accounts/purchase
+    description: Purchase the application
+    file_name: yaml/purchase_account.yaml
+
+# sports
+
+sports:
+    method: GET
+    endpoint: "sports"
+    description: Show all sports of the user
+    file_name: yaml/sports.yaml
+
+sports_create:
+    method: POST
+    endpoint: "sports"
+    description: Create a new sport for the user
+    file_name: yaml/sports_create.yaml
+
+sports_show:
+    method: GET
+    endpoint: "sports/{sportId}"
+    description: Show a specific sport of the user
+    file_name: yaml/sports_show.yaml
+
+sports_update:
+    method: PATCH
+    endpoint: "sports/{sportId}"
+    description: Update a specific sport of the user
+    file_name: yaml/sports_update.yaml
+
+sports_delete:
+    method: DELETE
+    endpoint: "sports/{sportId}"
+    description: Delete a specific sport of the user
+    file_name: yaml/sports_delete.yaml
+
+# teams
+
+sports_teams:
+    method: GET
+    endpoint: "sports/{sportId}/teams"
+    description: Show all teams of the sport
+    file_name: yaml/sports_teams.yaml
+
+sports_teams_create:
+    method: POST
+    endpoint: "sports/{sportId}/teams"
+    description: Create a new team for the sport
+    file_name: yaml/sports_teams_create.yaml
+
+sports_teams_show:
+    method: GET
+    endpoint: "sports/{sportId}/teams/{teamId}"
+    description: Show a specific team of the sport
+    file_name: yaml/sports_teams_show.yaml
+
+sports_teams_update:
+    method: PATCH
+    endpoint: "sports/{sportId}/teams/{teamId}"
+    description: Update a specific team of the sport
+    file_name: yaml/sports_teams_update.yaml
+
+sports_teams_delete:
+    method: DELETE
+    endpoint: "sports/{sportId}/teams/{teamId}"
+    description: Delete a specific team of the sport
+    file_name: yaml/sports_teams_delete.yaml
+
+# players
+
+teams_players:
+    method: GET
+    endpoint: "sports/{sportId}/teams/{teamId}/players"
+    description: Show all players of the team
+    file_name: yaml/teams_players.yaml
+
+teams_players_create:
+    method: POST
+    endpoint: "sports/{sportId}/teams/{teamId}/players"
+    description: Create a new player for the team
+    file_name: yaml/teams_players_create.yaml
+
+teams_players_show:
+    method: GET
+    endpoint: "sports/{sportId}/teams/{teamId}/players/{playerId}"
+    description: Show a specific player of the team
+    file_name: yaml/teams_players_show.yaml
+
+teams_players_update:
+    method: PATCH
+    endpoint: "sports/{sportId}/teams/{teamId}/players/{playerId}"
+    description: Update a specific player of the team
+    file_name: yaml/teams_players_update.yaml
+
+teams_players_delete:
+    method: DELETE
+    endpoint: "sports/{sportId}/teams/{teamId}/players/{playerId}"
+    description: Delete a specific player of the team
+    file_name: yaml/user_register.yaml
+
+# skills
+
+players_skills:
+    method: GET
+    endpoint: "sports/{sportId}/teams/{teamId}/players/{playerId}/skills"
+    description: Show all skills of the player
+    file_name: yaml/teams_players_delete.yaml
+
+players_skills_create:
+    method: POST
+    endpoint: "sports/{sportId}/teams/{teamId}/players/{playerId}/skills"
+    description: Create a new skill for the player
+    file_name: yaml/user_register.yaml
+
+players_skills_show:
+    method: GET
+    endpoint: "sports/{sportId}/teams/{teamId}/players/{playerId}/skills/{skillId}"
+    description: Show a specific skill of the player
+    file_name: yaml/players_skills_create.yaml
+
+players_skills_update:
+    method: PATCH
+    endpoint: "sports/{sportId}/teams/{teamId}/players/{playerId}/skills/{skillId}"
+    description: Update a specific skill of the player
+    file_name: yaml/players_skills_update.yaml
+
+players_skills_delete:
+    method: DELETE
+    endpoint: "sports/{sportId}/teams/{teamId}/players/{playerId}/skills/{skillId}"
+    description: Delete a specific skill of the player
+    file_name: yaml/players_skills_delete.yaml
+
+# videos
+
+players_videos:
+    method: GET
+    endpoint: "sports/{sportId}/teams/{teamId}/players/{playerId}/videos"
+    description: Show all videos of the player
+    file_name: yaml/players_videos.yaml
+
+players_videos_create:
+    method: POST
+    endpoint: "sports/{sportId}/teams/{teamId}/players/{playerId}/videos"
+    description: Create a new video for the player
+    file_name: yaml/players_videos_create.yaml
+
+players_videos_show:
+    method: GET
+    endpoint: "sports/{sportId}/teams/{teamId}/players/{playerId}/videos/{videoId}"
+    description: Show a specific video of the player
+    file_name: yaml/user_register.yaml
+
+players_videos_update:
+    method: PATCH
+    endpoint: "sports/{sportId}/teams/{teamId}/players/{playerId}/videos/{videoId}"
+    description: Update a specific video of the player
+    file_name: yaml/players_videos_show.yaml
+
+players_videos_delete:
+    method: DELETE
+    endpoint: "sports/{sportId}/teams/{teamId}/players/{playerId}/videos/{videoId}"
+    description: Delete a specific video of the player
+    file_name: yaml/players_videos_delete.yaml

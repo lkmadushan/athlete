@@ -63,3 +63,20 @@ Route::get('images/{sportId}/{imageName}', [
 
 	return $response;
 }]);
+
+/**
+ * Video response
+ */
+Route::get('videos/{videoId}/{thumbnail}', [
+	'as' => 'video_path',
+	'uses' => function()
+{
+	//
+}]);
+
+Route::get('videos/thumbs/{videoId}/{thumbnail}', [
+	'as' => 'video_thumb_path',
+	'uses' => function()
+{
+	//
+}]);

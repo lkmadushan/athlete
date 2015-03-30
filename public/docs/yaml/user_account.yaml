@@ -1,0 +1,304 @@
+---
+version: v1.0
+
+rate_limited: Yes
+
+response_format: JSON
+
+authentication: required
+
+auth_type: required
+
+method: POST
+
+resource: json/user_register.json
+
+description: Auth user's details
+
+endpoint: accounts/user
+
+api_key: required
+
+access_token: not_required
+
+device_id: required
+
+device_type: not_required
+
+parameters:
+
+json_generator: |
+    {
+      "success": true,
+      "data": {
+        "user_id": 12,
+        "email": "kRolfson@gmail.com",
+        "is_purchased": false,
+        "sports": [
+          {
+            "sport_id": 5,
+            "name": "quisquam",
+            "image": "http://athlete.dev/images/5/EiDD5MFCzm2I2EZ9.png",
+            "teams": [
+              {
+                "team_id": 1,
+                "name": "provident",
+                "players": [
+                  {
+                    "player_id": 1,
+                    "first_name": "Dawson",
+                    "last_name": "Macejkovic",
+                    "notes": "Dolorem ducimus id at ex repellat consectetur. Deserunt aut occaecati aut quod sit. Quidem qui nisi reiciendis accusamus repellendus.",
+                    "born_on": "1984-05-05 07:29:25",
+                    "skills": [
+                      {
+                        "skill_id": 1,
+                        "name": "quia",
+                        "notes": "Voluptatem mollitia hic nemo hic sint ea nisi. Provident repudiandae nisi consequuntur id voluptate. Temporibus dolorem voluptas officia sunt error ipsam facilis.",
+                        "level": "good"
+                      }
+                    ],
+                    "videos": [
+                      {
+                        "video_id": 1,
+                        "title": "voluptatem",
+                        "url": "http://athlete.dev/videos/1/voluptatem",
+                        "thumbnail": "http://athlete.dev/videos/thumbs/1/F3kBng2g2GpbKPs0.png"
+                      },
+                      {
+                        "video_id": 6,
+                        "title": "itaque",
+                        "url": "http:\/\/athlete.dev\/videos\/6\/itaque",
+                        "thumbnail": "http://athlete.dev/videos/thumbs/6/F3kBng2g2GpbKPs0.png"
+                      },
+                      {
+                        "video_id": 8,
+                        "title": "quia",
+                        "url": "http://athlete.dev/videos/8/quia",
+                        "thumbnail": "http://athlete.dev/videos/thumbs/8/F3kBng2g2GpbKPs0.png"
+                      }
+                    ],
+                    "weight": {
+                      "unit": "kg",
+                      "value": 75
+                    },
+                    "height": {
+                      "unit": "cm",
+                      "value": 174
+                    }
+                  },
+                  {
+                    "player_id": 4,
+                    "first_name": "Melba",
+                    "last_name": "Boyer",
+                    "notes": "Expedita totam aut porro commodi quo iusto. Temporibus libero animi dignissimos ut vel dolorem. Ea totam et est fuga et.",
+                    "born_on": "1990-01-20 05:44:18",
+                    "skills": [ ],
+                    "videos": [ ]
+                  },
+                  {
+                    "player_id": 5,
+                    "first_name": "Alexander",
+                    "last_name": "Jenkins",
+                    "notes": "Vero voluptatem nostrum impedit repudiandae. Explicabo minima distinctio nobis nihil distinctio cumque minima quia. Nam impedit officiis vel corporis.",
+                    "born_on": "1988-03-27 18:14:06",
+                    "skills": [
+                      {
+                        "skill_id": 8,
+                        "name": "sed",
+                        "notes": "Veritatis et consequatur blanditiis dolorem saepe ut. Et et sed voluptatem et provident sint perspiciatis.",
+                        "level": "excellent"
+                      }
+                    ],
+                    "videos": [ ]
+                  },
+                  {
+                    "player_id": 9,
+                    "first_name": "Harold",
+                    "last_name": "Swaniawski",
+                    "notes": "Quidem at consequatur ducimus. Vero repudiandae quia ut. Qui quibusdam reprehenderit modi asperiores perferendis.",
+                    "born_on": "1986-12-03 09:54:54",
+                    "skills": [
+                      {
+                        "skill_id": 6,
+                        "name": "delectus",
+                        "notes": "Quia dolorem tenetur quia officiis. Eos libero sit aliquid sit vero delectus nobis.",
+                        "level": "poor"
+                      }
+                    ],
+                    "videos": [ ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "sport_id": 7,
+            "name": "omnis",
+            "image": "http://athlete.dev/images/7/AmcGYLYkp8IcUwQ6.png",
+            "teams": [ ]
+          },
+          {
+            "sport_id": 9,
+            "name": "ratione",
+            "image": "http://athlete.dev/images/9/zi12TlHvs58mhavZ.png",
+            "teams": [ ]
+          },
+          {
+            "sport_id": 17,
+            "name": "quis",
+            "image": "http://athlete.dev/images/17/MKYf0x9MsG7Z1oYK.png",
+            "teams": [ ]
+          },
+          {
+            "sport_id": 23,
+            "name": "tempore",
+            "image": "http://athlete.dev/images/23/wnnmL7Mc10yhW9xb.png",
+            "teams": [
+              {
+                "team_id": 2,
+                "name": "iusto",
+                "players": [
+                  {
+                    "player_id": 2,
+                    "first_name": "Afton",
+                    "last_name": "Grant",
+                    "notes": "Explicabo esse assumenda est nobis placeat. Soluta quasi repellat odit perspiciatis aut minus quis. Veritatis et nesciunt deleniti modi dolores optio ipsa.",
+                    "born_on": "2010-05-08 09:19:17",
+                    "skills": [
+                      {
+                        "skill_id": 2,
+                        "name": "mollitia",
+                        "notes": "Accusamus voluptatibus dolor numquam minima quia. Eveniet vel qui eum enim deserunt. Amet necessitatibus ipsum nisi culpa quo.",
+                        "level": "excellent"
+                      },
+                      {
+                        "skill_id": 10,
+                        "name": "numquam",
+                        "notes": "Quas et corrupti aut ratione neque aut. Aspernatur aut ut hic sed ut. Ut rem eos libero aut quia iure.",
+                        "level": "poor"
+                      }
+                    ],
+                    "videos": [
+                      {
+                        "video_id": 2,
+                        "title": "dolore",
+                        "url": "http://athlete.dev/videos/2/dolore",
+                        "thumbnail": "http://athlete.dev/videos/thumbs/2/F3kBng2g2GpbKPs0.png"
+                      },
+                      {
+                        "video_id": 7,
+                        "title": "reiciendis",
+                        "url": "http://athlete.dev/videos/7/reiciendis",
+                        "thumbnail": "http://athlete.dev/videos/thumbs/7/F3kBng2g2GpbKPs0.png"
+                      }
+                    ],
+                    "weight": {
+                      "unit": "lb",
+                      "value": 26
+                    },
+                    "height": {
+                      "unit": "inches",
+                      "value": 50
+                    }
+                  },
+                  {
+                    "player_id": 6,
+                    "first_name": "Alyson",
+                    "last_name": "Bergstrom",
+                    "notes": "Vitae omnis illum libero porro doloribus voluptatibus. Perspiciatis quasi et molestiae eveniet harum omnis magni. Qui dicta ea quia soluta perferendis beatae assumenda.",
+                    "born_on": "1990-01-30 20:11:34",
+                    "skills": [ ],
+                    "videos": [
+                      {
+                        "video_id": 5,
+                        "title": "ut",
+                        "url": "http://athlete.dev/videos/5/ut",
+                        "thumbnail": "http://athlete.dev/videos/thumbs/5/F3kBng2g2GpbKPs0.png"
+                      },
+                      {
+                        "video_id": 10,
+                        "title": "assumenda",
+                        "url": "http://athlete.dev/videos/10/assumenda",
+                        "thumbnail": "http://athlete.dev/videos/thumbs/10/F3kBng2g2GpbKPs0.png"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "sport_id": 24,
+            "name": "impedit",
+            "image": "http://athlete.dev/images/24/GQDUDQYYjl4WSxfS.png",
+            "teams": [
+              {
+                "team_id": 3,
+                "name": "omnis",
+                "players": [
+                  {
+                    "player_id": 3,
+                    "first_name": "Wilson",
+                    "last_name": "Hoeger",
+                    "notes": "Esse nobis labore quo rerum maxime. Ut rerum at corporis.",
+                    "born_on": "1973-03-09 13:16:41",
+                    "skills": [
+                      {
+                        "skill_id": 3,
+                        "name": "id",
+                        "notes": "Sapiente dolore velit soluta alias. Earum illum ad dolore quia.",
+                        "level": "average"
+                      }
+                    ],
+                    "videos": [
+                      {
+                        "video_id": 3,
+                        "title": "neque",
+                        "url": "http://athlete.dev/videos/3/neque",
+                        "thumbnail": "http://athlete.dev/videos/thumbs/3/F3kBng2g2GpbKPs0.png"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "sport_id": 32,
+            "name": "non",
+            "image": "http://athlete.dev/images/32/F3kBng2g2GpbKPs0.png",
+            "teams": [ ]
+          },
+          {
+            "sport_id": 38,
+            "name": "ut",
+            "image": "http://athlete.dev/images/38/EOAdtng2rDBTMhts.png",
+            "teams": [ ]
+          },
+          {
+            "sport_id": 66,
+            "name": "esse",
+            "image": "http://athlete.dev/images/66/95KD6JX5scvq8th2.png",
+            "teams": [ ]
+          },
+          {
+            "sport_id": 72,
+            "name": "consequatur",
+            "image": "http://athlete.dev/images/72/Us21HJKM7fMwpAQD.png",
+            "teams": [ ]
+          },
+          {
+            "sport_id": 94,
+            "name": "expedita",
+            "image": "http://athlete.dev/images/94/gFotPHNJuig3AJ2p.png",
+            "teams": [ ]
+          }
+        ]
+      },
+      "status_code": 200
+    }
+    
+errors: 
+
+sandbox_errors:
