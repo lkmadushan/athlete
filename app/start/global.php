@@ -50,7 +50,7 @@ App::error(function(Exception $exception, $code)
 {
 	Log::error($exception);
 
-	/*switch($code) {
+	switch($code) {
 		case 500:
 			return Response::json(buildErrorResponse('Internel server!', $code), 500);
 
@@ -59,7 +59,7 @@ App::error(function(Exception $exception, $code)
 
 		case 405:
 			return Response::json(buildErrorResponse('Method not allowed!', $code), 404);
-	}*/
+	}
 });
 
 App::error(function(\Athlete\Filters\ApiKeyMismatchException $exception)
