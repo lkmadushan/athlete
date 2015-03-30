@@ -11,6 +11,8 @@ auth_type: required
 
 method: POST
 
+method_override:
+
 resource: json/user_register.json
 
 description: Auth user's details

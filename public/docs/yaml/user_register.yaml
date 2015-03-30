@@ -11,6 +11,8 @@ auth_type: not_required
 
 method: POST
 
+method_override:
+
 resource: json/user_register.json
 
 description: Register a new user

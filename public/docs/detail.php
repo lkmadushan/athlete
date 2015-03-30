@@ -109,6 +109,16 @@ $data = Spyc::YAMLLoad($file_name);
 					<tbody>
 
 					<?php
+					if ( ! empty($data['method_override'])) { ?>
+						<tr>
+							<td><b><span style="color:red">X-HTTP-Method-Override</span></b></td>
+							<td><i>String</i></td>
+							<td>Override HTTP Method</td>
+							<td></td>
+							<td></td>
+							<td><?php echo $data['method_override'] ?></td>
+						</tr>
+					<?php }
 					if ($data['auth_type'] == 'required') { ?>
 						<tr>
 							<td><b><span style="color:red">Authorization</span></b></td>
