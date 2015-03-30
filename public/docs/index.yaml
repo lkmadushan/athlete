@@ -25,8 +25,8 @@ user_account:
 
 change_password:
     method: PATCH
-    endpoint: accounts/change-passsword
-    description: Change user's passsword
+    endpoint: accounts/change-password
+    description: Change user's password
     file_name: yaml/change_password.yaml
 
 change_email:

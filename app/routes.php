@@ -25,7 +25,7 @@ Route::group(['prefix' => 'api/v1', 'before' => 'api.key'], function()
 		 */
 		Route::post('accounts/user', 'AccountsController@user');
 
-		Route::patch('accounts/change-passsword', 'AccountsController@changePassword');
+		Route::patch('accounts/change-password', 'AccountsController@changePassword');
 
 		Route::patch('accounts/change-email', 'AccountsController@changeEmail');
 
