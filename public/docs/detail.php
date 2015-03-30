@@ -221,23 +221,13 @@ $data = Spyc::YAMLLoad($file_name);
 
 			<div>
 				<h4> Errors </h4>
-				<pre class="prettyprint"> <code> <?php echo $data["errors"] ?> </code> </pre>
+				<pre class="prettyprint"> <code> <?php highlight_string($data["errors"]) ?> </code> </pre>
 			</div>
-			<div>
-				<h4> Sandbox Errors </h4>
-				<pre class=""
-				     style="background-color:#cccccc">  <code><?php echo $data["sandbox_errors"] ?> </code> </pre>
-			</div>
-
 			<div>
 				<a href="http://www.json-generator.com/ title=" JSON Generator"" target="_blank"><h4> JSON
 					Generator </h4></a>
 				<pre class="prettyprint"> <code> <?php highlight_string($data["json_generator"]) ?> </code> </pre>
 			</div>
-			<!-- <div>
-                <h4> Sample Response </h4>
-				<pre class="prettyprint"> <code> <?php highlight_string($data["sample_response"]) ?> </code> </pre>
-            </div> -->
 
 		</div>
 		<!-- col-8 -->
