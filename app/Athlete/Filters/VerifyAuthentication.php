@@ -48,16 +48,22 @@ class VerifyAuthentication {
 	 *
 	 * @param $request
 	 * @return bool
+	 * @throws \Athlete\Filters\UnauthorizedUserException
 	 */
 	public function resetDevice($request)
 	{
 		if($this->auth->check()) {
 
-			return $this->auth->user()->devices()->update([
-				'id' => $request->header('X-Auth-Device'),
-				'type' => $request->header('X-Auth-Device-Type'),
-				'push_token' => $request->header('X-Auth-Device-Push'),
-			]);
+			try {
+				return $this->auth->user()->devices()->update([
+					'id' => $request->header('X-Auth-Device'),
+					'type' => $request->header('X-Auth-Device-Type'),
+					'push_token' => $request->header('X-Auth-Device-Push'),
+				]);
+			} catch(\Exception $e) {
+
+				throw new UnauthorizedUserException;
+			}
 		}
 
 		return false;
