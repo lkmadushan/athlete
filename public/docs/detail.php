@@ -156,7 +156,7 @@ $data = Spyc::YAMLLoad($file_name);
 							<td>The Device Type</td>
 							<td></td>
 							<td></td>
-							<td></td>
+							<td>APPLE</td>
 						</tr>
 					<?php }
 					?>
