@@ -15,9 +15,9 @@ method_override: PATCH
 
 resource: json/reset_password.json
 
-description: Change user's password
+description: Change user's email
 
-endpoint: accounts/change-password
+endpoint: accounts/change-email
 
 api_key: required
 
@@ -28,32 +28,32 @@ device_id: required
 device_type: required
 
 parameters:
-    - name: current_password
-        description: User's current password
+    - name: current_email
+        description: User's current email
         type: String
         optional: No
         default:
-        values:
+        values: example@company.com
 
-    - name: password
-        description: User's new password
+    - name: email
+        description: User's new email
         type: String
         optional: No
         default:
-        values:
+        values: exampleNew@company.com
 
-    - name: password_confirmation
-        description: User's new password confirmation
+    - name: email_confirmation
+        description: User's new email confirmation
         type: String
         optional: No
         default:
-        values:
+        values: exampleNew@company.com
 
 json_generator: |
     {
       "success": true,
-      "data": "Password has been successfully changed.",
+      "data": "Email has been successfully changed.",
       "status_code": 200
     }
 
-errors: 
+errors:
