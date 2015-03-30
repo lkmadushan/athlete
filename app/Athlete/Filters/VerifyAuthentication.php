@@ -40,20 +40,26 @@ class VerifyAuthentication {
 	{
 		$deviceId = $request->header('X-Auth-Device');
 
-		return $this->auth->user()->hasDevice($deviceId);
+		if($this->auth->check()) return $this->auth->user()->hasDevice($deviceId);
 	}
 
 	/**
 	 * Reset login device
 	 *
 	 * @param $request
+	 * @return bool
 	 */
 	public function resetDevice($request)
 	{
-		return $this->auth->user()->devices()->update([
-			'id' => $request->header('X-Auth-Device'),
-			'type' => $request->header('X-Auth-Device-Type'),
-			'push_token' => $request->header('X-Auth-Device-Push'),
-		]);
+		if($this->auth->check()) {
+
+			return $this->auth->user()->devices()->update([
+				'id' => $request->header('X-Auth-Device'),
+				'type' => $request->header('X-Auth-Device-Type'),
+				'push_token' => $request->header('X-Auth-Device-Push'),
+			]);
+		}
+
+		return false;
 	}
 }
