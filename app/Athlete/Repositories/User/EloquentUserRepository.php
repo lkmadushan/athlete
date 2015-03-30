@@ -37,8 +37,7 @@ class EloquentUserRepository extends EloquentRepository implements UserRepositor
 	{
 		return [
 			'id' => $data['device_id'],
-			'type' => $data['device_type'],
-			'push_token' => $data['push_token'],
+			'type' => $data['device_type']
 		];
 	}
 }
