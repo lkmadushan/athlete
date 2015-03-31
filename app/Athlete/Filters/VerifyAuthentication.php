@@ -48,9 +48,9 @@ class VerifyAuthentication {
 	 */
 	public function loginUsingToken($token)
 	{
-		$device = Device::where('token', $token)->first();
+		$device = Device::where('access_token', $token)->first();
 
-		return $this->auth->onceUsingId($device->user_id);
+		if($device) return $this->auth->onceUsingId($device->user_id);
 	}
 
 	/**
