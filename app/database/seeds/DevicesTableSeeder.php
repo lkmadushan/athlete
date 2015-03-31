@@ -15,7 +15,7 @@ class DevicesTableSeeder extends Seeder {
 			Device::create([
 				'id' => $faker->unique()->uuid,
 				'type' => 'APPLE',
-				'access_token' => $faker->unique()->randomKey(32),
+				'access_token' => $faker->unique()->sha256,
 				'user_id' => $faker->randomElement($users)
 			]);
 		}

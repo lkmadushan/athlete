@@ -83,8 +83,8 @@ App::error(function(\Laracasts\Validation\FormValidationException $exception)
 		'success' => false,
 		'error' => [
 			'message' => $exception->getErrors()->first(),
+			'status_code' => 422
 		],
-		'status_code' => 422
 	], 422);
 });
 

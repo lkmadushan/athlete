@@ -1,5 +1,6 @@
 <?php namespace Athlete\Repositories\User;
 
+use Str;
 use User;
 use Device;
 use Athlete\Repositories\EloquentRepository;
@@ -37,7 +38,8 @@ class EloquentUserRepository extends EloquentRepository implements UserRepositor
 	{
 		return [
 			'id' => $data['device_id'],
-			'type' => $data['device_type']
+			'type' => $data['device_type'],
+			'access_token' => Str::random(64)
 		];
 	}
 

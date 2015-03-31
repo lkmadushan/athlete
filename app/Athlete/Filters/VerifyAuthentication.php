@@ -60,7 +60,7 @@ class VerifyAuthentication {
 		return $this->auth->user()->device()->update([
 			'id' => $request->header('X-Auth-Device'),
 			'type' => strtolower($request->header('X-Auth-Device-Type')),
-			'access_token' => Str::random(32),
+			'access_token' => Str::random(64),
 		]);
 	}
 }
