@@ -1,5 +1,6 @@
 <?php namespace Athlete\Filters;
 
+use Str;
 use Illuminate\Auth\AuthManager;
 use Symfony\Component\Security\Core\Util\StringUtils;
 
@@ -24,7 +25,9 @@ class VerifyAuthentication {
 	 */
 	public function filter($route, $request)
 	{
-		$this->auth->onceBasic();
+		$credentials = $request->only('email', 'password');
+
+		$this->auth->once($credentials);
 
 		if($this->auth->check() && ! $this->authDeviceMatch($request)) $this->resetDevice($request);
 
@@ -57,7 +60,7 @@ class VerifyAuthentication {
 		return $this->auth->user()->device()->update([
 			'id' => $request->header('X-Auth-Device'),
 			'type' => strtolower($request->header('X-Auth-Device-Type')),
-			'push_token' => $request->header('X-Auth-Device-Push'),
+			'access_token' => Str::random(32),
 		]);
 	}
 }

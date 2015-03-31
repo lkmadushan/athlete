@@ -11,5 +11,5 @@
 |
 */
 
-Route::filter('auth.once', 'Athlete\Filters\VerifyAuthentication');
+Route::filter('auth', 'Athlete\Filters\VerifyAuthentication');
 Route::filter('api.key', 'Athlete\Filters\VerifyApiKey');

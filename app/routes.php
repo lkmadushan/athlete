@@ -18,7 +18,7 @@ Route::group(['prefix' => 'api/v1', 'before' => 'api.key'], function()
 	/**
 	 * Check authentication before routing
 	 */
-	Route::group(['before' => 'auth.once'], function()
+	Route::group(['before' => 'auth'], function()
 	{
 		/**
 		 * Account Controllers

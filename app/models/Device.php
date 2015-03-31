@@ -2,7 +2,7 @@
 
 class Device extends \Eloquent {
 
-	protected $fillable = ['id', 'type', 'push_token'];
+	protected $fillable = ['id', 'type', 'access_token'];
 
 	public function setTypeAttribute($value)
 	{

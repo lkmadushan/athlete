@@ -16,7 +16,7 @@ class CreateDevicesTable extends Migration {
 		{
 			$table->string('id');
 			$table->string('type');
-			$table->string('push_token')->unique()->nullable();
+			$table->string('access_token')->unique()->nullable();
 			$table->integer('user_id')->unsigned();
 			$table->primary(['id', 'user_id']);
 			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
