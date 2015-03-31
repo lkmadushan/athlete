@@ -81,7 +81,9 @@ App::error(function(\Laracasts\Validation\FormValidationException $exception)
 {
 	return Response::json([
 		'success' => false,
-		'error' => $exception->getErrors()->all(),
+		'error' => [
+			'message' => $exception->getErrors()->first(),
+		],
 		'status_code' => 422
 	], 422);
 });
