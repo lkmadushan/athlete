@@ -17,4 +17,12 @@ interface UserRepository {
 	 * @return mixed
 	 */
 	public function saveWithDevice(array $data);
+
+	/**
+	 * Purchase the account
+	 *
+	 * @param \User $user
+	 * @return mixed
+	 */
+	public function  makePurchase(\User $user);
 }

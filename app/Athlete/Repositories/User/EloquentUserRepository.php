@@ -40,4 +40,21 @@ class EloquentUserRepository extends EloquentRepository implements UserRepositor
 			'type' => $data['device_type']
 		];
 	}
+
+	/**
+	 * Purchase the account
+	 *
+	 * @param \User $user
+	 * @return bool
+	 */
+	public function makePurchase(User $user)
+	{
+		if( ! $user->is_purchased) {
+			$user->is_purchased = 1;
+
+			return $user->save();
+		}
+
+		return false;
+	}
 }

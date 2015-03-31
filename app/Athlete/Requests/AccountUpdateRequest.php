@@ -27,4 +27,13 @@ class AccountUpdateRequest extends FormValidator {
 
 		return $this;
 	}
+
+	public function isPurchased()
+	{
+		$this->rules = [
+			'is_purchased' => 'required|boolean',
+		];
+
+		return $this;
+	}
 }

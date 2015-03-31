@@ -1,0 +1,52 @@
+---
+version: v1.0
+
+rate_limited: Yes
+
+response_format: JSON
+
+authentication: required
+
+auth_type: required
+
+method: POST
+
+method_override: PATCH
+
+resource: json/reset_password.json
+
+description: Purchase the application
+
+endpoint: accounts/purchase
+
+api_key: required
+
+access_token: not_required
+
+device_id: required
+
+device_type: required
+
+parameters:
+    - name: is_purchased
+        description: User's account purchase status
+        type: Boolean
+        optional: No
+        default:
+        values: 0/1
+
+json_generator: |
+    {
+      "success": true,
+      "data": "App has been successfully purchased.",
+      "status_code": 200
+    }
+
+errors: |
+    {
+      "success": false,
+      "error": {
+        "message": "App has already been purchased."
+      },
+      "status_code": 422
+    }

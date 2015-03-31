@@ -99,7 +99,7 @@ class AccountsController extends ApiController {
 	 */
 	public function changePassword()
 	{
-		$formData = Input::all();
+		$formData = Input::only('current_password', 'password', 'password_confirmation');
 
 		$this->updateRequest->changePassword()->validate($formData);
 
@@ -121,7 +121,7 @@ class AccountsController extends ApiController {
 	 */
 	public function changeEmail()
 	{
-		$formData = Input::all();
+		$formData = Input::only('current_email', 'email', 'email_confirmation');
 
 		$this->updateRequest->changeEmail(Auth::user()->id)->validate($formData);
 
@@ -133,6 +133,24 @@ class AccountsController extends ApiController {
 		}
 
 		return $this->respondUnprocess('Cannot change the e-mail!');
+	}
+
+	/**
+	 * Purchase the app
+	 *
+	 * @return \Illuminate\Http\JsonResponse
+	 * @throws \Laracasts\Validation\FormValidationException
+	 */
+	public function makePurchase()
+	{
+		$formData = Input::only('is_purchased');
+
+		$this->updateRequest->isPurchased()->validate($formData);
+
+		return ($this->repository->makePurchase(Auth::user()))
+			? $this->respondWithSuccess('App has been successfully purchased.')
+			: $this->respondUnprocess('App has already been purchased.');
+
 	}
 
 	/**
