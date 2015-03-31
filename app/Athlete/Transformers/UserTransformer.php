@@ -23,6 +23,7 @@ class UserTransformer extends TransformerAbstract {
 	public function transform(User $user)
 	{
 		return [
+			'token' => $user->device->access_token,
 			'user_id' => (int)$user->id,
 			'email' => $user->email,
 			'is_purchased' => (boolean)$user->is_purchased

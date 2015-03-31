@@ -1,5 +1,6 @@
 <?php namespace Athlete\Filters;
 
+use Device;
 use Str;
 use Illuminate\Auth\AuthManager;
 use Symfony\Component\Security\Core\Util\StringUtils;
@@ -27,11 +28,29 @@ class VerifyAuthentication {
 	{
 		$credentials = $request->only('email', 'password');
 
-		$this->auth->once($credentials);
+		if($credentials) $this->auth->once($credentials);
+
+		if($token = $request->header('X-Auth-Token')) {
+
+			$this->loginUsingToken($token);
+		}
 
 		if($this->auth->check() && ! $this->authDeviceMatch($request)) $this->resetDevice($request);
 
 		if($this->auth->guest() || ! $this->authDeviceMatch($request)) throw new UnauthorizedUserException;
+	}
+
+	/**
+	 * Log the given token into the application.
+	 *
+	 * @param $token
+	 * @return mixed
+	 */
+	public function loginUsingToken($token)
+	{
+		$device = Device::where('token', $token)->first();
+
+		return $this->auth->onceUsingId($device->user_id);
 	}
 
 	/**
