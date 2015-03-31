@@ -56,4 +56,30 @@ json_generator: |
       "status_code": 200
     }
 
-errors:
+errors: |
+    {
+      "success": false,
+      "error": {
+        "current_email": [
+          "The current email field is required."
+        ],
+        "email": [
+          "The email field is required."
+          "The email has already been taken.",
+          "The email must be a valid email address.",
+          "The email confirmation does not match."
+        ],
+        "email_confirmation": [
+          "The email confirmation field is required."
+        ]
+      },
+      "status_code": 422
+    }
+
+    {
+      "success": false,
+      "error": {
+        "message": "Cannot change e-mail."
+      },
+      "status_code": 422
+    }
