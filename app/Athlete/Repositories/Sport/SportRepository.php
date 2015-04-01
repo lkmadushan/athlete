@@ -22,9 +22,10 @@ interface SportRepository {
 	 * Paginate sports
 	 *
 	 * @param $limit
+	 * @param $offset
 	 * @return mixed
 	 */
-	public function paginate($limit);
+	public function paginate($limit, $offset);
 
 	/**
 	 * Save a sport

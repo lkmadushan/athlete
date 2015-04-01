@@ -36,8 +36,8 @@ abstract class EloquentRepository {
 		return $this->builder->findOrFail($id);
 	}
 
-	public function paginate($limit)
+	public function paginate($limit, $offset)
 	{
-		return $this->builder->paginate($limit);
+		return $this->builder->skip($offset)->take($limit)->get();
 	}
 }

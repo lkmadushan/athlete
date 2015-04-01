@@ -46,11 +46,13 @@ class SportsController extends ApiController {
 	 */
 	public function index()
 	{
-		$limit = Request::get('limit') ?: 10;
+		$limit = Request::get('limit') ?: 20;
 
-		$sports = $this->repository->filterByUser(Auth::user()->id)->paginate($limit);
+		$offset = Request::get('offset') ?: 0;
 
-		$data = $this->fractal->paginatedCollection($sports, new SportTransformer(), 'sports');
+		$sports = $this->repository->filterByUser(Auth::user()->id)->paginate($limit, $offset);
+
+		$data = $this->fractal->collection($sports, new SportTransformer(), 'sports');
 
 		return $this->respondWithSuccess($data);
 	}

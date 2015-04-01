@@ -28,6 +28,19 @@ device_id: required
 device_type: required
 
 parameters:
+    - name: limit
+        description: Limit items
+        type: Integer
+        optional: Yes
+        default:
+        values: 10
+
+    - name: offset
+        description: Skip items
+        type: Integer
+        optional: Yes
+        default:
+        values: 5
 
 json_generator: |
     {
@@ -84,17 +97,7 @@ json_generator: |
             "name": "itaque",
             "image": "http://athlete.dev/images/17/2cGm1X3lBGKhr3FB"
           }
-        ],
-        "meta": {
-          "pagination": {
-            "total": 19,
-            "count": 10,
-            "per_page": 10,
-            "current_page": 1,
-            "total_pages": 2,
-            "links": {"next": "http://athlete.dev/api/v1/sports?page=2"}
-          }
-        }
+        ]
       },
       "status_code": 200
     }
