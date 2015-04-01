@@ -50,8 +50,21 @@ parameters:
         values: image/png, image/bmp, image/jpeg
 
 json_generator: |
+    {
+      "success": true,
+      "data": "Sport has been successfully saved.",
+      "status_code": 200
+    }
 
 errors: |
+    {
+      "success": false,
+      "error": {
+        "message": "Unable to save the sport!",
+        "status_code": 422
+      }
+    }
+
     {
       "success": false,
       "error": {
