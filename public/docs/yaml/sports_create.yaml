@@ -15,7 +15,7 @@ method_override:
 
 resource: json/user_register.json
 
-description: Show all sports of the user
+description: Create a new sport of the user
 
 endpoint: sports
 
