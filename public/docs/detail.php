@@ -121,12 +121,12 @@ $data = Spyc::YAMLLoad($file_name);
 					<?php }
 					if ($data['auth_type'] == 'required') { ?>
 						<tr>
-							<td><b><span style="color:red">Authorization</span></b></td>
+							<td><b><span style="color:red">X-Auth-Token</span></b></td>
 							<td><i>String</i></td>
-							<td>Application authentication</td>
+							<td>Application authentication token</td>
 							<td></td>
 							<td></td>
-							<td>Basic a1JvbGZzb25AZ21haWwuY29tOmthbHBhMTIz</td>
+							<td>a1JvbGZzb25AZ21haWwuY29tOmthbHBhMTIz</td>
 						</tr>
 					<?php }
 					if ($data['api_key'] == 'required') { ?>
