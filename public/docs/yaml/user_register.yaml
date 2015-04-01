@@ -65,9 +65,14 @@ parameters:
 
 json_generator: |
     {
-        "success": true,
-        "data": "User has been successfully registered.",
-        "status_code": 200
+      "success": true,
+      "data": {
+        "token": "z5Y1qNxv0hmDW4OiOaFGGAgZCuWlOBzvzwecEIohnetYoUIMo11VjUjckCiq49Pc",
+        "user_id": 12,
+        "email": "kRolfson@gmail.com",
+        "is_purchased": false,
+        "sports": []
+      {
     }
     
 errors: |

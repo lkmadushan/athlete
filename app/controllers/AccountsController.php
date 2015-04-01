@@ -86,9 +86,11 @@ class AccountsController extends ApiController {
 
 		$this->registerUserRequest->validate($formData);
 
-		$this->repository->saveWithDevice($formData);
+		$user = $this->repository->saveWithDevice($formData);
 
-		return $this->respondWithSuccess('User has been successfully registered.');
+		$data = $this->fractal->item($user, new UserTransformer);
+
+		return $this->respondWithSuccess($data);
 	}
 
 	/**
