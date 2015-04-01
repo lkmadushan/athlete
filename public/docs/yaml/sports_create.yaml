@@ -7,7 +7,7 @@ response_format: JSON
 
 authentication: required
 
-auth_type: not_required
+auth_type: required
 
 method: POST
 
