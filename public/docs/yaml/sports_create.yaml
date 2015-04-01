@@ -1,0 +1,61 @@
+---
+version: v1.0
+
+rate_limited: Yes
+
+response_format: JSON
+
+authentication: required
+
+auth_type: not_required
+
+method: POST
+
+method_override:
+
+resource: json/user_register.json
+
+description: Auth user's sports
+
+endpoint: sports
+
+api_key: required
+
+access_token: not_required
+
+device_id: required
+
+device_type: required
+
+parameters:
+    - name: name
+        description: Sport's name
+        type: String
+        optional: No
+        default:
+        values: ex: cricket
+
+    - name: image
+        description: Image of the sport
+        type: String
+        optional: No
+        default:
+        values:
+
+    - name: mime
+        description: MIME type of the image
+        type: String
+        optional: No
+        default:
+        values: image/png, image/bmp, image/jpeg
+
+json_generator: |
+
+errors: |
+    {
+      "success": false,
+      "error": {
+        "message": "Invalid credentials!",
+        "status_code": 401
+      }
+    }

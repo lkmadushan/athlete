@@ -2,7 +2,7 @@
 
 class Sport extends \Eloquent {
 
-	protected $fillable = ['name'];
+	protected $fillable = ['name', 'mime'];
 
 	public function user()
 	{
@@ -24,7 +24,7 @@ class Sport extends \Eloquent {
 
 		static::creating(function($model)
 		{
-			$model->image = Str::random() . '.png';
+			$model->image = Str::random();
 		});
 	}
 }

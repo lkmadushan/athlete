@@ -74,21 +74,7 @@ errors: |
     {
       "success": false,
       "error": {
-        "device_id": [
-          "The device id field is required."
-        ],
-        "device_type": [
-          "The device type field is required."
-        ],
-        "email": [
-          "The email field is required.",
-          "The email has already been taken.",
-          "The email must be a valid email address."
-
-        ],
-        "password": [
-          "The password field is required."
-        ]
-      },
-      "status_code": 422
+        "message": "The email has already been taken.",
+        "status_code": 422
+      }
     }
