@@ -30,6 +30,74 @@ device_type: required
 parameters:
 
 json_generator: |
+    {
+      "success": true,
+      "data": {
+        "sports": [
+          {
+            "sport_id": 1,
+            "name": "quis",
+            "image": "http://athlete.dev/images/1/caEcqqPMC2jsWUSq"
+          },
+          {
+            "sport_id": 2,
+            "name": "optio",
+            "image": "http://athlete.dev/images/2/f91ZwHFC4j1D226X"
+          },
+          {
+            "sport_id": 4,
+            "name": "ipsum",
+            "image": "http://athlete.dev/images/4/unVgeCT80BCCwL0O"
+          },
+          {
+            "sport_id": 6,
+            "name": "voluptatibus",
+            "image": "http://athlete.dev/images/6/rjHWBr99b9lSSYr5"
+          },
+          {
+            "sport_id": 7,
+            "name": "qui",
+            "image": "http://athlete.dev/images/7/glG10ePyoZgfpbJl"
+          },
+          {
+            "sport_id": 9,
+            "name": "vitae",
+            "image": "http://athlete.dev/images/9/bUrzgHA6h04Fe8to"
+          },
+          {
+            "sport_id": 11,
+            "name": "nisi",
+            "image": "http://athlete.dev/images/11/iNcXf9ZCrtIMzpqm"
+          },
+          {
+            "sport_id": 13,
+            "name": "libero",
+            "image": "http://athlete.dev/images/13/zpZ7qVTzPpYxhQif"
+          },
+          {
+            "sport_id": 15,
+            "name": "omnis",
+            "image": "http://athlete.dev/images/15/O9ouKtCUPxSPYVBq"
+          },
+          {
+            "sport_id": 17,
+            "name": "itaque",
+            "image": "http://athlete.dev/images/17/2cGm1X3lBGKhr3FB"
+          }
+        ],
+        "meta": {
+          "pagination": {
+            "total": 19,
+            "count": 10,
+            "per_page": 10,
+            "current_page": 1,
+            "total_pages": 2,
+            "links": {"next": "http://athlete.dev/api/v1/sports?page=2"}
+          }
+        }
+      },
+      "status_code": 200
+    }
 
 errors: |
     {
