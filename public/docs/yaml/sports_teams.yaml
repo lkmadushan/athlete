@@ -1,0 +1,70 @@
+---
+version: v1.0
+
+rate_limited: Yes
+
+response_format: JSON
+
+authentication: required
+
+auth_type: required
+
+method: GET
+
+method_override:
+
+resource: json/user_register.json
+
+description: Show all teams of the sport
+
+endpoint: sports
+
+api_key: required
+
+access_token: not_required
+
+device_id: required
+
+device_type: required
+
+parameters:
+    - name: limit
+        description: Limit items
+        type: Integer
+        optional: Yes
+        default:
+        values: 10
+
+    - name: offset
+        description: Skip items
+        type: Integer
+        optional: Yes
+        default:
+        values: 5
+
+json_generator: |
+    {
+      "success": true,
+      "data": {
+        "teams": [
+          {
+            "team_id": 1,
+            "name": "architecto"
+          },
+          {
+            "team_id": 2,
+            "name": "illum"
+          }
+        ]
+      },
+      "status_code": 200
+    }
+
+errors: |
+    {
+      "success": false,
+      "error": {
+        "message": "Invalid credentials!",
+        "status_code": 401
+      }
+    }

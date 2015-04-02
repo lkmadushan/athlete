@@ -16,6 +16,7 @@ class SportsController extends ApiController {
 	 * @var \Athlete\Repositories\Sport\SportRepository $repository
 	 */
 	private $repository;
+
 	/**
 	 * @var \Athlete\Requests\UpdateSportRequest $updateSportRequest
 	 */
