@@ -28,9 +28,9 @@ class VerifyAuthentication {
 	{
 		$credentials = $request->only('email', 'password');
 
-		if($credentials) $this->auth->once($credentials);
+		$this->auth->once($credentials);
 
-		if($token = $request->header('X-Auth-Token')) {
+		if(in_array(null, $credentials) && $token = $request->header('X-Auth-Token')) {
 
 			$this->loginUsingToken($token);
 		}

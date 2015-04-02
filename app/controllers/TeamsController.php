@@ -65,13 +65,23 @@ class TeamsController extends \ApiController {
 	 * Store a newly created resource in storage.
 	 * POST sports/{sportId}/teams
 	 *
-	 * @return Response
+	 * @param $id
+	 * @return \Response
+	 * @throws \Laracasts\Validation\FormValidationException
 	 */
 	public function store($id)
 	{
 		$formData = Input::only('name');
 
 		$this->teamRequest->validate($formData);
+
+		$sport = Auth::user()->sports()->findOrFail($id);
+
+		$team = $sport->teams()->create($formData);
+
+		$data = $this->fractal->item($team, new TeamTransformer());
+
+		return $this->respondWithSuccess(array_merge($data, ['sports_count' => Team::count()]));
 	}
 
 	/**

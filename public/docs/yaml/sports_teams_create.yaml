@@ -1,0 +1,64 @@
+---
+version: v1.0
+
+rate_limited: Yes
+
+response_format: JSON
+
+authentication: required
+
+auth_type: required
+
+method: POST
+
+method_override:
+
+resource: json/user_register.json
+
+description: Create a new team for the sport
+
+endpoint: sports/{sportId}/teams
+
+api_key: required
+
+access_token: not_required
+
+device_id: required
+
+device_type: required
+
+parameters:
+    - name: name
+        description: Name of the team
+        type: String
+        optional:
+        default:
+        values: Team 1
+
+json_generator: |
+    {
+      "success": true,
+      "data": {
+        "team_id": 3,
+        "name": "Test Team 3",
+        "sports_count": 3
+      },
+      "status_code": 200
+    }
+
+errors: |
+    {
+      "success": false,
+      "error": {
+        "message": "Invalid credentials!",
+        "status_code": 401
+      }
+    }
+
+    {
+      "success": false,
+      "error": {
+        "message": "The name has already been taken.",
+        "status_code": 422
+      }
+    }

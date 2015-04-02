@@ -5,6 +5,6 @@ use Laracasts\Validation\FormValidator;
 class TeamRequest extends FormValidator {
 
 	protected $rules = [
-		'name' => 'required'
+		'name' => 'required|unique:teams'
 	];
 }
