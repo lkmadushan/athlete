@@ -30,6 +30,7 @@ class AccountsController extends ApiController {
 	 * @var RegisterUserRequest $registerUserRequest
 	 */
 	private $registerUserRequest;
+
 	/**
 	 * @var \Athlete\Repositories\User\UserRepository
 	 */
@@ -86,9 +87,9 @@ class AccountsController extends ApiController {
 
 		$this->registerUserRequest->validate($formData);
 
-		$user = $this->repository->saveWithDevice($formData);
+		$device = $this->repository->saveWithDevice($formData);
 
-		$data = $this->fractal->item($user, new UserTransformer);
+		$data = $this->fractal->item($device->user, new UserTransformer);
 
 		return $this->respondWithSuccess($data);
 	}

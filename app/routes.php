@@ -3,8 +3,8 @@
 /**
  * Password Reset Controllers
  */
-Route::get('password/reset', 'RemindersController@getReset');
-Route::get('password/reset', 'RemindersController@postReset');
+Route::get('password/reset/{token}', 'RemindersController@getReset');
+Route::post('password/reset', 'RemindersController@postReset');
 
 Route::group(['prefix' => 'api/v1', 'before' => 'api.key'], function()
 {

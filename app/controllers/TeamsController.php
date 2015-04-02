@@ -1,5 +1,6 @@
 <?php
 
+use Athlete\Requests\TeamRequest;
 use Sorskod\Larasponse\Larasponse;
 use Athlete\Transformers\TeamTransformer;
 use Athlete\Repositories\Team\TeamRepository;
@@ -17,20 +18,30 @@ class TeamsController extends \ApiController {
 	private $repository;
 
 	/**
+	 * @var \Athlete\Requests\TeamRequest
+	 */
+	private $teamRequest;
+
+	/**
 	 * @param \Sorskod\Larasponse\Larasponse $fractal
 	 * @param TeamRepository $repository
+	 * @param TeamRequest $teamRequest
 	 */
-	public function __construct(Larasponse $fractal, TeamRepository $repository)
+	public function __construct(Larasponse $fractal,
+	                            TeamRepository $repository,
+								TeamRequest $teamRequest
+	)
 	{
 		$this->fractal = $fractal;
 		$this->fractal->parseIncludes($this->getIncludes());
 
 		$this->repository = $repository;
+		$this->teamRequest = $teamRequest;
 	}
 
 	/**
 	 * Display a listing of the resource.
-	 * GET /teams
+	 * GET sports/{sportId}/teams
 	 *
 	 * @param $id
 	 * @return \Response
@@ -52,13 +63,15 @@ class TeamsController extends \ApiController {
 
 	/**
 	 * Store a newly created resource in storage.
-	 * POST /teams
+	 * POST sports/{sportId}/teams
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store($id)
 	{
-		//
+		$formData = Input::only('name');
+
+		$this->teamRequest->validate($formData);
 	}
 
 	/**
