@@ -46,6 +46,7 @@ class RemindersController extends ApiController {
 		$response = Password::reset($credentials, function($user, $password)
 		{
 			$user->password = $password;
+			$user->device->access_token = Str::random(64);
 
 			$user->save();
 		});
