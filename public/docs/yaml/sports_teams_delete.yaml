@@ -44,11 +44,3 @@ errors: |
         "status_code": 401
       }
     }
-
-    {
-      "success": false,
-      "error": {
-        "message": "The name has already been taken.",
-        "status_code": 422
-      }
-    }
