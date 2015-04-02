@@ -83,7 +83,9 @@ class SportsController extends ApiController {
 			return $this->respondUnprocess('Unable to save the sport!');
 		}
 
-		return $this->respondWithSuccess('Sport has been successfully saved.');
+		$data = $this->fractal->item($sport, new SportTransformer());
+
+		return $this->respondWithSuccess($data);
 	}
 
 	/**
@@ -131,7 +133,9 @@ class SportsController extends ApiController {
 			return $this->respondUnprocess('Unable to update the sport!');
 		}
 
-		return $this->respondWithSuccess('Sport has been successfully updated.');
+		$data = $this->fractal->item($sport, new SportTransformer());
+
+		return $this->respondWithSuccess($data);
 	}
 
 	/**
