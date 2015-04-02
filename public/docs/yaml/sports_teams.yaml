@@ -17,7 +17,7 @@ resource: json/user_register.json
 
 description: Show all teams of the sport
 
-endpoint: sports
+endpoint: sports/{sportId}/teams
 
 api_key: required
 
