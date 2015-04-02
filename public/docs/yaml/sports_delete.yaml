@@ -1,0 +1,54 @@
+---
+version: v1.0
+
+rate_limited: Yes
+
+response_format: JSON
+
+authentication: required
+
+auth_type: required
+
+method: POST
+
+method_override: DELETE
+
+resource: json/user_register.json
+
+description: Delete a specific sport of the user
+
+endpoint: sports/{sportId}
+
+api_key: required
+
+access_token: not_required
+
+device_id: required
+
+device_type: required
+
+parameters:
+
+json_generator: |
+    {
+      "success": true,
+      "data": "Sport has been successfully deleted.",
+      "status_code": 200
+    }
+
+errors: |
+    {
+      "success": false,
+      "error": {
+        "message": "Unable to delete the sport!",
+        "status_code": 422
+      }
+    }
+
+    {
+      "success": false,
+      "error": {
+        "message": "Invalid credentials!",
+        "status_code": 401
+      }
+    }
