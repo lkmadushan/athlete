@@ -33,7 +33,7 @@ parameters:
         type: String
         optional: Yes
         default:
-        values: ex: cricket
+        values: cricket
 
     - name: image
         description: Image of the sport
