@@ -1,0 +1,49 @@
+---
+version: v1.0
+
+rate_limited: Yes
+
+response_format: JSON
+
+authentication: required
+
+auth_type: required
+
+method: GET
+
+method_override:
+
+resource: json/user_register.json
+
+description: Show a specific team of the sport
+
+endpoint: sports/{sportId}/teams/{teamId}
+
+api_key: required
+
+access_token: not_required
+
+device_id: required
+
+device_type: required
+
+parameters:
+
+json_generator: |
+    {
+      "success": true,
+      "data": {
+        "team_id": 2,
+        "name": "Another Team3"
+      },
+      "status_code": 200
+    }
+
+errors: |
+    {
+      "success": false,
+      "error": {
+        "message": "Invalid credentials!",
+        "status_code": 401
+      }
+    }

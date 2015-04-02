@@ -86,37 +86,64 @@ class TeamsController extends \ApiController {
 
 	/**
 	 * Display the specified resource.
-	 * GET /teams/{id}
+	 * GET sports/{sportId}/teams/{teamId}
 	 *
-	 * @param  int  $id
+	 * @param $sportId
+	 * @param $teamId
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($sportId, $teamId)
 	{
-		//
+		$sport = Auth::user()->sports()->findOrFail($sportId);
+
+		$team = $this->repository->filterBySport($sport->id)->findById($teamId);
+
+		$data = $this->fractal->item($team, new TeamTransformer());
+
+		return $this->respondWithSuccess($data);
 	}
 
 	/**
 	 * Update the specified resource in storage.
-	 * PUT /teams/{id}
+	 * PATCH sports/{sportId}/teams/{teamId}
 	 *
-	 * @param  int  $id
-	 * @return Response
+	 * @param $sportId
+	 * @param $teamId
+	 * @return \Response
 	 */
-	public function update($id)
+	public function update($sportId, $teamId)
 	{
-		//
+		$formData = Input::only('name');
+
+		$this->teamRequest->validate($formData);
+
+		$sport = Auth::user()->sports()->findOrFail($sportId);
+
+		$team = $this->repository->filterBySport($sport->id)->findById($teamId);
+
+		$team->update($formData);
+
+		$data = $this->fractal->item($team, new TeamTransformer());
+
+		return $this->respondWithSuccess($data);
 	}
 
 	/**
 	 * Remove the specified resource from storage.
-	 * DELETE /teams/{id}
+	 * DELETE sports/{sportId}/teams/{teamId}
 	 *
-	 * @param  int  $id
-	 * @return Response
+	 * @param $sportId
+	 * @param $teamId
+	 * @return \Response
 	 */
-	public function destroy($id)
+	public function destroy($sportId, $teamId)
 	{
-		//
+		$sport = Auth::user()->sports()->findOrFail($sportId);
+
+		$team = $this->repository->filterBySport($sport->id)->findById($teamId);
+
+		$team->delete();
+
+		return $this->respondWithSuccess('Team has been successfully deleted.');
 	}
 }
