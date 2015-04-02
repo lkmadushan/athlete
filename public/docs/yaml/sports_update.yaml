@@ -9,13 +9,13 @@ authentication: required
 
 auth_type: required
 
-method: GET
+method: POST
 
-method_override:
+method_override: PATCH
 
 resource: json/user_register.json
 
-description: Show a specific sport of the user
+description: Update a specific sport of the user
 
 endpoint: sports/{sportId}
 
@@ -28,6 +28,26 @@ device_id: required
 device_type: required
 
 parameters:
+    - name: name
+        description: Sport's name
+        type: String
+        optional: Yes
+        default:
+        values: ex: cricket
+
+    - name: image
+        description: Image of the sport
+        type: String
+        optional: Yes
+        default:
+        values:
+
+    - name: mime
+        description: MIME type of the image
+        type: String
+        optional: Yes
+        default:
+        values: image/png, image/bmp, image/jpeg
 
 json_generator: |
     {
@@ -44,8 +64,8 @@ errors: |
     {
       "success": false,
       "error": {
-        "message": "Sport not found!",
-        "status_code": 404
+        "message": "Unable to update the sport!",
+        "status_code": 422
       }
     }
 

@@ -52,7 +52,11 @@ parameters:
 json_generator: |
     {
       "success": true,
-      "data": "Sport has been successfully saved.",
+      "data": {
+        "sport_id": 1,
+        "name": "quis",
+        "image": "http://athlete.dev/images/1/caEcqqPMC2jsWUSq"
+      },
       "status_code": 200
     }
 
