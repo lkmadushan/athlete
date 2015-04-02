@@ -1,0 +1,58 @@
+---
+version: v1.0
+
+rate_limited: Yes
+
+response_format: JSON
+
+authentication: required
+
+auth_type: required
+
+method: GET
+
+method_override:
+
+resource: json/user_register.json
+
+description: Show a specific sport of the user
+
+endpoint: sports/{sportId}
+
+api_key: required
+
+access_token: not_required
+
+device_id: required
+
+device_type: required
+
+parameters:
+
+json_generator: |
+    {
+      "success": true,
+      "data": {
+        "sport_id": 1,
+        "name": "quis",
+        "image": "http://athlete.dev/images/1/caEcqqPMC2jsWUSq"
+      },
+      "status_code": 200
+    }
+
+errors: |
+    {
+      "success": false,
+      "error": {
+        "message": "Sport not found!",
+        "status_code": 404
+      }
+    }
+    
+    {
+      "success": false,
+      "error": {
+        "message": "Invalid credentials!",
+        "status_code": 401
+      }
+    }
