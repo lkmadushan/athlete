@@ -12,7 +12,7 @@ class ImagesController extends \ApiController{
 	{
 		$sport = Sport::find($sportId);
 
-		$path = $this->getSportImagePath($sport);
+		$path = $this->getSportsImagePath($sport);
 
 		$response = Response::make(file_get_contents($path), '200');
 
@@ -27,7 +27,7 @@ class ImagesController extends \ApiController{
 	 * @param $sport
 	 * @return string
 	 */
-	private function getSportImagePath($sport)
+	private function getSportsImagePath($sport)
 	{
 		$path = ($sport->image == 'default.png') ? 'images/default.png' : "images/{$sport->id}/{$sport->image}";
 
