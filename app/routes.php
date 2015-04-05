@@ -51,32 +51,18 @@ Route::group(['prefix' => 'api/v1', 'before' => 'api.key'], function()
  */
 Route::get('images/{sportId}/{imageName}', [
 	'as' => 'image_path',
-	'uses' => function($sportId, $imageName)
-{
-	$mime = Sport::find($sportId)->mime;
-
-	$path = storage_path("images/{$sportId}/$imageName");
-
-	$response = Response::make(file_get_contents($path), '200');
-
-	$response->header('Content-Type', $mime);
-
-	return $response;
-}]);
+	'uses' => 'ImagesController@show'
+]);
 
 /**
  * Video response
  */
 Route::get('videos/{videoId}/{thumbnail}', [
 	'as' => 'video_path',
-	'uses' => function()
-{
-	//
-}]);
+	'uses' => 'VideosController@show'
+]);
 
 Route::get('videos/thumbs/{videoId}/{thumbnail}', [
 	'as' => 'video_thumb_path',
-	'uses' => function()
-{
-	//
-}]);
+	'uses' => 'VideosController@showThumbnail'
+]);
