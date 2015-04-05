@@ -7,7 +7,7 @@ class SportRequest extends FormValidator {
 	protected $rules = [
 		'name' => 'required',
 		'image' => 'required|sometimes|mimes:jpeg,bmp,png',
-		'mime' => 'required|in:image/jpeg,image/png,image/bmp'
+		'mime' => 'required|sometimes|in:image/jpeg,image/png,image/bmp'
 	];
 
 	public function updateRules()
