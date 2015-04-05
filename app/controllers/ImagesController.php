@@ -1,4 +1,4 @@
-<?php namespace controllers;
+<?php
 
 class ImagesController extends \ApiController{
 
