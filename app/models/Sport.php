@@ -26,10 +26,5 @@ class Sport extends \Eloquent {
 		{
 			$model->image = Str::random();
 		});
-
-		static::updating(function($model)
-		{
-			$model->image = Str::random();
-		});
 	}
 }
