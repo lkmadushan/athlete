@@ -23,6 +23,10 @@ class BackendServiceProvider extends ServiceProvider {
 			'Athlete\Repositories\Team\EloquentTeamRepository'
 		);
 
+		$this->app->bind('Athlete\Repositories\Player\PlayerRepository',
+			'Athlete\Repositories\Player\EloquentPlayerRepository'
+		);
+
 		$this->app->bind('League\Fractal\Serializer\SerializerAbstract',
 			'Athlete\Transformers\Serializers\CustomSerializer'
 		);
