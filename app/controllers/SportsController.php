@@ -123,10 +123,7 @@ class SportsController extends ApiController {
 		try {
 			DB::beginTransaction();
 
-			if(Input::hasFile('image')) {
-
-				$formData = array_merge($formData, ['image' => Str::random()]);
-			}
+			if(Input::hasFile('image')) $sport->image = Str::random();
 
 			$sport = $sport->update($formData);
 
