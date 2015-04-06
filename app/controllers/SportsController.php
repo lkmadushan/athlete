@@ -75,7 +75,7 @@ class SportsController extends ApiController {
 
 			$sport = Auth::user()->sports()->save(new Sport($formData));
 
-			$this->moveImage($sport->id, $sport->image);
+			$this->moveImage($sport->user_id, $sport->image);
 
 			DB::commit();
 		} catch(Exception $e) {
@@ -125,7 +125,7 @@ class SportsController extends ApiController {
 
 			$sport->update($formData);
 
-			$this->moveImage($sport->id, $sport->image);
+			$this->moveImage($sport->user_id, $sport->image);
 
 			DB::commit();
 		} catch(Exception $e) {
@@ -151,10 +151,12 @@ class SportsController extends ApiController {
 		$sport = $this->repository->filterByUser(Auth::user()->id)->findById($id);
 
 		try {
-			$path = storage_path("images/{$sport->id}/{$sport->image}");
+			if( ! $sport->image == 'default.png') {
+				$path = storage_path("images/{$sport->user_id}/{$sport->image}");
 
-			$sport->delete();
-			File::delete($path);
+				$sport->delete();
+				File::delete($path);
+			}
 		} catch(Exception $e) {
 
 			return $this->respondUnprocess('Unable to delete the sport!');

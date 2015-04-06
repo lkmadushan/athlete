@@ -29,7 +29,7 @@ class ImagesController extends \ApiController{
 	 */
 	private function getSportsImagePath($sport)
 	{
-		$path = ($sport->image == 'default.png') ? 'images/default.png' : "images/{$sport->id}/{$sport->image}";
+		$path = ($sport->image == 'default.png') ? 'images/default.png' : "images/{$sport->user_id}/{$sport->image}";
 
 		return storage_path($path);
 	}
