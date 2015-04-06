@@ -151,7 +151,7 @@ class SportsController extends ApiController {
 		$sport = $this->repository->filterByUser(Auth::user()->id)->findById($id);
 
 		try {
-			if( ! $sport->image == 'default.png') {
+			if($sport->image != 'default.png') {
 				$path = storage_path("images/{$sport->user_id}/{$sport->image}");
 
 				$sport->delete();
