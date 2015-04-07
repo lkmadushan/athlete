@@ -15,7 +15,7 @@ class CreateWeightsTable extends Migration {
 		Schema::create('weights', function(Blueprint $table)
 		{
 			$table->integer('id')->unsigned();
-			$table->enum('unit', ['kg', 'lb']);
+			$table->enum('unit', ['kg', 'lbs']);
 			$table->decimal('value', 6, 3)->unsigned();
 			$table->foreign('id')->references('id')->on('players')->onDelete('cascade');
 			$table->primary('id');

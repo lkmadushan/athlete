@@ -3,7 +3,7 @@
 use Player;
 use Athlete\Repositories\EloquentRepository;
 
-class EloquentPlayerRepository extends EloquentRepository {
+class EloquentPlayerRepository extends EloquentRepository implements PlayerRepository {
 
 	/**
 	 * @param \Player $model

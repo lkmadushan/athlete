@@ -15,7 +15,7 @@ class CreateHeightsTable extends Migration {
 		Schema::create('heights', function(Blueprint $table)
 		{
 			$table->integer('id')->unsigned();
-			$table->enum('unit', ['cm', 'inches']);
+			$table->enum('unit', ['cm', 'in']);
 			$table->decimal('value', 6, 3)->unsigned();
 			$table->foreign('id')->references('id')->on('players')->onDelete('cascade');
 			$table->primary('id');

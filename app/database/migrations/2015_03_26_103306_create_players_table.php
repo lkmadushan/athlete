@@ -17,6 +17,8 @@ class CreatePlayersTable extends Migration {
 			$table->increments('id')->unsigned();
 			$table->string('first_name');
 			$table->string('last_name');
+			$table->string('image');
+			$table->string('mime');
 			$table->text('notes')->nullable();
 			$table->timestamp('born_on');
 			$table->integer('team_id')->unsigned();

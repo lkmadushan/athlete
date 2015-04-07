@@ -72,21 +72,25 @@ class PlayersController extends ApiController {
 	 */
 	public function store($sportId, $teamId)
 	{
-		$formData = Input::only('name');
+		$formData = Input::all();
 
-		$this->teamRequest->validate($formData);
+		$this->playerRequest->validate($formData);
 
-		$team = Auth::user()->sports()->whereSportId($sportId)->teams()->findOrFail($teamId);
-
-		$team = $team->players()->create($formData);
-
+		$team = Auth::user()->sports()->find($sportId)->teams()->findOrFail($teamId);
 
 		try {
 			DB::beginTransaction();
 
-			$sport = Auth::user()->sports()->save(new Sport($formData));
+			if(Input::hasFile('image')) {
+				$formData = array_merge($formData, ['image' => Str::random()]);
+			}
 
-			$this->moveImage($sport->user_id, $sport->image);
+			$player = $team->players()->create($formData);
+
+			//associate height and weight
+			dd(json_decode($formData['height']));
+
+			$this->moveImage($player->id, $player->image);
 
 			DB::commit();
 		} catch(Exception $e) {
@@ -95,7 +99,7 @@ class PlayersController extends ApiController {
 			return $this->respondUnprocess('Unable to save the sport!');
 		}
 
-		$data = $this->fractal->item($team, new TeamTransformer());
+		$data = $this->fractal->item($player, new PlayerTransformer());
 
 		return $this->respondWithSuccess(array_merge($data, ['teams_count' => Team::count()]));
 	}
@@ -104,14 +108,18 @@ class PlayersController extends ApiController {
 	 * Display the specified resource.
 	 * GET /sports/{id}
 	 *
-	 * @param  int  $id
-	 * @return Response
+	 * @param $sportId
+	 * @param $teamId
+	 * @param $playerId
+	 * @return \Response
 	 */
-	public function show($id)
+	public function show($sportId, $teamId, $playerId)
 	{
-		$sport = $this->repository->filterByUser(Auth::user()->id)->findById($id);
+		$team = Auth::user()->sports()->find($sportId)->teams()->findOrFail($teamId);
 
-		$data = $this->fractal->item($sport, new SportTransformer());
+		$player = $team->players()->findOrFail($playerId);
+
+		$data = $this->fractal->item($player, new SportTransformer());
 
 		return $this->respondWithSuccess($data);
 	}
@@ -186,7 +194,7 @@ class PlayersController extends ApiController {
 	{
 		if(Input::hasFile('image') && Input::file('image')->isValid()) {
 
-			Input::file('image')->move(storage_path("images/$path"), $name);
+			Input::file('image')->move(storage_path("players/$path"), $name);
 		}
 	}
 }

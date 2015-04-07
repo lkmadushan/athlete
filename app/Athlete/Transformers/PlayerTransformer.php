@@ -26,6 +26,7 @@ class PlayerTransformer extends  TransformerAbstract {
 			'player_id' => (int)$player->id,
 			'first_name' => $player->first_name,
 			'last_name' => $player->last_name,
+			'image' => route('player_image_path', [$player->id, $player->image]),
 			'notes' => $player->notes,
 			'born_on' => $player->born_on,
 		];
