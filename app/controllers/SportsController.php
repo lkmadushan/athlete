@@ -124,7 +124,12 @@ class SportsController extends ApiController {
 			DB::beginTransaction();
 
 			// rename the image name to clear caching for mobile devices
-			if(Input::hasFile('image')) $sport->image = Str::random();
+			if(Input::hasFile('image')) {
+				$path = storage_path("images/{$sport->user_id}/{$sport->image}");
+				File::delete($path);
+
+				$sport->image = Str::random();
+			}
 
 			$sport = $sport->update($formData);
 
