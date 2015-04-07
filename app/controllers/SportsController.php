@@ -73,6 +73,10 @@ class SportsController extends ApiController {
 		try {
 			DB::beginTransaction();
 
+			if(Input::hasFile('image')) {
+				$formData = array_merge($formData, ['image' => Str::random()]);
+			}
+
 			$sport = Auth::user()->sports()->save(new Sport($formData));
 
 			$this->moveImage($sport->user_id, $sport->image);
@@ -128,10 +132,10 @@ class SportsController extends ApiController {
 				$path = storage_path("images/{$sport->user_id}/{$sport->image}");
 				File::delete($path);
 
-				$sport->image = Str::random();
+				$formData = array_merge($formData, ['image' => Str::random()]);
 			}
 
-			$sport = $sport->update($formData);
+			$sport->update($formData);
 
 			$this->moveImage($sport->user_id, $sport->image);
 

@@ -2,7 +2,7 @@
 
 class Sport extends \Eloquent {
 
-	protected $fillable = ['name', 'mime'];
+	protected $fillable = ['name', 'mime', 'image'];
 
 	public function user()
 	{
@@ -12,19 +12,5 @@ class Sport extends \Eloquent {
 	public function teams()
 	{
 		return $this->hasMany('Team');
-	}
-
-	/**
-	 * Set image name when creating a sport
-	 *
-	 */
-	public static function boot()
-	{
-		parent::boot();
-
-		static::creating(function($model)
-		{
-			$model->image = Str::random();
-		});
 	}
 }
