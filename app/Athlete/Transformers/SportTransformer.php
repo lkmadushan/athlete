@@ -26,6 +26,7 @@ class SportTransformer extends TransformerAbstract {
 			'sport_id' => (int)$sport->id,
 			'name' => $sport->name,
 			'image' => route('image_path', [$sport->id, $sport->image]),
+			'image_type' => $sport->image_type,
 		];
 	}
 

@@ -55,7 +55,8 @@ json_generator: |
       "data": {
         "sport_id": 1,
         "name": "quis",
-        "image": "http://athlete.dev/images/1/caEcqqPMC2jsWUSq"
+        "image": "http://athlete.dev/images/1/caEcqqPMC2jsWUSq",
+        "image_type": "uploaded"
       },
       "status_code": 200
     }

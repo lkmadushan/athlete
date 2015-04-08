@@ -7,7 +7,8 @@ class SportRequest extends FormValidator {
 	protected $rules = [
 		'name' => 'required',
 		'image' => 'required|sometimes|mimes:jpeg,bmp,png',
-		'mime' => 'required_with:image|in:image/jpeg,image/png,image/bmp'
+		'mime' => 'required_with:image|in:image/jpeg,image/png,image/bmp',
+		'image_type' => 'required_with:image|in:uploaded,default'
 	];
 
 	public function updateRules()
@@ -15,7 +16,8 @@ class SportRequest extends FormValidator {
 		$this->rules = [
 			'name' => 'required|sometimes',
 			'image' => 'required|sometimes|mimes:jpeg,bmp,png',
-			'mime' => 'required_with:image|in:image/jpeg,image/png,image/bmp'
+			'mime' => 'required_with:image|in:image/jpeg,image/png,image/bmp',
+			'image_type' => 'required_with:image|in:uploaded,default'
 		];
 
 		return $this;
