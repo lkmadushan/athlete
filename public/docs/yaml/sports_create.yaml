@@ -49,6 +49,13 @@ parameters:
         default:
         values: image/png, image/bmp, image/jpeg
 
+    - name: image_type
+        description: Check uploaded or default image type
+        type: String
+        optional: No
+        default:
+        values: uploaded, default
+
 json_generator: |
     {
       "success": true,
