@@ -179,3 +179,7 @@ composer.lock
 .env.php
 
 _ide_helper.php
+
+# server
+error_log.txt
+/public/cgi-bin/
