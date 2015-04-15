@@ -50,8 +50,13 @@ Route::group(['prefix' => 'api/v1', 'before' => 'api.key'], function()
  * Image response
  */
 Route::get('images/{sportId}/{imageName}', [
-	'as' => 'image_path',
-	'uses' => 'ImagesController@show'
+	'as' => 'sport_image_path',
+	'uses' => 'ImagesController@getSportImage'
+]);
+
+Route::get('players/{playerId}/{imageName}', [
+	'as' => 'player_image_path',
+	'uses' => 'ImagesController@getPlayerImage'
 ]);
 
 /**

@@ -87,8 +87,16 @@ class PlayersController extends ApiController {
 
 			$player = $team->players()->create($formData);
 
-			//associate height and weight
-			dd(json_decode($formData['height']));
+			//save weight, height of the player
+			$player->weight()->save(new Weight([
+				'unit' => $formData['weight_unit'],
+				'value' => $formData['weight_value']
+			]));
+
+			$player->height()->save(new Height([
+				'unit' => $formData['height_unit'],
+				'value' => $formData['height_value']
+			]));
 
 			$this->moveImage($player->id, $player->image);
 
