@@ -14,6 +14,7 @@ class CreateSkillsTable extends Migration {
 	{
 		Schema::create('skills', function(Blueprint $table)
 		{
+			$table->engine = 'InnoDB';
 			$table->increments('id')->unsigned();
 			$table->string('name');
 			$table->text('notes');

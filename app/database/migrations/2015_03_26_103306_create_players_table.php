@@ -14,10 +14,12 @@ class CreatePlayersTable extends Migration {
 	{
 		Schema::create('players', function(Blueprint $table)
 		{
+			$table->engine = 'InnoDB';
 			$table->increments('id')->unsigned();
 			$table->string('first_name');
 			$table->string('last_name');
 			$table->string('image');
+			$table->enum('image_type', ['uploaded', 'default']);
 			$table->string('mime');
 			$table->text('notes')->nullable();
 			$table->timestamp('born_on');

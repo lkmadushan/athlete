@@ -14,6 +14,7 @@ class CreateWeightsTable extends Migration {
 	{
 		Schema::create('weights', function(Blueprint $table)
 		{
+			$table->engine = 'InnoDB';
 			$table->integer('id')->unsigned();
 			$table->enum('unit', ['kg', 'lbs']);
 			$table->decimal('value', 6, 3)->unsigned();

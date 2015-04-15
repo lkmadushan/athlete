@@ -14,6 +14,7 @@ class CreateSportsTable extends Migration {
 	{
 		Schema::create('sports', function(Blueprint $table)
 		{
+			$table->engine = 'InnoDB';
 			$table->increments('id')->unsigned();
 			$table->string('name');
 			$table->string('image')->default('default.png');

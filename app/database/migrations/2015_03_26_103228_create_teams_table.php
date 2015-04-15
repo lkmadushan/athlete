@@ -14,6 +14,7 @@ class CreateTeamsTable extends Migration {
 	{
 		Schema::create('teams', function(Blueprint $table)
 		{
+			$table->engine = 'InnoDB';
 			$table->increments('id')->unsigned();
 			$table->string('name');
 			$table->integer('sport_id')->unsigned();

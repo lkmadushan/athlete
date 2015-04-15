@@ -14,6 +14,7 @@ class CreateDevicesTable extends Migration {
 	{
 		Schema::create('devices', function(Blueprint $table)
 		{
+			$table->engine = 'InnoDB';
 			$table->string('id');
 			$table->string('type');
 			$table->string('access_token')->unique()->nullable();

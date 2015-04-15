@@ -14,6 +14,7 @@ class CreateHeightsTable extends Migration {
 	{
 		Schema::create('heights', function(Blueprint $table)
 		{
+			$table->engine = 'InnoDB';
 			$table->integer('id')->unsigned();
 			$table->enum('unit', ['cm', 'in']);
 			$table->decimal('value', 6, 3)->unsigned();
