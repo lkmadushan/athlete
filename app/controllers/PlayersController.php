@@ -53,7 +53,7 @@ class PlayersController extends ApiController {
 
 		$offset = Request::get('offset') ?: 0;
 
-		$team = Auth::user()->sports()->whereSportId($sportId)->teams()->findOrFail($teamId);
+		$team = Auth::user()->sports()->findOrfail($sportId)->teams()->findOrFail($teamId);
 
 		$players = $this->repository->filterByTeam($team->id)->paginate($limit, $offset);
 
@@ -76,7 +76,7 @@ class PlayersController extends ApiController {
 
 		$this->playerRequest->validate($formData);
 
-		$team = Auth::user()->sports()->find($sportId)->teams()->findOrFail($teamId);
+		$team = Auth::user()->sports()->findOrFail($sportId)->teams()->findOrFail($teamId);
 
 		try {
 			DB::beginTransaction();
@@ -87,16 +87,22 @@ class PlayersController extends ApiController {
 
 			$player = $team->players()->create($formData);
 
-			//save weight, height of the player
-			$player->weight()->save(new Weight([
-				'unit' => $formData['weight_unit'],
-				'value' => $formData['weight_value']
-			]));
+			//save weight, height of the player if they exists
+			if(array_key_exists('weight_unit', $formData)) {
 
-			$player->height()->save(new Height([
-				'unit' => $formData['height_unit'],
-				'value' => $formData['height_value']
-			]));
+				$player->weight()->save(new Weight([
+					'unit' => $formData['weight_unit'],
+					'value' => $formData['weight_value']
+				]));
+			}
+
+			if(array_key_exists('height_unit', $formData)) {
+
+				$player->height()->save(new Height([
+					'unit' => $formData['height_unit'],
+					'value' => $formData['height_value']
+				]));
+			}
 
 			$this->moveImage($player->id, $player->image);
 
@@ -104,7 +110,7 @@ class PlayersController extends ApiController {
 		} catch(Exception $e) {
 			DB::rollBack();
 
-			return $this->respondUnprocess('Unable to save the sport!');
+			return $this->respondUnprocess($e->getMessage());
 		}
 
 		$data = $this->fractal->item($player, new PlayerTransformer());
@@ -123,11 +129,11 @@ class PlayersController extends ApiController {
 	 */
 	public function show($sportId, $teamId, $playerId)
 	{
-		$team = Auth::user()->sports()->find($sportId)->teams()->findOrFail($teamId);
+		$team = Auth::user()->sports()->findOrFail($sportId)->teams()->findOrFail($teamId);
 
 		$player = $team->players()->findOrFail($playerId);
 
-		$data = $this->fractal->item($player, new SportTransformer());
+		$data = $this->fractal->item($player, new playerTransformer());
 
 		return $this->respondWithSuccess($data);
 	}
@@ -143,27 +149,33 @@ class PlayersController extends ApiController {
 	{
 		$formData = Input::all();
 
-		$this->sportRequest->updateRules()->validate($formData);
+		$this->playerRequest->updateRules()->validate($formData);
 
-		$sport = $this->repository->filterByUser(Auth::user()->id)->findById($id);
+		$team = Auth::user()->sports()->findOrFail($sportId)->teams()->findOrFail($teamId);
 
 		try {
 			DB::beginTransaction();
 
-			$sport->update($formData);
+			if(Input::hasFile('image')) {
+				$formData = array_merge($formData, ['image' => Str::random()]);
+			}
 
-			$this->moveImage($sport->user_id, $sport->image);
+			$player = $team->players()->create($formData);
+
+			//update weight, height of the player
+
+			$this->moveImage($player->id, $player->image);
 
 			DB::commit();
 		} catch(Exception $e) {
 			DB::rollBack();
 
-			return $this->respondUnprocess('Unable to update the sport!');
+			return $this->respondUnprocess('Unable to update the player!');
 		}
 
-		$data = $this->fractal->item($sport, new SportTransformer());
+		$data = $this->fractal->item($player, new PlayerTransformer());
 
-		return $this->respondWithSuccess($data);
+		return $this->respondWithSuccess(array_merge($data, ['players_count' => Player::count()]));
 	}
 
 	/**
@@ -186,7 +198,7 @@ class PlayersController extends ApiController {
 			}
 		} catch(Exception $e) {
 
-			return $this->respondUnprocess('Unable to delete the sport!');
+			return $this->respondUnprocess('Unable to delete the player!');
 		}
 
 		return $this->respondWithSuccess('Sport has been successfully deleted.');

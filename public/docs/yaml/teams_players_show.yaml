@@ -1,0 +1,69 @@
+---
+version: v1.0
+
+rate_limited: Yes
+
+response_format: JSON
+
+authentication: required
+
+auth_type: required
+
+method: GET
+
+method_override:
+
+resource: json/user_register.json
+
+description: Show a specific player of the team
+
+endpoint: sports/{sportId}/teams/{teamId}/players/{playerId}
+
+api_key: required
+
+access_token: not_required
+
+device_id: required
+
+device_type: required
+
+parameters:
+
+json_generator: |
+    {
+      "success": true,
+      "data": {
+        "player_id": 23,
+        "first_name": "Kamal",
+        "last_name": "Perera",
+        "image": "http://athlete.dev/players/23/0Pkf2n05yxgnEmRK",
+        "notes": null,
+        "born_on": "0000-00-00",
+        "height": {
+          "unit": "cm",
+          "value": 174
+        },
+        "weight": {
+          "unit": "kg",
+          "value": 60
+        }
+      },
+      "status_code": 200
+    }
+
+errors: |
+    {
+      "success": false,
+      "error": {
+        "message": "Player not found!",
+        "status_code": 404
+      }
+    }
+
+    {
+      "success": false,
+      "error": {
+        "message": "Invalid credentials!",
+        "status_code": 401
+      }
+    }

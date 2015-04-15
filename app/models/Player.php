@@ -2,7 +2,7 @@
 
 class Player extends \Eloquent {
 
-	protected $fillable = [];
+	protected $fillable = ['first_name', 'last_name', 'image', 'image_type', 'mime', 'notes', 'born_on'];
 
 	public function team()
 	{

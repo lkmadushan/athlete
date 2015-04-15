@@ -2,7 +2,7 @@
 
 class Weight extends \Eloquent {
 
-	protected $fillable = [];
+	protected $fillable = ['unit', 'value'];
 
 	public function player()
 	{

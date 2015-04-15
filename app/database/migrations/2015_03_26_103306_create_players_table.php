@@ -22,7 +22,7 @@ class CreatePlayersTable extends Migration {
 			$table->enum('image_type', ['uploaded', 'default'])->default('default');
 			$table->string('mime');
 			$table->text('notes')->nullable();
-			$table->timestamp('born_on');
+			$table->date('born_on');
 			$table->integer('team_id')->unsigned();
 			$table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
 			$table->timestamps();

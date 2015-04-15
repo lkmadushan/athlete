@@ -5,6 +5,10 @@ use League\Fractal\TransformerAbstract;
 
 class PlayerTransformer extends  TransformerAbstract {
 
+	protected $defaultIncludes = [
+		'weight', 'height'
+	];
+
 	/**
 	 * Avaliable includes to parse
 	 *

@@ -9,9 +9,12 @@ class PlayerRequest extends FormValidator {
 		'last_name' => 'required',
 		'image' => 'required|mimes:jpeg,bmp,png',
 		'mime' => 'required_with:image|in:image/jpeg,image/png,image/bmp',
+		'image_type' => 'required_with:image|in:uploaded,default',
 		'born_on' => 'required|sometimes',
-		'height' => 'required|sometimes',
-		'weight' => 'required|sometimes'
+		'height_unit' => 'required|sometimes|in:in,cm',
+		'height_value' => 'required_with:height_unit',
+		'weight_unit' => 'required|sometimes|in:kg,lbs',
+		'weight_value' => 'required_with:weight_unit'
 	];
 
 	public function updateRules()
@@ -21,9 +24,12 @@ class PlayerRequest extends FormValidator {
 			'last_name' => 'required|sometimes',
 			'image' => 'required|sometimes|mimes:jpeg,bmp,png',
 			'mime' => 'required_with:image|in:image/jpeg,image/png,image/bmp',
+			'image_type' => 'required_with:image|in:uploaded,default',
 			'born_on' => 'required|sometimes',
-			'height' => 'required|sometimes',
-			'weight' => 'required|sometimes',
+			'height_unit' => 'required|sometimes|in:in,cm',
+			'height_value' => 'required_with:height_unit',
+			'weight_unit' => 'required|sometimes|in:kg,lbs',
+			'weight_value' => 'required_with:weight_unit',
 			'note' => 'required|sometimes'
 		];
 

@@ -1,0 +1,78 @@
+---
+version: v1.0
+
+rate_limited: Yes
+
+response_format: JSON
+
+authentication: required
+
+auth_type: required
+
+method: GET
+
+method_override:
+
+resource:
+
+description: Show all players of the team
+
+endpoint: sports/{sportId}/teams/{teamId}/players
+
+api_key: required
+
+access_token: not_required
+
+device_id: required
+
+device_type: required
+
+parameters:
+    - name: limit
+        description: Limit items
+        type: Integer
+        optional: Yes
+        default:
+        values: 10
+
+    - name: offset
+        description: Skip items
+        type: Integer
+        optional: Yes
+        default:
+        values: 5
+
+json_generator: |
+    {
+      "success": true,
+      "data": {
+        "players": [
+          {
+            "player_id": 4,
+            "first_name": "Micheal",
+            "last_name": "Rippin",
+            "image": "http://athlete.dev/players/4/default.png",
+            "notes": "Qui voluptate voluptatem neque minima rem praesentium ipsa ad. Enim minima voluptas quidem placeat consequuntur minima et quisquam. Placeat corporis sit alias quibusdam officia.",
+            "born_on": "1977-12-17",
+            "height": {
+              "unit": "cm",
+              "value": 174
+            },
+            "weight": {
+              "unit": "kg",
+              "value": 60
+            }
+          }
+        ]
+      },
+      "status_code": 200
+    }
+
+errors: |
+    {
+      "success": false,
+      "error": {
+        "message": "Invalid credentials!",
+        "status_code": 401
+      }
+    }
