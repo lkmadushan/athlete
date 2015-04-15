@@ -15,6 +15,9 @@ class PlayersTableSeeder extends Seeder {
 			Player::create([
 				'first_name' => $faker->firstName,
 				'last_name' => $faker->lastName,
+				'image' => 'default.png',
+				'mime' => 'image/png',
+				'image_type' => 'default',
 				'notes' => $faker->paragraph(2),
 				'born_on' => $faker->dateTime,
 				'team_id' => $faker->randomElement($teams)

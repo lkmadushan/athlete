@@ -14,7 +14,9 @@ class SportsTableSeeder extends Seeder {
 		{
 			Sport::create([
 				'name' => $faker->word,
-				'image' => $faker->word,
+				'image' => 'default.png',
+				'mime' => 'image/png',
+				'image_type' => 'default',
 				'user_id' => $faker->randomElement($users)
 			]);
 		}
