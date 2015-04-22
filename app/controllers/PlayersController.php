@@ -140,12 +140,15 @@ class PlayersController extends ApiController {
 
 	/**
 	 * Update the specified resource in storage.
-	 * PUT /sports/{id}
+	 * PUT /players/{playerId}
 	 *
-	 * @param  int  $id
-	 * @return Response
+	 * @param $sportId
+	 * @param $teamId
+	 * @param $playerId
+	 * @return \Response
+	 * @throws \Laracasts\Validation\FormValidationException
 	 */
-	public function update($id)
+	public function update($sportId, $teamId, $playerId)
 	{
 		$formData = Input::all();
 
@@ -153,16 +156,41 @@ class PlayersController extends ApiController {
 
 		$team = Auth::user()->sports()->findOrFail($sportId)->teams()->findOrFail($teamId);
 
+		$player = $team->players()->findOrFail($playerId);
+
 		try {
 			DB::beginTransaction();
 
+			// rename the image name to clear caching for mobile devices
 			if(Input::hasFile('image')) {
+				$path = storage_path("players/{$player->id}/{$player->image}");
+				File::delete($path);
+
 				$formData = array_merge($formData, ['image' => Str::random()]);
 			}
 
-			$player = $team->players()->create($formData);
+			$player->update($formData);
 
 			//update weight, height of the player
+			if(array_key_exists('weight_unit', $formData)) {
+
+				Weight::updateOrCreate([
+					'id' => $playerId
+				], [
+					'unit' => $formData['weight_unit'],
+					'value' => $formData['weight_value']
+				]);
+			}
+
+			if(array_key_exists('height_unit', $formData)) {
+
+				Height::updateOrCreate([
+					'id' => $playerId
+				], [
+					'unit' => $formData['height_unit'],
+					'value' => $formData['height_value']
+				]);
+			}
 
 			$this->moveImage($player->id, $player->image);
 
@@ -170,30 +198,34 @@ class PlayersController extends ApiController {
 		} catch(Exception $e) {
 			DB::rollBack();
 
-			return $this->respondUnprocess('Unable to update the player!');
+			return $this->respondUnprocess($e->getMessage());
 		}
 
 		$data = $this->fractal->item($player, new PlayerTransformer());
 
-		return $this->respondWithSuccess(array_merge($data, ['players_count' => Player::count()]));
+		return $this->respondWithSuccess($data);
 	}
 
 	/**
 	 * Remove the specified resource from storage.
-	 * DELETE /sports/{id}
+	 * DELETE /players/{playerId}
 	 *
-	 * @param  int  $id
-	 * @return Response
+	 * @param $sportId
+	 * @param $teamId
+	 * @param $playerId
+	 * @return \Response
 	 */
-	public function destroy($id)
+	public function destroy($sportId, $teamId, $playerId)
 	{
-		$sport = $this->repository->filterByUser(Auth::user()->id)->findById($id);
+		$team = Auth::user()->sports()->findOrFail($sportId)->teams()->findOrFail($teamId);
+
+		$player = $team->players()->findOrFail($playerId);
 
 		try {
-			if($sport->image != 'default.png') {
-				$path = storage_path("images/{$sport->user_id}/{$sport->image}");
+			if($player->image != 'default.png') {
+				$path = storage_path("players/{$player->id}");
 
-				$sport->delete();
+				$player->delete();
 				File::delete($path);
 			}
 		} catch(Exception $e) {
@@ -201,7 +233,7 @@ class PlayersController extends ApiController {
 			return $this->respondUnprocess('Unable to delete the player!');
 		}
 
-		return $this->respondWithSuccess('Sport has been successfully deleted.');
+		return $this->respondWithSuccess('Player has been successfully deleted.');
 	}
 
 	/**

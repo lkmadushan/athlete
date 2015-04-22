@@ -1,0 +1,137 @@
+---
+version: v1.0
+
+rate_limited: Yes
+
+response_format: JSON
+
+authentication: required
+
+auth_type: required
+
+method: POST
+
+method_override: PATCH
+
+resource: json/user_register.json
+
+description: Update a specific player for the team
+
+endpoint: sports/{sportId}/teams/{teamId}/players/{playerId}
+
+api_key: required
+
+access_token: not_required
+
+device_id: required
+
+device_type: required
+
+parameters:
+    - name: first_name
+      description: First name of the player
+      type: String
+      optional: Yes
+      default:
+      values: Jhon
+
+    - name: last_name
+      description: Last name of the player
+      type: String
+      optional: Yes
+      default:
+      values: Doe
+
+    - name: image
+      description: Image of the player
+      type: String
+      optional: Yes
+      default:
+      values:
+
+    - name: mime
+      description: MIME type of the image
+      type: String
+      optional: Yes
+      default:
+      values: image/png, image/bmp, image/jpeg
+
+    - name: image_type
+      description: Uploaded or default image
+      type: String
+      optional: Yes
+      default:
+      values: uploaded, default
+
+    - name: born_on
+      description: Birthday of the player
+      type: String
+      optional: Yes
+      default:
+      values: 1991-03-21
+
+    - name: notes
+      description: Notes of the player
+      type: String
+      optional: Yes
+      default:
+      values: Something about the player
+
+    - name: weight_unit
+      description: Unit of the weight
+      type: String
+      optional: Yes
+      default:
+      values: kg, lbs
+
+    - name: weight_value
+      description: Value of the weight
+      type: String
+      optional: Yes
+      default:
+      values: 65
+
+    - name: height_unit
+      description: Unit of the height
+      type: String
+      optional: Yes
+      default:
+      values: cm, in
+
+    - name: height_value
+      description: Value of the height
+      type: String
+      optional: Yes
+      default:
+      values: 175
+
+json_generator: |
+    {
+      "success": true,
+      "data": {
+        "player_id": 23,
+        "first_name": "Jhon",
+        "last_name": "Doe",
+        "image": "http://athlete.dev/players/23/0Pkf2n05yxgnEmRK",
+        "notes": null,
+        "born_on": "0000-00-00",
+        "height": {
+          "unit": "cm",
+          "value": 174
+        },
+        "weight": {
+          "unit": "kg",
+          "value": 60
+        }
+      },
+      "status_code": 200
+    }
+
+errors: |
+    {
+      "success": false,
+      "error": {
+        "message": "Invalid credentials!",
+        "status_code": 401
+      }
+    }
