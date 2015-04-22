@@ -129,13 +129,13 @@ teams_players_update:
     method: PATCH
     endpoint: "sports/{sportId}/teams/{teamId}/players/{playerId}"
     description: Update a specific player of the team
-    file_name: yaml/teams_players_delete.yaml
+    file_name: yaml/teams_players_update.yaml
 
 teams_players_delete:
     method: DELETE
     endpoint: "sports/{sportId}/teams/{teamId}/players/{playerId}"
     description: Delete a specific player of the team
-    file_name: yaml/user_register.yaml
+    file_name: yaml/teams_players_delete.yaml
 
 # skills
 
