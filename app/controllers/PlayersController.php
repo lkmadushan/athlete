@@ -198,7 +198,7 @@ class PlayersController extends ApiController {
 		} catch(Exception $e) {
 			DB::rollBack();
 
-			return $this->respondUnprocess($e->getMessage());
+			return $this->respondUnprocess('Unable to update the player!');
 		}
 
 		$data = $this->fractal->item($player, new PlayerTransformer());

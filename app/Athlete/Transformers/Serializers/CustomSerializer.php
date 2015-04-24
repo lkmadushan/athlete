@@ -1,7 +1,6 @@
 <?php namespace Athlete\Transformers\Serializers;
 
 use League\Fractal\Serializer\ArraySerializer;
-use League\Fractal\Pagination\PaginatorInterface;
 
 class CustomSerializer extends ArraySerializer {
 
