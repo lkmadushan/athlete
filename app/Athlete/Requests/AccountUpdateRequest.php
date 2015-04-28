@@ -20,7 +20,7 @@ class AccountUpdateRequest extends FormValidator {
 	public function changeEmail($id)
 	{
 		$this->rules = [
-			'current_email' => 'required',
+			'current_password' => 'required',
 			'email' => "required|email|unique:users,email,{$id},id|confirmed",
 			'email_confirmation' => 'required'
 		];

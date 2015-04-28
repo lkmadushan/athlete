@@ -28,12 +28,12 @@ device_id: required
 device_type: required
 
 parameters:
-    - name: current_email
-        description: User's current email
+    - name: current_password
+        description: User's current password
         type: String
         optional: No
         default:
-        values: example@company.com
+        values: *********
 
     - name: email
         description: User's new email
