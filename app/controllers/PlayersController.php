@@ -64,7 +64,7 @@ class PlayersController extends ApiController {
 
 	/**
 	 * Store a newly created resource in storage.
-	 * POST /sports
+	 * POST /players
 	 *
 	 * @param $sportId
 	 * @param $teamId
@@ -120,7 +120,7 @@ class PlayersController extends ApiController {
 
 	/**
 	 * Display the specified resource.
-	 * GET /sports/{id}
+	 * GET /players/{id}
 	 *
 	 * @param $sportId
 	 * @param $teamId
