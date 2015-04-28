@@ -124,11 +124,11 @@ class AccountsController extends ApiController {
 	 */
 	public function changeEmail()
 	{
-		$formData = Input::only('current_email', 'email', 'email_confirmation');
+		$formData = Input::only('current_password', 'email', 'email_confirmation');
 
 		$this->updateRequest->changeEmail(Auth::user()->id)->validate($formData);
 
-		if(StringUtils::equals(Auth::user()->email, $formData['current_email'])) {
+		if(Hash::check($formData['current_password'], Auth::user()->password)) {
 
 			Auth::user()->update($formData);
 
