@@ -40,9 +40,9 @@ Route::group(['prefix' => 'api/v1', 'before' => 'api.key'], function()
 
 		Route::resource('sports.teams.players', 'PlayersController', ['except' => ['create', 'edit']]);
 
-		Route::resource('sports.teams.players.skills', '', ['except' => ['create', 'edit']]);
+		Route::resource('sports.teams.players.skills', 'SkillsController', ['except' => ['create', 'edit']]);
 
-		Route::resource('sports.teams.players.videos', '', ['except' => ['create', 'edit']]);
+		Route::resource('sports.teams.players.videos', 'VideosController', ['except' => ['create', 'edit']]);
 	});
 });
 

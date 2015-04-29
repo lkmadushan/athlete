@@ -1,9 +1,9 @@
 <?php
 
-use Athlete\Requests\PlayerRequest;
+use Athlete\Requests\SkillRequest;
 use Sorskod\Larasponse\Larasponse;
-use Athlete\Transformers\PlayerTransformer;
-use Athlete\Repositories\Player\PlayerRepository;
+use Athlete\Transformers\SkillTransformer;
+use Athlete\Repositories\Skill\SkillRepository;
 
 class SkillsController extends ApiController {
 
@@ -13,30 +13,30 @@ class SkillsController extends ApiController {
 	private $fractal;
 
 	/**
-	 * @var \Athlete\Repositories\Player\PlayerRepository $repository
+	 * @var \Athlete\Repositories\Skill\SkillRepository $repository
 	 */
 	private $repository;
 
 	/**
-	 * @var \Athlete\Requests\PlayerRequest $playerRequest
+	 * @var \Athlete\Requests\SkillRequest $skillRequest
 	 */
-	private $playerRequest;
+	private $skillRequest;
 
 	/**
 	 * @param \Sorskod\Larasponse\Larasponse $fractal
-	 * @param PlayerRepository $repository
-	 * @param \Athlete\Requests\PlayerRequest $playerRequest
+	 * @param SkillRepository $repository
+	 * @param \Athlete\Requests\SkillRequest $skillRequest
 	 */
 	public function __construct(Larasponse $fractal,
-	                            PlayerRepository $repository,
-	                            PlayerRequest $playerRequest
+	                            SkillRepository $repository,
+	                            SkillRequest $skillRequest
 	)
 	{
 		$this->fractal = $fractal;
 		$this->fractal->parseIncludes($this->getIncludes());
 
 		$this->repository = $repository;
-		$this->playerRequest = $playerRequest;
+		$this->skillRequest = $skillRequest;
 	}
 
 	/**
@@ -45,19 +45,22 @@ class SkillsController extends ApiController {
 	 *
 	 * @param $sportId
 	 * @param $teamId
+	 * @param $playerId
 	 * @return \Response
 	 */
-	public function index($sportId, $teamId)
+	public function index($sportId, $teamId, $playerId)
 	{
 		$limit = Request::get('limit') ?: 20;
 
 		$offset = Request::get('offset') ?: 0;
 
-		$team = Auth::user()->sports()->findOrfail($sportId)->teams()->findOrFail($teamId);
+		$player = Auth::user()->sports()->findOrfail($sportId)
+			->teams()->findOrFail($teamId)
+			->players()->findOrFail($playerId);
 
-		$players = $this->repository->filterByTeam($team->id)->paginate($limit, $offset);
+		$skills = $this->repository->filterByPlayer($player->id)->paginate($limit, $offset);
 
-		$data = $this->fractal->collection($players, new playerTransformer(), 'players');
+		$data = $this->fractal->collection($skills, new SkillTransformer(), 'skills');
 
 		return $this->respondWithSuccess($data);
 	}
@@ -68,54 +71,29 @@ class SkillsController extends ApiController {
 	 *
 	 * @param $sportId
 	 * @param $teamId
+	 * @param $playerId
 	 * @return \Response
 	 */
-	public function store($sportId, $teamId)
+	public function store($sportId, $teamId, $playerId)
 	{
-		$formData = Input::all();
+		if(Input::isJson()) {
 
-		$this->playerRequest->validate($formData);
+			$formData = Input::json();
 
-		$team = Auth::user()->sports()->findOrFail($sportId)->teams()->findOrFail($teamId);
+			$this->skillRequest->validateJson($formData);
 
-		try {
-			DB::beginTransaction();
+			$player = Auth::user()->sports()->findOrfail($sportId)
+				->teams()->findOrFail($teamId)
+				->players()->findOrFail($playerId);
 
-			if(Input::hasFile('image')) {
-				$formData = array_merge($formData, ['image' => Str::random()]);
-			}
+			$skills = $player->skills()->createMany($formData->all());
 
-			$player = $team->players()->create($formData);
+			$data = $this->fractal->collection($skills, new SkillTransformer());
 
-			//save weight, height of the player if they exists
-			if(array_key_exists('weight_unit', $formData)) {
-
-				$player->weight()->save(new Weight([
-					'unit' => $formData['weight_unit'],
-					'value' => $formData['weight_value']
-				]));
-			}
-
-			if(array_key_exists('height_unit', $formData)) {
-
-				$player->height()->save(new Height([
-					'unit' => $formData['height_unit'],
-					'value' => $formData['height_value']
-				]));
-			}
-
-			$this->moveImage($player->id, $player->image);
-
-			DB::commit();
-		} catch(Exception $e) {
-			DB::rollBack();
-
-			return $this->respondUnprocess($e->getMessage());
+			return $this->respondWithSuccess($data);
 		}
 
-		$data = $this->fractal->item($player, new PlayerTransformer());
-
-		return $this->respondWithSuccess(array_merge($data, ['players_count' => Player::count()]));
+		return $this->respondWithError('JSON content is required!');
 	}
 
 	/**
@@ -125,15 +103,18 @@ class SkillsController extends ApiController {
 	 * @param $sportId
 	 * @param $teamId
 	 * @param $playerId
+	 * @param $skillId
 	 * @return \Response
 	 */
-	public function show($sportId, $teamId, $playerId)
+	public function show($sportId, $teamId, $playerId, $skillId)
 	{
-		$team = Auth::user()->sports()->findOrFail($sportId)->teams()->findOrFail($teamId);
+		$player = Auth::user()->sports()->findOrfail($sportId)
+			->teams()->findOrFail($teamId)
+			->players()->findOrFail($playerId);
 
-		$player = $team->players()->findOrFail($playerId);
+		$skill = $player->skills()->findOrFail($skillId);
 
-		$data = $this->fractal->item($player, new playerTransformer());
+		$data = $this->fractal->item($skill, new SkillTransformer());
 
 		return $this->respondWithSuccess($data);
 	}
@@ -145,65 +126,30 @@ class SkillsController extends ApiController {
 	 * @param $sportId
 	 * @param $teamId
 	 * @param $playerId
+	 * @param $skillId
 	 * @return \Response
 	 * @throws \Laracasts\Validation\FormValidationException
 	 */
-	public function update($sportId, $teamId, $playerId)
+	public function update($sportId, $teamId, $playerId, $skillId)
 	{
-		$formData = Input::all();
+		if(Input::isJson()) {
 
-		$this->playerRequest->updateRules()->validate($formData);
+			$formData = Input::json();
 
-		$team = Auth::user()->sports()->findOrFail($sportId)->teams()->findOrFail($teamId);
+			$this->skillRequest->validate($formData);
 
-		$player = $team->players()->findOrFail($playerId);
+			$player = Auth::user()->sports()->findOrfail($sportId)
+				->teams()->findOrFail($teamId)
+				->players()->findOrFail($playerId);
 
-		try {
-			DB::beginTransaction();
+			$skill = $player->skills()->findOrFail($skillId)->updateMany($formData->all());
 
-			// rename the image name to clear caching for mobile devices
-			if(Input::hasFile('image')) {
-				$path = storage_path("players/{$player->id}/{$player->image}");
-				File::delete($path);
+			$data = $this->fractal->collection($skill, new SkillTransformer());
 
-				$formData = array_merge($formData, ['image' => Str::random()]);
-			}
-
-			$player->update($formData);
-
-			//update weight, height of the player
-			if(array_key_exists('weight_unit', $formData)) {
-
-				Weight::updateOrCreate([
-					'id' => $playerId
-				], [
-					'unit' => $formData['weight_unit'],
-					'value' => $formData['weight_value']
-				]);
-			}
-
-			if(array_key_exists('height_unit', $formData)) {
-
-				Height::updateOrCreate([
-					'id' => $playerId
-				], [
-					'unit' => $formData['height_unit'],
-					'value' => $formData['height_value']
-				]);
-			}
-
-			$this->moveImage($player->id, $player->image);
-
-			DB::commit();
-		} catch(Exception $e) {
-			DB::rollBack();
-
-			return $this->respondUnprocess('Unable to update the player!');
+			return $this->respondWithSuccess($data);
 		}
 
-		$data = $this->fractal->item($player, new PlayerTransformer());
-
-		return $this->respondWithSuccess($data);
+		return $this->respondWithError('JSON content is required!');
 	}
 
 	/**
@@ -213,26 +159,19 @@ class SkillsController extends ApiController {
 	 * @param $sportId
 	 * @param $teamId
 	 * @param $playerId
+	 * @param $skillId
 	 * @return \Response
 	 */
-	public function destroy($sportId, $teamId, $playerId)
+	public function destroy($sportId, $teamId, $playerId, $skillId)
 	{
-		$team = Auth::user()->sports()->findOrFail($sportId)->teams()->findOrFail($teamId);
+		$player = Auth::user()->sports()->findOrfail($sportId)
+			->teams()->findOrFail($teamId)
+			->players()->findOrFail($playerId);
 
-		$player = $team->players()->findOrFail($playerId);
+		$skill = $player->skills()->findOrFail($skillId);
 
-		try {
-			if($player->image != 'default.png') {
-				$path = storage_path("players/{$player->id}");
+		$skill->delete();
 
-				$player->delete();
-				File::delete($path);
-			}
-		} catch(Exception $e) {
-
-			return $this->respondUnprocess('Unable to delete the player!');
-		}
-
-		return $this->respondWithSuccess('Player has been successfully deleted.');
+		return $this->respondWithSuccess('Skill has been successfully deleted.');
 	}
 }

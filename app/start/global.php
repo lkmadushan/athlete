@@ -52,7 +52,7 @@ App::error(function(Exception $exception, $code)
 
 	switch($code) {
 		case 500:
-			return Response::json(buildErrorResponse('Internel server error!', $code), 500);
+			return Response::json(buildErrorResponse($exception->getMessage(), $code), 500);
 
 		case 404:
 			return Response::json(buildErrorResponse('Not found!', $code), 404);
