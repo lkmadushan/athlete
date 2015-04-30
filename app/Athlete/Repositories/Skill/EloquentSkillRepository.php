@@ -1,6 +1,7 @@
 <?php namespace Athlete\Repositories\Skill;
 
 use Skill;
+use Player;
 use Athlete\Repositories\EloquentRepository;
 
 class EloquentSkillRepository extends EloquentRepository implements SkillRepository {
@@ -24,5 +25,28 @@ class EloquentSkillRepository extends EloquentRepository implements SkillReposit
 		$this->builder = $this->model->where('player_id', $playerId);
 
 		return $this;
+	}
+
+	/**
+	 * Update an array of skills at once belongs to a player
+	 *
+	 * @param array $skills
+	 * @param Player $player
+	 * @return mixed
+	 */
+	public function updatePlayerSkills(array $skills, Player $player)
+	{
+		$instances = [];
+
+		foreach($skills as $data)
+		{
+			$skill = $player->skills()->findOrFail($data['skill_id']);
+
+			$skill->update($data);
+
+			$instances[] = $skill;
+		}
+
+		return $instances;
 	}
 }

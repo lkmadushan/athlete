@@ -126,11 +126,11 @@ class SkillsController extends ApiController {
 	 * @param $sportId
 	 * @param $teamId
 	 * @param $playerId
-	 * @param $skillId
+	 * @param $skillIds
 	 * @return \Response
 	 * @throws \Laracasts\Validation\FormValidationException
 	 */
-	public function update($sportId, $teamId, $playerId, $skillId)
+	public function update($sportId, $teamId, $playerId, $skillIds = null)
 	{
 		if(Input::isJson()) {
 
@@ -142,9 +142,9 @@ class SkillsController extends ApiController {
 				->teams()->findOrFail($teamId)
 				->players()->findOrFail($playerId);
 
-			$skill = $player->skills()->findOrFail($skillId)->updateMany($formData->all());
+			$skills = $this->repository->updatePlayerSkills($formData->all(), $player);
 
-			$data = $this->fractal->collection($skill, new SkillTransformer());
+			$data = $this->fractal->collection($skills, new SkillTransformer());
 
 			return $this->respondWithSuccess($data);
 		}

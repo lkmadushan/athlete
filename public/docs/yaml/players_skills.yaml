@@ -1,0 +1,80 @@
+---
+version: v1.0
+
+rate_limited: Yes
+
+response_format: JSON
+
+authentication: required
+
+auth_type: required
+
+method: GET
+
+method_override:
+
+resource:
+
+description: Show all skills of the player
+
+endpoint: sports/{sportId}/teams/{teamId}/players/{playerId}/skills
+
+api_key: required
+
+access_token: not_required
+
+device_id: required
+
+device_type: required
+
+parameters:
+    - name: limit
+        description: Limit items
+        type: Integer
+        optional: Yes
+        default:
+        values: 10
+
+    - name: offset
+        description: Skip items
+        type: Integer
+        optional: Yes
+        default:
+        values: 5
+
+json_generator: |
+    {
+      "success": true,
+      "data": {
+        "skills": [
+          {
+            "skill_id": 10,
+            "name": "quae",
+            "notes": "Ut commodi dolor sed sed veniam doloribus eius.",
+            "level": "Excellent"
+          },
+          {
+            "skill_id": 11,
+            "name": "weruesuis",
+            "notes": "Atque corporis quos enim commodi.",
+            "level": "Excellent"
+          },
+          {
+            "skill_id": 12,
+            "name": "asmens",
+            "notes": "Ut commodi dolor sed sed veniam doloribus eiusi.",
+            "level": "Excellent"
+          }
+        ]
+      },
+      "status_code": 200
+    }
+
+errors: |
+    {
+      "success": false,
+      "error": {
+        "message": "Invalid credentials!",
+        "status_code": 401
+      }
+    }

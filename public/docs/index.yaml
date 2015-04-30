@@ -143,24 +143,24 @@ players_skills:
     method: GET
     endpoint: "sports/{sportId}/teams/{teamId}/players/{playerId}/skills"
     description: Show all skills of the player
-    file_name: yaml/teams_players_delete.yaml
+    file_name: yaml/players_skills.yaml
 
 players_skills_create:
     method: POST
     endpoint: "sports/{sportId}/teams/{teamId}/players/{playerId}/skills"
     description: Create a new skill for the player
-    file_name: yaml/user_register.yaml
+    file_name: yaml/players_skills_create.yaml
 
 players_skills_show:
     method: GET
     endpoint: "sports/{sportId}/teams/{teamId}/players/{playerId}/skills/{skillId}"
     description: Show a specific skill of the player
-    file_name: yaml/players_skills_create.yaml
+    file_name: yaml/players_skills_show.yaml
 
 players_skills_update:
     method: PATCH
-    endpoint: "sports/{sportId}/teams/{teamId}/players/{playerId}/skills/{skillId}"
-    description: Update a specific skill of the player
+    endpoint: "sports/{sportId}/teams/{teamId}/players/{playerId}/skills/{skillId,skillId,skillId}"
+    description: Update specific skills of the player
     file_name: yaml/players_skills_update.yaml
 
 players_skills_delete:

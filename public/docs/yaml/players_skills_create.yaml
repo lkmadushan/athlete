@@ -1,0 +1,95 @@
+---
+version: v1.0
+
+rate_limited: Yes
+
+response_format: JSON
+
+authentication: required
+
+auth_type: required
+
+method: POST
+
+method_override:
+
+resource: json/user_register.json
+
+description: Create new skills for the player
+
+endpoint: sports/{sportId}/teams/{teamId}/players/{playerId}/skills
+
+api_key: required
+
+access_token: not_required
+
+device_id: required
+
+device_type: required
+
+parameters:
+
+json_generator: |
+
+    [
+      {
+        "name": "quae",
+        "notes": "Ut commodi dolor sed sed veniam doloribus eius.",
+        "level": "Excellent"
+      },
+      {
+        "name": "weruesuis",
+        "notes": "Atque corporis quos enim commodi.",
+        "level": "Excellent"
+      },
+      {
+        "name": "asmens",
+        "notes": "Ut commodi dolor sed sed veniam doloribus eiusi.",
+        "level": "Excellent"
+      },
+      {
+        "name": "new skill",
+        "notes": "Et necessitatibus sit rerum natus illum. Sed aperiam eos qui.",
+        "level": "Poor"
+      }
+    ]
+
+    {
+      "success": true,
+      "data": [
+        {
+          "skill_id": 20,
+          "name": "quae",
+          "notes": "Ut commodi dolor sed sed veniam doloribus eius.",
+          "level": "Excellent"
+        },
+        {
+          "skill_id": 21,
+          "name": "weruesuis",
+          "notes": "Atque corporis quos enim commodi.",
+          "level": "Excellent"
+        },
+        {
+          "skill_id": 22,
+          "name": "asmens",
+          "notes": "Ut commodi dolor sed sed veniam doloribus eiusi.",
+          "level": "Excellent"
+        },
+        {
+          "skill_id": 23,
+          "name": "new skill",
+          "notes": "Et necessitatibus sit rerum natus illum. Sed aperiam eos qui.",
+          "level": "Poor"
+        }
+      ],
+      "status_code": 200
+    }
+
+errors: |
+    {
+      "success": false,
+      "error": {
+        "message": "Invalid credentials!",
+        "status_code": 401
+      }
+    }

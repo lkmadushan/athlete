@@ -34,4 +34,13 @@ interface SkillRepository {
 	 * @return mixed
 	 */
 	public function save(array $data);
+
+	/**
+	 * Update an array of skills at once belongs to a player
+	 *
+	 * @param array $skills
+	 * @param \Player $player
+	 * @return mixed
+	 */
+	public function updatePlayerSkills(array $skills, \Player $player);
 }
