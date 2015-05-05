@@ -6,7 +6,7 @@ class VideoRequest extends FormValidator {
 
 	protected $rules = [
 		'title' => 'required',
-		'video' => 'required|max:100000',
+		'video' => 'required|max:100000|mimes:mp4',
 		'video_mime' => 'required_with:video|in:video/mp4',
 		'thumbnail_image' => 'required_with:video|sometimes|mimes:jpeg,bmp,png',
 		'thumbnail_mime' => 'required_with:thumbnail_image|in:image/jpeg,image/png,image/bmp',
@@ -16,7 +16,7 @@ class VideoRequest extends FormValidator {
 	{
 		$this->rules = [
 			'title' => 'required|sometimes',
-			'video' => 'required|sometimes|max:100000',
+			'video' => 'required|sometimes|max:100000|mimes:mp4',
 			'video_mime' => 'required_with:video|in:video/mp4',
 			'thumbnail_image' => 'required_with:video|sometimes|mimes:jpeg,bmp,png',
 			'thumbnail_mime' => 'required_with:thumbnail_image|in:image/jpeg,image/png,image/bmp',
