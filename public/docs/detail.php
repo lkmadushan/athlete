@@ -169,6 +169,16 @@ $data = Spyc::YAMLLoad($file_name);
 							<td>APPLE</td>
 						</tr>
 					<?php }
+					if ($data['json_content'] == 'required') { ?>
+						<tr>
+							<td><b><span style="color:red">Content-Type</span></b></td>
+							<td><i> String </i></td>
+							<td>The Device Type</td>
+							<td></td>
+							<td></td>
+							<td>application/json</td>
+						</tr>
+					<?php }
 					?>
 
 					</tbody>

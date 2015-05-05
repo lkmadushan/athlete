@@ -27,6 +27,8 @@ device_id: required
 
 device_type: required
 
+json_content: required
+
 parameters:
 
 json_generator: |
