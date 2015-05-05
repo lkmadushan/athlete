@@ -62,12 +62,12 @@ Route::get('players/{playerId}/{imageName}', [
 /**
  * Video response
  */
-Route::get('videos/{videoId}/{thumbnail}', [
+Route::get('videos/{videoId}/{slug}', [
 	'as' => 'video_path',
-	'uses' => 'VideosController@show'
+	'uses' => 'VideosController@showVideo'
 ]);
 
-Route::get('videos/thumbs/{videoId}/{thumbnail}', [
+Route::get('videos/{videoId}/thumbs/{thumbnail}', [
 	'as' => 'video_thumb_path',
 	'uses' => 'VideosController@showThumbnail'
 ]);

@@ -110,12 +110,12 @@ class PlayersController extends ApiController {
 		} catch(Exception $e) {
 			DB::rollBack();
 
-			return $this->respondUnprocess($e->getMessage());
+			return $this->respondUnprocess('Unable to save the player!');
 		}
 
 		$data = $this->fractal->item($player, new PlayerTransformer());
 
-		return $this->respondWithSuccess(array_merge($data, ['players_count' => Player::count()]));
+		return $this->respondWithSuccess(array_merge($data, ['players_count' => $team->players->count()]));
 	}
 
 	/**
