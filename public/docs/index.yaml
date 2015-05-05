@@ -187,13 +187,13 @@ players_videos_show:
     method: GET
     endpoint: "sports/{sportId}/teams/{teamId}/players/{playerId}/videos/{videoId}"
     description: Show a specific video of the player
-    file_name: yaml/user_register.yaml
+    file_name: yaml/players_videos_show.yaml
 
 players_videos_update:
     method: PATCH
     endpoint: "sports/{sportId}/teams/{teamId}/players/{playerId}/videos/{videoId}"
     description: Update a specific video of the player
-    file_name: yaml/players_videos_show.yaml
+    file_name: yaml/players_videos_update.yaml
 
 players_videos_delete:
     method: DELETE

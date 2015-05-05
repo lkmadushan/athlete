@@ -1,0 +1,76 @@
+---
+version: v1.0
+
+rate_limited: Yes
+
+response_format: JSON
+
+authentication: required
+
+auth_type: required
+
+method: GET
+
+method_override:
+
+resource:
+
+description: Show all videos of the player
+
+endpoint: sports/{sportId}/teams/{teamId}/players/{playerId}/videos
+
+api_key: required
+
+access_token: not_required
+
+device_id: required
+
+device_type: required
+
+parameters:
+    - name: limit
+        description: Limit items
+        type: Integer
+        optional: Yes
+        default:
+        values: 10
+
+    - name: offset
+        description: Skip items
+        type: Integer
+        optional: Yes
+        default:
+        values: 5
+
+json_generator: |
+    {
+      "success": true,
+      "data": {
+        "videos": [
+          {
+            "video_id": 3,
+            "title": "fuga",
+            "url": "http://athlete.dev/videos/3/aperiam",
+            "thumbnail": "http://athlete.dev/videos/3/thumbs/accusantium",
+            "uploaded_at": "05 May 2015"
+          },
+          {
+            "video_id": 5,
+            "title": "sint",
+            "url": "http://athlete.dev/videos/5/nam",
+            "thumbnail": "http://athlete.dev/videos/5/thumbs/quod",
+            "uploaded_at": "05 May 2015"
+          }
+        ]
+      },
+      "status_code": 200
+    }
+
+errors: |
+    {
+      "success": false,
+      "error": {
+        "message": "Invalid credentials!",
+        "status_code": 401
+      }
+    }

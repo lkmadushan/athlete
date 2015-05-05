@@ -1,0 +1,60 @@
+---
+version: v1.0
+
+rate_limited: Yes
+
+response_format: JSON
+
+authentication: required
+
+auth_type: required
+
+method: GET
+
+method_override:
+
+resource: json/user_register.json
+
+description: Show a specific video of the player
+
+endpoint: sports/{sportId}/teams/{teamId}/players/{playerId}/videos/{videoId}
+
+api_key: required
+
+access_token: not_required
+
+device_id: required
+
+device_type: required
+
+parameters:
+
+json_generator: |
+    {
+      "success": true,
+      "data": {
+        "video_id": 13,
+        "title": "My new video x",
+        "url": "http://athlete.dev/videos/13/zyKRQce0BzbFU1Ps",
+        "thumbnail": "http://athlete.dev/videos/13/thumbs/QVBjrdZwZzeawweV",
+        "uploaded_at": "05 May 2015"
+      },
+      "status_code": 200
+    }
+
+errors: |
+    {
+      "success": false,
+      "error": {
+        "message": "Video not found!",
+        "status_code": 404
+      }
+    }
+
+    {
+      "success": false,
+      "error": {
+        "message": "Invalid credentials!",
+        "status_code": 401
+      }
+    }
