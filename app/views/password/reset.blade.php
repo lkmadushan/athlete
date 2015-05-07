@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Athele Profile</title>
-    <link rel="shortcut icon" href="images/athlete-favicon.png">
+    <link rel="shortcut icon" href="{{ asset('images/athlete-favicon.png') }}">
 
     <!-- Bootstrap -->
 
@@ -36,7 +36,7 @@
                 <div class="panel panel-default" id="middle-pannel">
                     <div class="panel-body">
                         <div class="text-center">
-                            <img src="images/athlete-logo.png" class="img-responsive center-block" id="login">
+                            <img src="{{ asset('images/athlete-logo.png') }}" class="img-responsive center-block" id="login">
 
                             <h3 class="text-center text-white text-thin">Forgot Password?</h3>
 
@@ -125,16 +125,16 @@
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="js/jquery-2.1.1.min.js"></script>
+<script src="{{ asset('js/jquery-2.1.1.min.js') }}"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="js/bootstrap.min.js"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <!--smooth loading with effects -->
-<script src="js/wow.min.js"></script>
+<script src="{{ asset('js/wow.min.js') }}"></script>
 
-<script src="js/angular.min.js"></script>
+<script src="{{ asset('js/angular.min.js') }}"></script>
 
-<script src="js/ui-bootstrap-tpls.min.js"></script>
-<script src="js/app.js"></script>
+<script src="{{ asset('js/ui-bootstrap-tpls.min.js') }}"></script>
+<script src="{{ asset('js/app.js') }}"></script>
 
 </body>
 </html>
