@@ -38,6 +38,6 @@ abstract class EloquentRepository {
 
 	public function paginate($limit, $offset)
 	{
-		return $this->builder->skip($offset)->take($limit)->get();
+		return $this->builder->latest()->skip($offset)->take($limit)->get();
 	}
 }

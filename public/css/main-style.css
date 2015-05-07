@@ -1,0 +1,51 @@
+@charset "UTF-8";
+/* CSS Document */
+html, body {
+	margin: 0;
+	padding:2%;
+	background:rgba(0,0,0,1);
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight:lighter;
+	font-size:14px;
+}
+
+
+
+
+#middle-pannel{
+background:url(../images/athlete_bg.jpg) center center no-repeat;
+background-size:cover;
+
+}
+
+.color-green{
+color:#8fff00;
+}
+.text-white{
+color:#FFF;	
+}
+.text-thin{
+font-weight:lighter !important;	
+}
+.btn-bg{
+/*background:url(../images/button-bg.png) center center no-repeat;
+background-size:cover;	*/
+background:#a3cd39;
+color:#FFF;
+}
+.btn-bg:hover{
+/*background:url(../images/button-bg.png) center center no-repeat;
+background-size:cover;	*/
+background:#a3cd39;
+color:#FFF;
+}
+
+.ok-btn{
+
+color:#3c763d;	
+}
+
+.middle {
+    display: table-cell;
+    vertical-align: middle;
+}
