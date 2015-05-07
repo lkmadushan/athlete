@@ -47,8 +47,8 @@ class RemindersController extends ApiController {
 		{
 			$user->password = $password;
 			$user->save();
-			
-			Device::where('user_id', $user->id)->update([
+
+			Device::whereUserId($user->id)->update([
 				'access_token' => Str::random(64)
 			]);
 		});
