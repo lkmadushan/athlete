@@ -142,7 +142,7 @@ class SkillsController extends ApiController {
 				->teams()->findOrFail($teamId)
 				->players()->findOrFail($playerId);
 
-			$skills = $this->repository->updatePlayerSkills($formData, $player);
+			$skills = $this->repository->updateOrInsertPlayerSkills($formData, $player);
 
 			$data = $this->fractal->collection($skills, new SkillTransformer());
 

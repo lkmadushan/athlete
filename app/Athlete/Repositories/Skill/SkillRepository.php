@@ -42,5 +42,5 @@ interface SkillRepository {
 	 * @param \Player $player
 	 * @return mixed
 	 */
-	public function updatePlayerSkills(array $skills, \Player $player);
+	public function updateOrInsertPlayerSkills(array $skills, \Player $player);
 }

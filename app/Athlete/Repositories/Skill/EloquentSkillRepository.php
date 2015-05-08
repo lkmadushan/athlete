@@ -28,25 +28,22 @@ class EloquentSkillRepository extends EloquentRepository implements SkillReposit
 	}
 
 	/**
-	 * Update an array of skills at once belongs to a player
+	 * Update or insert an array of skills at once belongs to a player
 	 *
 	 * @param array $skills
 	 * @param Player $player
 	 * @return mixed
 	 */
-	public function updatePlayerSkills(array $skills, Player $player)
+	public function updateOrInsertPlayerSkills(array $skills, Player $player)
 	{
 		$instances = [];
 
 		foreach($skills as $data)
 		{
-			$skill = $player->skills()->getRelated()->firstOrNew([
-				'id' => $data['skill_id']
-			]);
+			$skill = $this->model->findOrNew($data['skill_id']);
+			$skill->fill($data);
 
-			$foreign = ['player_id' => $player->id];
-
-			$skill->fill(array_merge($foreign, $data))->save();
+			$player->skills()->save($skill);
 
 			$instances[] = $skill;
 		}
