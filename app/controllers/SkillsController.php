@@ -136,7 +136,7 @@ class SkillsController extends ApiController {
 
 			$formData = Input::json('skills');
 
-			$this->skillRequest->validate($formData);
+			$this->skillRequest->validateJson($formData);
 
 			$player = Auth::user()->sports()->findOrfail($sportId)
 				->teams()->findOrFail($teamId)
