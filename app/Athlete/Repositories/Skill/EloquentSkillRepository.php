@@ -40,9 +40,11 @@ class EloquentSkillRepository extends EloquentRepository implements SkillReposit
 
 		foreach($skills as $data)
 		{
-			$skill = $player->skills()->findOrFail($data['skill_id']);
+			$skill = $player->skills()->firstOrNew([
+				'id' => $data['skill_id']
+			]);
 
-			$skill->update($data);
+			$skill->fill($data)->save();
 
 			$instances[] = $skill;
 		}
