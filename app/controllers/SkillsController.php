@@ -134,7 +134,7 @@ class SkillsController extends ApiController {
 	{
 		if(Input::isJson()) {
 
-			$formData = Input::json();
+			$formData = Input::json('skills');
 
 			$this->skillRequest->validate($formData);
 
