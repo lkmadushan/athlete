@@ -2,7 +2,7 @@
 
 class Skill extends \Eloquent {
 
-	protected $fillable = ['name', 'notes', 'level'];
+	protected $fillable = ['name', 'notes', 'level', 'player_id'];
 
 	public function setLevelAttribute($value)
 	{

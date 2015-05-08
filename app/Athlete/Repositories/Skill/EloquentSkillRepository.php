@@ -44,7 +44,9 @@ class EloquentSkillRepository extends EloquentRepository implements SkillReposit
 				'id' => $data['skill_id']
 			]);
 
-			$skill->fill($data)->save();
+			$foreign = ['player_id' => $player->id];
+
+			$skill->fill(array_merge($foreign, $data))->save();
 
 			$instances[] = $skill;
 		}
