@@ -68,7 +68,7 @@ class SportsController extends ApiController {
 	{
 		$formData = Input::all();
 
-		$this->sportRequest->validate($formData);
+		$this->sportRequest->rules(Auth::user()->id)->validate($formData);
 
 		try {
 			DB::beginTransaction();
@@ -120,9 +120,11 @@ class SportsController extends ApiController {
 	{
 		$formData = Input::all();
 
-		$this->sportRequest->updateRules()->validate($formData);
+		$userId = Auth::user()->id;
 
-		$sport = $this->repository->filterByUser(Auth::user()->id)->findById($id);
+		$this->sportRequest->updateRules($userId)->validate($formData);
+
+		$sport = $this->repository->filterByUser($userId)->findById($id);
 
 		try {
 			DB::beginTransaction();

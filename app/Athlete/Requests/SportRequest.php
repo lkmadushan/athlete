@@ -4,17 +4,24 @@ use Laracasts\Validation\FormValidator;
 
 class SportRequest extends FormValidator {
 
-	protected $rules = [
-		'name' => 'required',
-		'image' => 'required|sometimes|mimes:jpeg,bmp,png',
-		'mime' => 'required_with:image|in:image/jpeg,image/png,image/bmp',
-		'image_type' => 'required_with:image|in:uploaded,default'
-	];
+	protected $rules = [];
 
-	public function updateRules()
+	public function rules($userId)
 	{
 		$this->rules = [
-			'name' => 'required|sometimes',
+			'name' => "unique:users,sports,null,id,user_id,{$userId}",
+			'image' => 'required|sometimes|mimes:jpeg,bmp,png',
+			'mime' => 'required_with:image|in:image/jpeg,image/png,image/bmp',
+			'image_type' => 'required_with:image|in:uploaded,default'
+		];
+
+		return $this;
+	}
+
+	public function updateRules($userId)
+	{
+		$this->rules = [
+			'name' => "unique:users,sports,null,id,user_id,{$userId}",
 			'image' => 'required|sometimes|mimes:jpeg,bmp,png',
 			'mime' => 'required_with:image|in:image/jpeg,image/png,image/bmp',
 			'image_type' => 'required_with:image|in:uploaded,default'

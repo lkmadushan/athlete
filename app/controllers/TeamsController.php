@@ -73,7 +73,7 @@ class TeamsController extends \ApiController {
 	{
 		$formData = Input::only('name');
 
-		$this->teamRequest->validate($formData);
+		$this->teamRequest->rules($id)->validate($formData);
 
 		$sport = Auth::user()->sports()->findOrFail($id);
 
@@ -115,7 +115,7 @@ class TeamsController extends \ApiController {
 	{
 		$formData = Input::only('name');
 
-		$this->teamRequest->validate($formData);
+		$this->teamRequest->rules($sportId)->validate($formData);
 
 		$sport = Auth::user()->sports()->findOrFail($sportId);
 
