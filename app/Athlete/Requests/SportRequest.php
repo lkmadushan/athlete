@@ -9,7 +9,7 @@ class SportRequest extends FormValidator {
 	public function rules($userId)
 	{
 		$this->rules = [
-			'name' => "unique:users,sports,null,id,user_id,{$userId}",
+			'name' => "required|unique:sports,name,null,id,user_id,{$userId}",
 			'image' => 'required|sometimes|mimes:jpeg,bmp,png',
 			'mime' => 'required_with:image|in:image/jpeg,image/png,image/bmp',
 			'image_type' => 'required_with:image|in:uploaded,default'
@@ -21,7 +21,7 @@ class SportRequest extends FormValidator {
 	public function updateRules($userId)
 	{
 		$this->rules = [
-			'name' => "unique:users,sports,null,id,user_id,{$userId}",
+			'name' => "required|unique:sports,name,null,id,user_id,{$userId}",
 			'image' => 'required|sometimes|mimes:jpeg,bmp,png',
 			'mime' => 'required_with:image|in:image/jpeg,image/png,image/bmp',
 			'image_type' => 'required_with:image|in:uploaded,default'
