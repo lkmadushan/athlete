@@ -24,7 +24,8 @@ class TeamTransformer extends TransformerAbstract {
 	{
 		return [
 			'team_id' => (int)$team->id,
-			'name' => $team->name
+			'name' => $team->name,
+			'teams_count' => \Auth::user()->teams->count()
 		];
 	}
 
