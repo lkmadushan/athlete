@@ -46,6 +46,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	}
 
 	/**
+	 * User has many teams through sports
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+	 */
+	public function teams()
+	{
+		return $this->hasManyThrough('Team', 'Sport');
+	}
+
+	/**
 	 * User has one device
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\HasMany

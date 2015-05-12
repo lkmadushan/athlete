@@ -81,7 +81,7 @@ class TeamsController extends \ApiController {
 
 		$data = $this->fractal->item($team, new TeamTransformer());
 
-		return $this->respondWithSuccess(array_merge($data, ['teams_count' => $sport->teams->count()]));
+		return $this->respondWithSuccess(array_merge($data, ['teams_count' => Auth::user()->teams->count()]));
 	}
 
 	/**
