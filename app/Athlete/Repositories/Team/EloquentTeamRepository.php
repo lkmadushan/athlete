@@ -21,7 +21,7 @@ class EloquentTeamRepository extends EloquentRepository implements TeamRepositor
 	 */
 	public function filterBySport($sportId)
 	{
-		$this->builder = $this->model->where('sport_id', $sportId);
+		$this->builder = $this->model->where('sport_id', $sportId)->orderBy('name');
 
 		return $this;
 	}
