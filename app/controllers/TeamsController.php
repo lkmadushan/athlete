@@ -58,7 +58,7 @@ class TeamsController extends \ApiController {
 
 		$data = $this->fractal->collection($teams, new TeamTransformer(), 'teams');
 
-		return $this->respondWithSuccess($data);
+		return $this->respondWithSuccess(array_merge($data, ['teams_count' => Auth::user()->teams->count()]));
 	}
 
 	/**

@@ -59,7 +59,7 @@ class PlayersController extends ApiController {
 
 		$data = $this->fractal->collection($players, new playerTransformer(), 'players');
 
-		return $this->respondWithSuccess($data);
+		return $this->respondWithSuccess(array_merge($data, ['players_count' => $team->players->count()]));
 	}
 
 	/**

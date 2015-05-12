@@ -63,7 +63,8 @@ json_generator: |
               "value": 60
             }
           }
-        ]
+        ],
+        "players_count": 1
       },
       "status_code": 200
     }

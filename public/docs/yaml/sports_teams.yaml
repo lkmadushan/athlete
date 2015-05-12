@@ -55,7 +55,8 @@ json_generator: |
             "team_id": 2,
             "name": "illum"
           }
-        ]
+        ],
+        "teams_count": 2
       },
       "status_code": 200
     }

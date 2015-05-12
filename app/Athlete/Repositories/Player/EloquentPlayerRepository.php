@@ -21,7 +21,7 @@ class EloquentPlayerRepository extends EloquentRepository implements PlayerRepos
 	 */
 	public function filterByTeam($teamId)
 	{
-		$this->builder = $this->model->where('team_id', $teamId);
+		$this->builder = $this->model->where('team_id', $teamId)->orderBy('first_name');
 
 		return $this;
 	}
