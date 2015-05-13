@@ -6,7 +6,6 @@ class SkillRequest extends FormValidator {
 
 	protected $rules = [
 		'name' => 'required|sometimes',
-		'notes' => 'required|sometimes',
 		'level' => 'required|sometimes'
 	];
 

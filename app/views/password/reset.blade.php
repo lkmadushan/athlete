@@ -46,6 +46,13 @@
 
                                 <form action="{{ action('RemindersController@postReset') }}" method="POST" class="form"
                                       name="myForm"><!--start form--><!--add form action as needed-->
+                                    <div>
+                                        @if (Session::has('error'))
+                                            {{ trans(Session::get('reason')) }}
+                                        @else
+                                            An email with the password reset has been sent.
+                                        @endif
+                                    </div>
                                     <input type="hidden" name="token" value="{{ $token }}">
                                     <fieldset>
                                         <div class="form-group  has-feedback" id="email-fb">
