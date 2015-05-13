@@ -97,16 +97,16 @@
                                                    type="submit">
                                         </div>
 
-                                        <div class="form-group has-success has-feedback">
-
-                                            <p class="text-white">Password has been successfully changed.</p>
-
-                                        </div>
-
-                                        @if (Session::has('error'))
+                                        @if(Session::has('error'))
                                             <div class="form-group has-danger has-feedback">
 
                                                 <p class="text-danger">{{ trans(Session::get('error')) }}</p>
+
+                                            </div>
+                                        @else
+                                            <div class="form-group has-success has-feedback">
+
+                                                <p class="text-white">Password has been successfully changed.</p>
 
                                             </div>
                                         @endif
