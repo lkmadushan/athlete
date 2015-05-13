@@ -46,13 +46,6 @@
 
                                 <form action="{{ action('RemindersController@postReset') }}" method="POST" class="form"
                                       name="myForm"><!--start form--><!--add form action as needed-->
-                                    <div>
-                                        @if (Session::has('error'))
-                                            {{ trans(Session::get('reason')) }}
-                                        @else
-                                            An email with the password reset has been sent.
-                                        @endif
-                                    </div>
                                     <input type="hidden" name="token" value="{{ $token }}">
                                     <fieldset>
                                         <div class="form-group  has-feedback" id="email-fb">
@@ -106,10 +99,17 @@
 
                                         <div class="form-group has-success has-feedback">
 
-                                            <p class="text-white">Reset Password Link Sent To the Email</p>
-
+                                            <p class="text-white">Password has been successfully changed.</p>
 
                                         </div>
+
+                                        @if (Session::has('error'))
+                                            <div class="form-group has-danger has-feedback">
+
+                                                <p class="text-danger">{{ trans(Session::get('error')) }}</p>
+
+                                            </div>
+                                        @endif
 
                                     </fieldset>
                                 </form>
