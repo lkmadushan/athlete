@@ -51,7 +51,7 @@
                                             {{ trans(Session::get('reason')) }}
                                         @else
                                             An email with the password reset has been sent.
-                                        @endif
+                                        @endifssh
                                     </div>
                                     <input type="hidden" name="token" value="{{ $token }}">
                                     <fieldset>
