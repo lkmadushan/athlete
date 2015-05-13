@@ -53,7 +53,7 @@
                                                 <span class="input-group-addon"><i
                                                             class="glyphicon glyphicon-envelope"></i></span>
                                                 <!--EMAIL ADDRESS-->
-                                                <input id="email" name="email" placeholder="email address"
+                                                <input id="email" name="email" placeholder="Email Address"
                                                        class="form-control" type="email"
                                                        aria-describedby="inputSuccess2Status" required>
                                                 <!--span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span-->

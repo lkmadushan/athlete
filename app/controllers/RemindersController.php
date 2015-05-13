@@ -9,7 +9,12 @@ class RemindersController extends ApiController {
 	 */
 	public function postRemind()
 	{
-		switch ($response = Password::remind(Input::only('email')))
+		$response = Password::remind(Input::only('email'), function($message)
+		{
+			$message->subject('Password Reset');
+		});
+
+		switch ($response)
 		{
 			case Password::INVALID_USER:
 				return $this->respondUnprocess(Lang::get($response));
@@ -42,6 +47,11 @@ class RemindersController extends ApiController {
 		$credentials = Input::only(
 			'email', 'password', 'password_confirmation', 'token'
 		);
+
+		Password::validator(function($credentials)
+		{
+			return strlen($credentials['password']) >= 1;
+		});
 
 		$response = Password::reset($credentials, function($user, $password)
 		{
