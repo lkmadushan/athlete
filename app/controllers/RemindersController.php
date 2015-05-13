@@ -61,7 +61,7 @@ class RemindersController extends ApiController {
 				return Redirect::back()->with('error', Lang::get($response));
 
 			case Password::PASSWORD_RESET:
-				return Redirect::to('/');
+				return Redirect::back()->with('success', 'Password has been successfully changed.');
 		}
 	}
 }

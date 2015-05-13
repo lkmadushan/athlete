@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'dev-mail@elegantsandbox.com', 'name' => 'Developer'),
+	'from' => array('address' => 'dev-mail@elegantsandbox.com', 'name' => 'Athlete Profile'),
 
 	/*
 	|--------------------------------------------------------------------------

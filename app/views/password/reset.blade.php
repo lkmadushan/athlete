@@ -98,17 +98,21 @@
                                         </div>
 
                                         @if(Session::has('error'))
+
                                             <div class="form-group has-danger has-feedback">
 
                                                 <p class="text-danger">{{ trans(Session::get('error')) }}</p>
 
                                             </div>
-                                        @else
+
+                                        @elseif(Session::has('success'))
+
                                             <div class="form-group has-success has-feedback">
 
-                                                <p class="text-white">Password has been successfully changed.</p>
+                                                <p class="text-white">{{ Session::get('success') }}</p>
 
                                             </div>
+
                                         @endif
 
                                     </fieldset>
