@@ -122,7 +122,7 @@ class SportsController extends ApiController {
 
 		$userId = Auth::user()->id;
 
-		$this->sportRequest->updateRules($userId)->validate($formData);
+		$this->sportRequest->updateRules($userId, $id)->validate($formData);
 
 		$sport = $this->repository->filterByUser($userId)->findById($id);
 
