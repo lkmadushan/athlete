@@ -36,7 +36,8 @@
                 <div class="panel panel-default" id="middle-pannel">
                     <div class="panel-body">
                         <div class="text-center">
-                            <img src="{{ asset('images/athlete-logo.png') }}" class="img-responsive center-block" id="login">
+                            <img src="{{ asset('images/athlete-logo.png') }}" class="img-responsive center-block"
+                                 id="login">
 
                             <h3 class="text-center text-white text-thin">Forgot Password?</h3>
 

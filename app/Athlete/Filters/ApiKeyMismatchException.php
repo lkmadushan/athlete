@@ -2,10 +2,11 @@
 
 use Exception;
 
-class ApiKeyMismatchException extends Exception {
+class ApiKeyMismatchException extends Exception
+{
 
-	public function __construct($message = 'Valid api key is required!')
-	{
-		parent::__construct($message);
-	}
+    public function __construct($message = 'Valid api key is required!')
+    {
+        parent::__construct($message);
+    }
 }

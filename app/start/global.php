@@ -13,10 +13,10 @@
 
 ClassLoader::addDirectories(array(
 
-	app_path().'/commands',
-	app_path().'/controllers',
-	app_path().'/models',
-	app_path().'/database/seeds',
+    app_path() . '/commands',
+    app_path() . '/controllers',
+    app_path() . '/models',
+    app_path() . '/database/seeds',
 
 ));
 
@@ -31,7 +31,7 @@ ClassLoader::addDirectories(array(
 |
 */
 
-Log::useFiles(storage_path().'/logs/laravel.log');
+Log::useFiles(storage_path() . '/logs/laravel.log');
 
 /*
 |--------------------------------------------------------------------------
@@ -46,46 +46,41 @@ Log::useFiles(storage_path().'/logs/laravel.log');
 |
 */
 
-App::error(function(Exception $exception, $code)
-{
-	Log::error($exception);
+App::error(function (Exception $exception, $code) {
+    Log::error($exception);
 
-	switch($code) {
-		case 500:
-			return Response::json(buildErrorResponse($exception->getMessage(), $code), 500);
+    switch ($code) {
+        case 500:
+            return Response::json(buildErrorResponse($exception->getMessage(), $code), 500);
 
-		case 404:
-			return Response::json(buildErrorResponse('Not found!', $code), 404);
+        case 404:
+            return Response::json(buildErrorResponse('Not found!', $code), 404);
 
-		case 405:
-			return Response::json(buildErrorResponse('Method not allowed!', $code), 404);
-	}
+        case 405:
+            return Response::json(buildErrorResponse('Method not allowed!', $code), 404);
+    }
 });
 
-App::error(function(\Athlete\Filters\ApiKeyMismatchException $exception)
-{
-	return Response::json(buildErrorResponse($exception->getMessage(), 400), 400);
+App::error(function (\Athlete\Filters\ApiKeyMismatchException $exception) {
+    return Response::json(buildErrorResponse($exception->getMessage(), 400), 400);
 });
 
-App::error(function(\Athlete\Filters\UnauthorizedUserException $exception)
-{
-	return Response::json(buildErrorResponse($exception->getMessage(), 401), 401);
+App::error(function (\Athlete\Filters\UnauthorizedUserException $exception) {
+    return Response::json(buildErrorResponse($exception->getMessage(), 401), 401);
 });
 
-App::error(function(Illuminate\Database\Eloquent\ModelNotFoundException $exception)
-{
-	return Response::json(buildErrorResponse($exception->getModel(). " not found!", 404), 404);
+App::error(function (Illuminate\Database\Eloquent\ModelNotFoundException $exception) {
+    return Response::json(buildErrorResponse($exception->getModel() . " not found!", 404), 404);
 });
 
-App::error(function(\Laracasts\Validation\FormValidationException $exception)
-{
-	return Response::json([
-		'success' => false,
-		'error' => [
-			'message' => $exception->getErrors()->first(),
-			'status_code' => 422
-		],
-	], 422);
+App::error(function (\Laracasts\Validation\FormValidationException $exception) {
+    return Response::json([
+        'success' => false,
+        'error' => [
+            'message' => $exception->getErrors()->first(),
+            'status_code' => 422
+        ],
+    ], 422);
 });
 
 /*
@@ -99,9 +94,8 @@ App::error(function(\Laracasts\Validation\FormValidationException $exception)
 |
 */
 
-App::down(function()
-{
-	return Response::make("Be right back!", 503);
+App::down(function () {
+    return Response::make("Be right back!", 503);
 });
 
 /*
@@ -115,7 +109,7 @@ App::down(function()
 |
 */
 
-require app_path().'/filters.php';
+require app_path() . '/filters.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -124,4 +118,4 @@ require app_path().'/filters.php';
 |
 */
 
-require app_path().'/helpers.php';
+require app_path() . '/helpers.php';

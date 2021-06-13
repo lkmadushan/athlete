@@ -1,11 +1,12 @@
 <?php
 
-class Weight extends \Eloquent {
+class Weight extends \Eloquent
+{
 
-	protected $fillable = ['id', 'unit', 'value'];
+    protected $fillable = ['id', 'unit', 'value'];
 
-	public function player()
-	{
-		return $this->belongsTo('Player', 'id', 'id');
-	}
+    public function player()
+    {
+        return $this->belongsTo('Player', 'id', 'id');
+    }
 }

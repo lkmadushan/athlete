@@ -3,26 +3,27 @@
 use Athlete\Repositories\EloquentRepository;
 use Sport;
 
-class EloquentSportRepository extends EloquentRepository implements SportRepository {
+class EloquentSportRepository extends EloquentRepository implements SportRepository
+{
 
-	/**
-	 * @param \Sport $model
-	 */
-	public function __construct(Sport $model)
-	{
-		$this->model = $model;
-	}
+    /**
+     * @param \Sport $model
+     */
+    public function __construct(Sport $model)
+    {
+        $this->model = $model;
+    }
 
-	/**
-	 * Filter sports by user id
-	 *
-	 * @param $userId
-	 * @return mixed
-	 */
-	public function filterByUser($userId)
-	{
-		$this->builder = $this->model->where('user_id', $userId);
+    /**
+     * Filter sports by user id
+     *
+     * @param $userId
+     * @return mixed
+     */
+    public function filterByUser($userId)
+    {
+        $this->builder = $this->model->where('user_id', $userId);
 
-		return $this;
-	}
+        return $this;
+    }
 }

@@ -2,10 +2,11 @@
 
 use Exception;
 
-class UnauthorizedUserException extends Exception {
+class UnauthorizedUserException extends Exception
+{
 
-	public function __construct($message = 'Invalid credentials!')
-	{
-		parent::__construct($message);
-	}
+    public function __construct($message = 'Invalid credentials!')
+    {
+        parent::__construct($message);
+    }
 }

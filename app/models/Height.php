@@ -1,11 +1,12 @@
 <?php
 
-class Height extends \Eloquent {
+class Height extends \Eloquent
+{
 
-	protected $fillable = ['id', 'unit', 'value'];
+    protected $fillable = ['id', 'unit', 'value'];
 
-	public function player()
-	{
-		return $this->belongsTo('Player', 'id', 'id');
-	}
+    public function player()
+    {
+        return $this->belongsTo('Player', 'id', 'id');
+    }
 }

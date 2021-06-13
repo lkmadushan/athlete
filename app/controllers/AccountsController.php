@@ -1,168 +1,169 @@
 <?php
 
-use Athlete\Requests\AccountUpdateRequest;
-use Sorskod\Larasponse\Larasponse;
-use Athlete\Transformers\UserTransformer;
-use Athlete\Requests\RegisterUserRequest;
 use Athlete\Repositories\User\UserRepository;
+use Athlete\Requests\AccountUpdateRequest;
+use Athlete\Requests\RegisterUserRequest;
+use Athlete\Transformers\UserTransformer;
+use Sorskod\Larasponse\Larasponse;
 use Symfony\Component\Security\Core\Util\StringUtils;
 
-class AccountsController extends ApiController {
+class AccountsController extends ApiController
+{
 
-	/**
-	 * @var \Sorskod\Larasponse\Larasponse $fractal
-	 */
-	private $fractal;
+    /**
+     * @var \Sorskod\Larasponse\Larasponse $fractal
+     */
+    private $fractal;
 
-	/**
-	 * Includes relations
-	 *
-	 * @var array
-	 */
-	private $includes = [
-		'sports.teams.players.skills',
-		'sports.teams.players.videos',
-		'sports.teams.players.height',
-		'sports.teams.players.weight'
-	];
+    /**
+     * Includes relations
+     *
+     * @var array
+     */
+    private $includes = [
+        'sports.teams.players.skills',
+        'sports.teams.players.videos',
+        'sports.teams.players.height',
+        'sports.teams.players.weight'
+    ];
 
-	/**
-	 * @var RegisterUserRequest $registerUserRequest
-	 */
-	private $registerUserRequest;
+    /**
+     * @var RegisterUserRequest $registerUserRequest
+     */
+    private $registerUserRequest;
 
-	/**
-	 * @var \Athlete\Repositories\User\UserRepository
-	 */
-	private $repository;
+    /**
+     * @var \Athlete\Repositories\User\UserRepository
+     */
+    private $repository;
 
-	/**
-	 * @var \Athlete\Requests\AccountUpdateRequest $updateRequest
-	 */
-	private $updateRequest;
+    /**
+     * @var \Athlete\Requests\AccountUpdateRequest $updateRequest
+     */
+    private $updateRequest;
 
-	/**
-	 * Inject the dependancies
-	 *
-	 * @param \Sorskod\Larasponse\Larasponse $fractal
-	 * @param RegisterUserRequest $registerUserRequest
-	 * @param \Athlete\Requests\AccountUpdateRequest $updateRequest
-	 * @param \Athlete\Repositories\User\UserRepository $repository
-	 */
-	public function __construct(Larasponse $fractal,
-	                            RegisterUserRequest $registerUserRequest,
-	                            AccountUpdateRequest $updateRequest,
-	                            UserRepository $repository
-	)
-	{
-		$this->fractal = $fractal;
-		$this->fractal->parseIncludes($this->getIncludes());
+    /**
+     * Inject the dependancies
+     *
+     * @param \Sorskod\Larasponse\Larasponse $fractal
+     * @param RegisterUserRequest $registerUserRequest
+     * @param \Athlete\Requests\AccountUpdateRequest $updateRequest
+     * @param \Athlete\Repositories\User\UserRepository $repository
+     */
+    public function __construct(Larasponse $fractal,
+                                RegisterUserRequest $registerUserRequest,
+                                AccountUpdateRequest $updateRequest,
+                                UserRepository $repository
+    )
+    {
+        $this->fractal = $fractal;
+        $this->fractal->parseIncludes($this->getIncludes());
 
-		$this->registerUserRequest = $registerUserRequest;
-		$this->repository = $repository;
-		$this->updateRequest = $updateRequest;
-	}
+        $this->registerUserRequest = $registerUserRequest;
+        $this->repository = $repository;
+        $this->updateRequest = $updateRequest;
+    }
 
-	/**
-	 * Get authenticate user response
-	 *
-	 * @return \Illuminate\Http\JsonResponse
-	 */
-	public function user()
-	{
-		$data = $this->fractal->item(Auth::user(), new UserTransformer);
+    /**
+     * Parse includes to comma seperated values
+     *
+     * @return string
+     */
+    protected function getIncludes()
+    {
+        return implode(',', $this->includes);
+    }
 
-		return $this->respondWithSuccess($data);
-	}
+    /**
+     * Get authenticate user response
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function user()
+    {
+        $data = $this->fractal->item(Auth::user(), new UserTransformer);
 
-	/**
-	 * Register a new user
-	 *
-	 * @return \Illuminate\Http\JsonResponse
-	 * @throws \Laracasts\Validation\FormValidationException
-	 */
-	public function register()
-	{
-		$formData = Input::all();
+        return $this->respondWithSuccess($data);
+    }
 
-		$this->registerUserRequest->validate($formData);
+    /**
+     * Register a new user
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Laracasts\Validation\FormValidationException
+     */
+    public function register()
+    {
+        $formData = Input::all();
 
-		$device = $this->repository->saveWithDevice($formData);
+        $this->registerUserRequest->validate($formData);
 
-		$data = $this->fractal->item($device->user, new UserTransformer);
+        $device = $this->repository->saveWithDevice($formData);
 
-		return $this->respondWithSuccess($data);
-	}
+        $data = $this->fractal->item($device->user, new UserTransformer);
 
-	/**
-	 * Change user's password
-	 *
-	 * @return \Illuminate\Http\JsonResponse
-	 * @throws \Laracasts\Validation\FormValidationException
-	 */
-	public function changePassword()
-	{
-		$formData = Input::only('current_password', 'password', 'password_confirmation');
+        return $this->respondWithSuccess($data);
+    }
 
-		$this->updateRequest->changePassword()->validate($formData);
+    /**
+     * Change user's password
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Laracasts\Validation\FormValidationException
+     */
+    public function changePassword()
+    {
+        $formData = Input::only('current_password', 'password', 'password_confirmation');
 
-		if(Hash::check($formData['current_password'], Auth::user()->password)) {
+        $this->updateRequest->changePassword()->validate($formData);
 
-			Auth::user()->update($formData);
+        if (Hash::check($formData['current_password'], Auth::user()->password)) {
 
-			return $this->respondWithSuccess('Password has been successfully changed.');
-		}
+            Auth::user()->update($formData);
 
-		return $this->respondUnprocess('Cannot change the password!');
-	}
+            return $this->respondWithSuccess('Password has been successfully changed.');
+        }
 
-	/**
-	 * Change user's email
-	 *
-	 * @return \Illuminate\Http\JsonResponse
-	 * @throws \Laracasts\Validation\FormValidationException
-	 */
-	public function changeEmail()
-	{
-		$formData = Input::only('current_password', 'email', 'email_confirmation');
+        return $this->respondUnprocess('Cannot change the password!');
+    }
 
-		$this->updateRequest->changeEmail(Auth::user()->id)->validate($formData);
+    /**
+     * Change user's email
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Laracasts\Validation\FormValidationException
+     */
+    public function changeEmail()
+    {
+        $formData = Input::only('current_password', 'email', 'email_confirmation');
 
-		if(Hash::check($formData['current_password'], Auth::user()->password)) {
+        $this->updateRequest->changeEmail(Auth::user()->id)->validate($formData);
 
-			Auth::user()->update($formData);
+        if (Hash::check($formData['current_password'], Auth::user()->password)) {
 
-			return $this->respondWithSuccess('Email has been successfully changed.');
-		}
+            Auth::user()->update($formData);
 
-		return $this->respondUnprocess('Cannot change the e-mail!');
-	}
+            return $this->respondWithSuccess('Email has been successfully changed.');
+        }
 
-	/**
-	 * Purchase the app
-	 *
-	 * @return \Illuminate\Http\JsonResponse
-	 * @throws \Laracasts\Validation\FormValidationException
-	 */
-	public function makePurchase()
-	{
-		$formData = Input::only('is_purchased');
+        return $this->respondUnprocess('Cannot change the e-mail!');
+    }
 
-		$this->updateRequest->isPurchased()->validate($formData);
+    /**
+     * Purchase the app
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Laracasts\Validation\FormValidationException
+     */
+    public function makePurchase()
+    {
+        $formData = Input::only('is_purchased');
 
-		return ($this->repository->makePurchase(Auth::user()))
-			? $this->respondWithSuccess('App has been successfully purchased.')
-			: $this->respondUnprocess('App has already been purchased.');
+        $this->updateRequest->isPurchased()->validate($formData);
 
-	}
+        return ($this->repository->makePurchase(Auth::user()))
+            ? $this->respondWithSuccess('App has been successfully purchased.')
+            : $this->respondUnprocess('App has already been purchased.');
 
-	/**
-	 * Parse includes to comma seperated values
-	 *
-	 * @return string
-	 */
-	protected function getIncludes()
-	{
-		return implode(',', $this->includes);
-	}
+    }
 }

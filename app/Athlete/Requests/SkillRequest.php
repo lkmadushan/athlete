@@ -2,20 +2,21 @@
 
 use Laracasts\Validation\FormValidator;
 
-class SkillRequest extends FormValidator {
+class SkillRequest extends FormValidator
+{
 
-	protected $rules = [
-		'name' => 'required|sometimes',
-		'level' => 'required|sometimes'
-	];
+    protected $rules = [
+        'name' => 'required|sometimes',
+        'level' => 'required|sometimes'
+    ];
 
-	public function validateJson($skills)
-	{
-		foreach($skills as $skill) {
+    public function validateJson($skills)
+    {
+        foreach ($skills as $skill) {
 
-			$this->validate($skill);
-		}
+            $this->validate($skill);
+        }
 
-		return true;
-	}
+        return true;
+    }
 }

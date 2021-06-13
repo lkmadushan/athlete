@@ -1,49 +1,50 @@
 <?php
 
-class DatabaseSeeder extends Seeder {
+class DatabaseSeeder extends Seeder
+{
 
-	protected $tables = [
-		'users', 'devices', 'sports', 'teams', 'players', 'skills', 'videos'
-	];
+    protected $tables = [
+        'users', 'devices', 'sports', 'teams', 'players', 'skills', 'videos'
+    ];
 
-	/**
-	 * Run the database seeds.
-	 *
-	 * @return void
-	 */
-	public function run()
-	{
-		Eloquent::unguard();
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        Eloquent::unguard();
 
-		$this->cleanDatabase();
+        $this->cleanDatabase();
 
-		$this->seed();
-	}
+        $this->seed();
+    }
 
-	/**
-	 * Clean the database
-	 */
-	protected function cleanDatabase()
-	{
-		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+    /**
+     * Clean the database
+     */
+    protected function cleanDatabase()
+    {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 
-		foreach($this->tables as $table) {
-			DB::table($table)->truncate();
-		}
-	}
+        foreach ($this->tables as $table) {
+            DB::table($table)->truncate();
+        }
+    }
 
-	protected function seed()
-	{
-		foreach($this->tables as $table) {
+    protected function seed()
+    {
+        foreach ($this->tables as $table) {
 
-			$seeder = $this->tableToSeeder($table);
+            $seeder = $this->tableToSeeder($table);
 
-			$this->call($seeder);
-		}
-	}
+            $this->call($seeder);
+        }
+    }
 
-	protected function tableToSeeder($table)
-	{
-		return ucfirst($table) . 'TableSeeder';
-	}
+    protected function tableToSeeder($table)
+    {
+        return ucfirst($table) . 'TableSeeder';
+    }
 }

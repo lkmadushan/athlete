@@ -1,252 +1,253 @@
 <?php
 
-use Athlete\Requests\PlayerRequest;
-use Sorskod\Larasponse\Larasponse;
-use Athlete\Transformers\PlayerTransformer;
 use Athlete\Repositories\Player\PlayerRepository;
+use Athlete\Requests\PlayerRequest;
+use Athlete\Transformers\PlayerTransformer;
+use Sorskod\Larasponse\Larasponse;
 
-class PlayersController extends ApiController {
+class PlayersController extends ApiController
+{
 
-	/**
-	 * @var \Sorskod\Larasponse\Larasponse $fractal
-	 */
-	private $fractal;
+    /**
+     * @var \Sorskod\Larasponse\Larasponse $fractal
+     */
+    private $fractal;
 
-	/**
-	 * @var \Athlete\Repositories\Player\PlayerRepository $repository
-	 */
-	private $repository;
+    /**
+     * @var \Athlete\Repositories\Player\PlayerRepository $repository
+     */
+    private $repository;
 
-	/**
-	 * @var \Athlete\Requests\PlayerRequest $playerRequest
-	 */
-	private $playerRequest;
+    /**
+     * @var \Athlete\Requests\PlayerRequest $playerRequest
+     */
+    private $playerRequest;
 
-	/**
-	 * @param \Sorskod\Larasponse\Larasponse $fractal
-	 * @param PlayerRepository $repository
-	 * @param \Athlete\Requests\PlayerRequest $playerRequest
-	 */
-	public function __construct(Larasponse $fractal,
-	                            PlayerRepository $repository,
-	                            PlayerRequest $playerRequest
-	)
-	{
-		$this->fractal = $fractal;
-		$this->fractal->parseIncludes($this->getIncludes());
+    /**
+     * @param \Sorskod\Larasponse\Larasponse $fractal
+     * @param PlayerRepository $repository
+     * @param \Athlete\Requests\PlayerRequest $playerRequest
+     */
+    public function __construct(Larasponse $fractal,
+                                PlayerRepository $repository,
+                                PlayerRequest $playerRequest
+    )
+    {
+        $this->fractal = $fractal;
+        $this->fractal->parseIncludes($this->getIncludes());
 
-		$this->repository = $repository;
-		$this->playerRequest = $playerRequest;
-	}
+        $this->repository = $repository;
+        $this->playerRequest = $playerRequest;
+    }
 
-	/**
-	 * Display a listing of the resource.
-	 * GET /players
-	 *
-	 * @param $sportId
-	 * @param $teamId
-	 * @return \Response
-	 */
-	public function index($sportId, $teamId)
-	{
-		$limit = Request::get('limit') ?: 20;
+    /**
+     * Display a listing of the resource.
+     * GET /players
+     *
+     * @param $sportId
+     * @param $teamId
+     * @return \Response
+     */
+    public function index($sportId, $teamId)
+    {
+        $limit = Request::get('limit') ?: 20;
 
-		$offset = Request::get('offset') ?: 0;
+        $offset = Request::get('offset') ?: 0;
 
-		$team = Auth::user()->sports()->findOrfail($sportId)->teams()->findOrFail($teamId);
+        $team = Auth::user()->sports()->findOrfail($sportId)->teams()->findOrFail($teamId);
 
-		$players = $this->repository->filterByTeam($team->id)->paginate($limit, $offset);
+        $players = $this->repository->filterByTeam($team->id)->paginate($limit, $offset);
 
-		$data = $this->fractal->collection($players, new playerTransformer(), 'players');
+        $data = $this->fractal->collection($players, new playerTransformer(), 'players');
 
-		return $this->respondWithSuccess(array_merge($data, ['players_count' => $team->players->count()]));
-	}
+        return $this->respondWithSuccess(array_merge($data, ['players_count' => $team->players->count()]));
+    }
 
-	/**
-	 * Store a newly created resource in storage.
-	 * POST /players
-	 *
-	 * @param $sportId
-	 * @param $teamId
-	 * @return \Response
-	 */
-	public function store($sportId, $teamId)
-	{
-		$formData = Input::all();
+    /**
+     * Store a newly created resource in storage.
+     * POST /players
+     *
+     * @param $sportId
+     * @param $teamId
+     * @return \Response
+     */
+    public function store($sportId, $teamId)
+    {
+        $formData = Input::all();
 
-		$this->playerRequest->validate($formData);
+        $this->playerRequest->validate($formData);
 
-		$team = Auth::user()->sports()->findOrFail($sportId)->teams()->findOrFail($teamId);
+        $team = Auth::user()->sports()->findOrFail($sportId)->teams()->findOrFail($teamId);
 
-		try {
-			DB::beginTransaction();
+        try {
+            DB::beginTransaction();
 
-			if(Input::hasFile('image')) {
-				$formData = array_merge($formData, ['image' => Str::random()]);
-			}
+            if (Input::hasFile('image')) {
+                $formData = array_merge($formData, ['image' => Str::random()]);
+            }
 
-			$player = $team->players()->create($formData);
+            $player = $team->players()->create($formData);
 
-			//save weight, height of the player if they exists
-			if(array_key_exists('weight_unit', $formData)) {
+            //save weight, height of the player if they exists
+            if (array_key_exists('weight_unit', $formData)) {
 
-				$player->weight()->save(new Weight([
-					'unit' => $formData['weight_unit'],
-					'value' => $formData['weight_value']
-				]));
-			}
+                $player->weight()->save(new Weight([
+                    'unit' => $formData['weight_unit'],
+                    'value' => $formData['weight_value']
+                ]));
+            }
 
-			if(array_key_exists('height_unit', $formData)) {
+            if (array_key_exists('height_unit', $formData)) {
 
-				$player->height()->save(new Height([
-					'unit' => $formData['height_unit'],
-					'value' => $formData['height_value']
-				]));
-			}
+                $player->height()->save(new Height([
+                    'unit' => $formData['height_unit'],
+                    'value' => $formData['height_value']
+                ]));
+            }
 
-			$this->moveImage($player->id, $player->image);
+            $this->moveImage($player->id, $player->image);
 
-			DB::commit();
-		} catch(Exception $e) {
-			DB::rollBack();
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
 
-			return $this->respondUnprocess('Unable to save the player!');
-		}
+            return $this->respondUnprocess('Unable to save the player!');
+        }
 
-		$data = $this->fractal->item($player, new PlayerTransformer());
+        $data = $this->fractal->item($player, new PlayerTransformer());
 
-		return $this->respondWithSuccess(array_merge($data, ['players_count' => $team->players->count()]));
-	}
+        return $this->respondWithSuccess(array_merge($data, ['players_count' => $team->players->count()]));
+    }
 
-	/**
-	 * Display the specified resource.
-	 * GET /players/{id}
-	 *
-	 * @param $sportId
-	 * @param $teamId
-	 * @param $playerId
-	 * @return \Response
-	 */
-	public function show($sportId, $teamId, $playerId)
-	{
-		$team = Auth::user()->sports()->findOrFail($sportId)->teams()->findOrFail($teamId);
+    /**
+     * Move image to app/storage path
+     *
+     * @param $path
+     * @param $name
+     */
+    private function moveImage($path, $name)
+    {
+        if (Input::hasFile('image') && Input::file('image')->isValid()) {
 
-		$player = $team->players()->findOrFail($playerId);
+            Input::file('image')->move(storage_path("players/$path"), $name);
+        }
+    }
 
-		$data = $this->fractal->item($player, new playerTransformer());
+    /**
+     * Display the specified resource.
+     * GET /players/{id}
+     *
+     * @param $sportId
+     * @param $teamId
+     * @param $playerId
+     * @return \Response
+     */
+    public function show($sportId, $teamId, $playerId)
+    {
+        $team = Auth::user()->sports()->findOrFail($sportId)->teams()->findOrFail($teamId);
 
-		return $this->respondWithSuccess($data);
-	}
+        $player = $team->players()->findOrFail($playerId);
 
-	/**
-	 * Update the specified resource in storage.
-	 * PUT /players/{playerId}
-	 *
-	 * @param $sportId
-	 * @param $teamId
-	 * @param $playerId
-	 * @return \Response
-	 * @throws \Laracasts\Validation\FormValidationException
-	 */
-	public function update($sportId, $teamId, $playerId)
-	{
-		$formData = Input::all();
+        $data = $this->fractal->item($player, new playerTransformer());
 
-		$this->playerRequest->updateRules()->validate($formData);
+        return $this->respondWithSuccess($data);
+    }
 
-		$team = Auth::user()->sports()->findOrFail($sportId)->teams()->findOrFail($teamId);
+    /**
+     * Update the specified resource in storage.
+     * PUT /players/{playerId}
+     *
+     * @param $sportId
+     * @param $teamId
+     * @param $playerId
+     * @return \Response
+     * @throws \Laracasts\Validation\FormValidationException
+     */
+    public function update($sportId, $teamId, $playerId)
+    {
+        $formData = Input::all();
 
-		$player = $team->players()->findOrFail($playerId);
+        $this->playerRequest->updateRules()->validate($formData);
 
-		try {
-			DB::beginTransaction();
+        $team = Auth::user()->sports()->findOrFail($sportId)->teams()->findOrFail($teamId);
 
-			// rename the image name to clear caching for mobile devices
-			if(Input::hasFile('image')) {
-				$path = storage_path("players/{$player->id}/{$player->image}");
-				File::delete($path);
+        $player = $team->players()->findOrFail($playerId);
 
-				$formData = array_merge($formData, ['image' => Str::random()]);
-			}
+        try {
+            DB::beginTransaction();
 
-			$player->update($formData);
+            // rename the image name to clear caching for mobile devices
+            if (Input::hasFile('image')) {
+                $path = storage_path("players/{$player->id}/{$player->image}");
+                File::delete($path);
 
-			//update weight, height of the player
-			if(array_key_exists('weight_unit', $formData)) {
+                $formData = array_merge($formData, ['image' => Str::random()]);
+            }
 
-				Weight::updateOrCreate([
-					'id' => $playerId
-				], [
-					'unit' => $formData['weight_unit'],
-					'value' => $formData['weight_value']
-				]);
-			}
+            $player->update($formData);
 
-			if(array_key_exists('height_unit', $formData)) {
+            //update weight, height of the player
+            if (array_key_exists('weight_unit', $formData)) {
 
-				Height::updateOrCreate([
-					'id' => $playerId
-				], [
-					'unit' => $formData['height_unit'],
-					'value' => $formData['height_value']
-				]);
-			}
+                Weight::updateOrCreate([
+                    'id' => $playerId
+                ], [
+                    'unit' => $formData['weight_unit'],
+                    'value' => $formData['weight_value']
+                ]);
+            }
 
-			$this->moveImage($player->id, $player->image);
+            if (array_key_exists('height_unit', $formData)) {
 
-			DB::commit();
-		} catch(Exception $e) {
-			DB::rollBack();
+                Height::updateOrCreate([
+                    'id' => $playerId
+                ], [
+                    'unit' => $formData['height_unit'],
+                    'value' => $formData['height_value']
+                ]);
+            }
 
-			return $this->respondUnprocess('Unable to update the player!');
-		}
+            $this->moveImage($player->id, $player->image);
 
-		$data = $this->fractal->item($player, new PlayerTransformer());
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
 
-		return $this->respondWithSuccess($data);
-	}
+            return $this->respondUnprocess('Unable to update the player!');
+        }
 
-	/**
-	 * Remove the specified resource from storage.
-	 * DELETE /players/{playerId}
-	 *
-	 * @param $sportId
-	 * @param $teamId
-	 * @param $playerId
-	 * @return \Response
-	 */
-	public function destroy($sportId, $teamId, $playerId)
-	{
-		$team = Auth::user()->sports()->findOrFail($sportId)->teams()->findOrFail($teamId);
+        $data = $this->fractal->item($player, new PlayerTransformer());
 
-		$player = $team->players()->findOrFail($playerId);
+        return $this->respondWithSuccess($data);
+    }
 
-		try {
-			if($player->image != 'default.png') {
-				$path = storage_path("players/{$player->id}");
+    /**
+     * Remove the specified resource from storage.
+     * DELETE /players/{playerId}
+     *
+     * @param $sportId
+     * @param $teamId
+     * @param $playerId
+     * @return \Response
+     */
+    public function destroy($sportId, $teamId, $playerId)
+    {
+        $team = Auth::user()->sports()->findOrFail($sportId)->teams()->findOrFail($teamId);
 
-				$player->delete();
-				File::delete($path);
-			}
-		} catch(Exception $e) {
+        $player = $team->players()->findOrFail($playerId);
 
-			return $this->respondUnprocess('Unable to delete the player!');
-		}
+        try {
+            if ($player->image != 'default.png') {
+                $path = storage_path("players/{$player->id}");
 
-		return $this->respondWithSuccess('Player has been successfully deleted.');
-	}
+                $player->delete();
+                File::delete($path);
+            }
+        } catch (Exception $e) {
 
-	/**
-	 * Move image to app/storage path
-	 *
-	 * @param $path
-	 * @param $name
-	 */
-	private function moveImage($path, $name)
-	{
-		if(Input::hasFile('image') && Input::file('image')->isValid()) {
+            return $this->respondUnprocess('Unable to delete the player!');
+        }
 
-			Input::file('image')->move(storage_path("players/$path"), $name);
-		}
-	}
+        return $this->respondWithSuccess('Player has been successfully deleted.');
+    }
 }

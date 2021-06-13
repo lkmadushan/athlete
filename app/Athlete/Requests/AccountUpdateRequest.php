@@ -2,38 +2,39 @@
 
 use Laracasts\Validation\FormValidator;
 
-class AccountUpdateRequest extends FormValidator {
+class AccountUpdateRequest extends FormValidator
+{
 
-	protected $rules = [];
+    protected $rules = [];
 
-	public function changePassword()
-	{
-		$this->rules = [
-			'current_password' => 'required',
-			'password' => 'required|confirmed',
-			'password_confirmation' => 'required'
-		];
+    public function changePassword()
+    {
+        $this->rules = [
+            'current_password' => 'required',
+            'password' => 'required|confirmed',
+            'password_confirmation' => 'required'
+        ];
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function changeEmail($id)
-	{
-		$this->rules = [
-			'current_password' => 'required',
-			'email' => "required|email|unique:users,email,{$id},id|confirmed",
-			'email_confirmation' => 'required'
-		];
+    public function changeEmail($id)
+    {
+        $this->rules = [
+            'current_password' => 'required',
+            'email' => "required|email|unique:users,email,{$id},id|confirmed",
+            'email_confirmation' => 'required'
+        ];
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function isPurchased()
-	{
-		$this->rules = [
-			'is_purchased' => 'required|boolean',
-		];
+    public function isPurchased()
+    {
+        $this->rules = [
+            'is_purchased' => 'required|boolean',
+        ];
 
-		return $this;
-	}
+        return $this;
+    }
 }

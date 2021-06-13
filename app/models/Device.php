@@ -1,21 +1,22 @@
 <?php
 
-class Device extends \Eloquent {
+class Device extends \Eloquent
+{
 
-	protected $fillable = ['id', 'type', 'access_token'];
+    protected $fillable = ['id', 'type', 'access_token'];
 
-	public function setTypeAttribute($value)
-	{
-		$this->attributes['type'] = strtolower($value);
-	}
+    public function setTypeAttribute($value)
+    {
+        $this->attributes['type'] = strtolower($value);
+    }
 
-	public function getTypeAttribute($value)
-	{
-		return strtoupper($value);
-	}
+    public function getTypeAttribute($value)
+    {
+        return strtoupper($value);
+    }
 
-	public function user()
-	{
-		return $this->belongsTo('User');
-	}
+    public function user()
+    {
+        return $this->belongsTo('User');
+    }
 }

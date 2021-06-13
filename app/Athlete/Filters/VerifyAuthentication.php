@@ -1,85 +1,86 @@
 <?php namespace Athlete\Filters;
 
 use Device;
-use Str;
 use Illuminate\Auth\AuthManager;
+use Str;
 use Symfony\Component\Security\Core\Util\StringUtils;
 
-class VerifyAuthentication {
+class VerifyAuthentication
+{
 
-	/**
-	 * @var Illuminate\Auth\AuthManager $guard
-	 */
-	protected $auth;
+    /**
+     * @var Illuminate\Auth\AuthManager $guard
+     */
+    protected $auth;
 
-	public function __construct(AuthManager $auth)
-	{
-		$this->auth = $auth;
-	}
+    public function __construct(AuthManager $auth)
+    {
+        $this->auth = $auth;
+    }
 
-	/**
-	 * Authenticate the user
-	 *
-	 * @param $route
-	 * @param $request
-	 * @throws \Athlete\Filters\UnauthorizedUserException
-	 */
-	public function filter($route, $request)
-	{
-		$credentials = $request->only('email', 'password');
+    /**
+     * Authenticate the user
+     *
+     * @param $route
+     * @param $request
+     * @throws \Athlete\Filters\UnauthorizedUserException
+     */
+    public function filter($route, $request)
+    {
+        $credentials = $request->only('email', 'password');
 
-		$this->auth->once($credentials);
+        $this->auth->once($credentials);
 
-		if(in_array(null, $credentials) && $token = $request->header('X-Auth-Token')) {
+        if (in_array(null, $credentials) && $token = $request->header('X-Auth-Token')) {
 
-			$this->loginUsingToken($token);
-		}
+            $this->loginUsingToken($token);
+        }
 
-		if($this->auth->check() && ! $this->authDeviceMatch($request)) $this->resetDevice($request);
+        if ($this->auth->check() && !$this->authDeviceMatch($request)) $this->resetDevice($request);
 
-		if($this->auth->guest() || ! $this->authDeviceMatch($request)) throw new UnauthorizedUserException;
-	}
+        if ($this->auth->guest() || !$this->authDeviceMatch($request)) throw new UnauthorizedUserException;
+    }
 
-	/**
-	 * Log the given token into the application.
-	 *
-	 * @param $token
-	 * @return mixed
-	 */
-	public function loginUsingToken($token)
-	{
-		$device = Device::where('access_token', $token)->first();
+    /**
+     * Log the given token into the application.
+     *
+     * @param $token
+     * @return mixed
+     */
+    public function loginUsingToken($token)
+    {
+        $device = Device::where('access_token', $token)->first();
 
-		if($device) return $this->auth->onceUsingId($device->user_id);
-	}
+        if ($device) return $this->auth->onceUsingId($device->user_id);
+    }
 
-	/**
-	 * Match the authenticated device
-	 *
-	 * @param $request
-	 * @return bool
-	 */
-	public function authDeviceMatch($request)
-	{
-		$deviceId = $request->header('X-Auth-Device');
+    /**
+     * Match the authenticated device
+     *
+     * @param $request
+     * @return bool
+     */
+    public function authDeviceMatch($request)
+    {
+        $deviceId = $request->header('X-Auth-Device');
 
-		if($this->auth->check())
-			return StringUtils::equals($this->auth->user()->device->id, $deviceId);
+        if ($this->auth->check())
+            return StringUtils::equals($this->auth->user()->device->id, $deviceId);
 
-		return false;
-	}
+        return false;
+    }
 
-	/**
-	 * Reset the device
-	 *
-	 * @param $request
-	 */
-	public function resetDevice($request)
-	{
-		return $this->auth->user()->device()->update([
-			'id' => $request->header('X-Auth-Device'),
-			'type' => strtolower($request->header('X-Auth-Device-Type')),
-			'access_token' => Str::random(64),
-		]);
-	}
+    /**
+     * Reset the device
+     *
+     * @param $request
+     */
+    public function resetDevice($request)
+    {
+        return $this->auth->user()->device()->update([
+            'id' => $request->header('X-Auth-Device'),
+            'type' => strtolower($request->header('X-Auth-Device-Type')),
+            'access_token' => Str::random(64),
+        ]);
+    }
 }
